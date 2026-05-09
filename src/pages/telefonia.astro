@@ -1,0 +1,100 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SectorHero from "~/components/SectorHero.astro";
+import ContactForm from "~/components/ContactForm.astro";
+import FAQ from "~/components/FAQ.astro";
+
+const benefits = [
+  "Fibra y móvil: comparamos los principales operadores",
+  "Soluciones para hogar, autónomos y empresa",
+  "Centralitas virtuales y telefonía profesional",
+  "Te avisamos si tu tarifa ya está bien optimizada",
+];
+
+const faqs = [
+  {
+    question: "¿Con qué operadores trabajáis?",
+    answer: "Trabajamos con los principales operadores del mercado español. La diferencia entre uno y otro suele estar en el equilibrio entre precio, cobertura, atención al cliente y servicios añadidos. Comparamos todos esos factores para que la decisión sea fácil.",
+  },
+  {
+    question: "Soy autónomo / pyme. ¿También me ayudáis?",
+    answer: "Sí. De hecho es uno de los casos donde más diferencia conseguimos. Comparamos tarifas profesionales (con IVA aparte, mejor SLA, atención preferente) y centralitas virtuales si las necesitas. La factura mensual de una pyme típica baja entre un 15% y un 30%.",
+  },
+  {
+    question: "¿Qué es una centralita virtual y por qué la necesito?",
+    answer: "Una centralita virtual es la versión moderna de la centralita física: gestiona las llamadas de tu negocio (extensiones, desvíos, horarios, locuciones) sin necesidad de hardware. La pagas como un servicio mensual y la usas desde el móvil, el ordenador o un teléfono IP. Si tienes un negocio con varios trabajadores y reciben llamadas, casi siempre compensa.",
+  },
+  {
+    question: "¿Y si tengo permanencia con mi compañía actual?",
+    answer: "Lo revisamos. Muchas veces la penalización por irse antes de tiempo sale más barata que seguir un año más con una mala tarifa, y otras veces es al revés. Echamos los números contigo antes de tomar la decisión.",
+  },
+];
+---
+
+<BaseLayout
+  title="Telefonía multimarca: fibra, móvil y centralitas"
+  description="Comparamos fibra, móvil y centralitas virtuales entre los principales operadores. Para hogar y empresa. Asesoramiento gratuito en Galicia."
+  schemaType="Service"
+>
+  <SectorHero
+    category="Sector · Telefonía"
+    title="Fibra, móvil y centralitas."
+    highlight="La mejor combinación, sin atarte a una marca."
+    description="Comparamos los principales operadores del mercado para encontrar la mejor combinación de fibra, móvil y centralita virtual según uses la conexión en casa o para tu negocio."
+    benefits={benefits}
+  />
+
+  <section class="qn-sector-form" aria-labelledby="telefonia-form-heading">
+    <div class="qn-container qn-sector-form-grid">
+      <div>
+        <p class="qn-eyebrow">Comparativa de tarifas</p>
+        <h2 id="telefonia-form-heading" class="qn-display-lg qn-sector-form-title">
+          Cuéntanos qué uso le das.<br /><span>Te buscamos la mejor combinación.</span>
+        </h2>
+        <p class="qn-sector-form-lead">
+          Hogar, autónomo, pyme. Cada perfil necesita una tarifa distinta. Cuéntanos cómo usas la conexión y el móvil y te preparamos una propuesta a medida con tres o cuatro alternativas competitivas.
+        </p>
+      </div>
+      <ContactForm origen="telefonia" title="Comparativa de fibra y móvil" description="Hogar, autónomo o empresa. Te llamamos en menos de 24h." />
+    </div>
+  </section>
+
+  <FAQ items={faqs} title="Sobre fibra, móvil y centralitas" />
+</BaseLayout>
+
+<style>
+  .qn-sector-form {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background: var(--color-bone);
+  }
+
+  .qn-sector-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-sector-form-title {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .qn-sector-form-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-sector-form-lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-graphite);
+    margin: 0;
+    max-width: 30rem;
+  }
+
+  @media (min-width: 900px) {
+    .qn-sector-form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

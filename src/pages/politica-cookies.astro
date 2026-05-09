@@ -1,0 +1,87 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const lastUpdate = "9 de mayo de 2026";
+---
+
+<BaseLayout
+  title="Política de cookies"
+  description="Política de cookies de queNECESITAS conforme a la LSSI-CE."
+>
+  <section class="qn-legal">
+    <div class="qn-container qn-legal-inner">
+      <p class="qn-eyebrow">Información legal</p>
+      <h1 class="qn-display-lg qn-legal-title">Política de cookies</h1>
+      <p class="qn-legal-update">Última actualización: {lastUpdate}</p>
+
+      <div class="qn-legal-body">
+        <h2>1. ¿Qué son las cookies?</h2>
+        <p>
+          Una cookie es un pequeño archivo que un sitio web descarga en tu navegador cuando lo visitas. Las cookies permiten al sitio recordar tus acciones y preferencias durante un periodo de tiempo, para que no tengas que volver a configurarlas cada vez que regreses al sitio o navegues por sus páginas.
+        </p>
+
+        <h2>2. Cookies utilizadas en este sitio web</h2>
+        <p>
+          En el momento de la última actualización de esta política, este sitio web utiliza únicamente cookies estrictamente necesarias para su funcionamiento. No empleamos cookies analíticas ni publicitarias de terceros sin tu consentimiento expreso.
+        </p>
+
+        <h2>3. Tipos de cookies por finalidad</h2>
+        <ul>
+          <li><strong>Cookies técnicas o estrictamente necesarias:</strong> permiten al usuario la navegación a través del sitio web y la utilización de las diferentes opciones o servicios que en ella existan. Estas cookies no requieren consentimiento.</li>
+          <li><strong>Cookies de personalización:</strong> permiten al usuario acceder al servicio con algunas características de carácter general predefinidas en función de una serie de criterios.</li>
+          <li><strong>Cookies de análisis:</strong> permiten al responsable cuantificar el número de usuarios y realizar la medición y análisis estadístico de la utilización que hacen de los servicios prestados.</li>
+          <li><strong>Cookies publicitarias:</strong> permiten la gestión, de la forma más eficaz posible, de los espacios publicitarios.</li>
+          <li><strong>Cookies de publicidad comportamental:</strong> almacenan información del comportamiento de los usuarios obtenida a través de la observación continuada de sus hábitos de navegación.</li>
+        </ul>
+
+        <h2>4. Consentimiento</h2>
+        <p>
+          Al acceder al sitio web por primera vez, verás un aviso informándote del uso de cookies y de la posibilidad de configurarlas o rechazarlas. Si continúas navegando o haces clic en el botón "Aceptar", consientes el uso de cookies.
+        </p>
+
+        <h2>5. Cómo gestionar y desactivar las cookies</h2>
+        <p>
+          Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de las opciones del navegador. A continuación te facilitamos enlaces a las instrucciones de los principales navegadores:
+        </p>
+        <ul>
+          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+          <li><a href="https://support.mozilla.org/es/kb/proteccion-antirrastreo-mejorada-firefox-escritorio" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+          <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
+          <li><a href="https://support.microsoft.com/es-es/microsoft-edge" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+        </ul>
+
+        <h2>6. Modificaciones</h2>
+        <p>
+          El responsable se reserva el derecho a modificar la presente política para adaptarla a novedades legislativas o jurisprudenciales, así como a las que pudieran derivarse de los usos y costumbres establecidos en cada momento.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-legal { padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6rem); }
+  .qn-legal-inner { max-width: 780px; }
+  .qn-legal-title { margin: 1rem 0 0.5rem; }
+  .qn-legal-update {
+    font-size: 0.875rem;
+    color: var(--color-stone);
+    margin: 0 0 2.5rem;
+  }
+  .qn-legal-body {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+  .qn-legal-body h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+  .qn-legal-body p { margin: 0 0 1rem; }
+  .qn-legal-body ul { margin: 0 0 1.25rem; padding-left: 1.25rem; }
+  .qn-legal-body li { margin: 0 0 0.4rem; }
+  .qn-legal-body strong { color: var(--color-brand-600); font-weight: 600; }
+  .qn-legal-body a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+</style>

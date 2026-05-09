@@ -1,0 +1,147 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Sobre nosotros"
+  description="queNECESITAS es una marca de Gespronet Axencia de Marketing e Deseño S.L. Equipo comercial multimarca en Galicia, con base en Oleiros."
+>
+  <section class="qn-about">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Quiénes somos</p>
+      <h1 class="qn-display-xl qn-about-title">
+        Una marca con una idea simple:<br /><span>el cliente primero.</span>
+      </h1>
+
+      <div class="qn-about-grid">
+        <div class="qn-about-prose">
+          <p>
+            queNECESITAS nace dentro de Gespronet Axencia de Marketing e Deseño S.L., una empresa gallega con base en Oleiros que lleva años trabajando con clientes finales en sectores muy distintos: alarmas, energía, telefonía e inmuebles.
+          </p>
+          <p>
+            En todos ellos vimos lo mismo: el cliente acaba contratando lo que el comercial tiene que vender, no lo que más le conviene. Las grandes compañías llevan décadas optimizando su captación, y la decisión final del usuario casi nunca es del todo informada.
+          </p>
+          <p>
+            Por eso creamos queNECESITAS. La idea es sencilla: si trabajamos con todas las marcas, no tenemos un incentivo para empujarte hacia ninguna. Te enseñamos los números reales, te explicamos las diferencias y tú decides. El asesoramiento es gratuito porque las compañías nos pagan por traerles clientes bien informados — no tienes que pagar nada extra.
+          </p>
+          <p>
+            Operamos desde Galicia, con un equipo comercial local que conoce el mercado y atiende en castelán e galego. Nuestra zona principal de inmuebles es A Coruña, Oleiros, Sada y Bergondo. En el resto de servicios trabajamos en toda la comunidad.
+          </p>
+        </div>
+
+        <aside class="qn-about-card">
+          <h2 class="qn-about-card-title">Datos legales</h2>
+          <dl class="qn-about-data">
+            <dt>Marca comercial</dt>
+            <dd>queNECESITAS</dd>
+            <dt>Razón social</dt>
+            <dd>Gespronet Axencia de Marketing e Deseño S.L.</dd>
+            <dt>CIF</dt>
+            <dd>B75490136</dd>
+            <dt>Domicilio</dt>
+            <dd>Rúa do Souto 1<br />Porto de Santa Cruz<br />15179 Oleiros, A Coruña</dd>
+            <dt>Teléfono</dt>
+            <dd><a href="tel:+34672274969">672 274 969</a></dd>
+            <dt>Email</dt>
+            <dd><a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a></dd>
+            <dt>Horario</dt>
+            <dd>Lunes a viernes<br />8:00 — 16:00</dd>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-about {
+    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  }
+
+  .qn-about-title {
+    margin: 1rem 0 3rem;
+    max-width: 18ch;
+  }
+
+  .qn-about-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .qn-about-prose p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+    margin: 0 0 1.25rem;
+  }
+
+  .qn-about-prose p:first-of-type::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-brand-600);
+    font-size: 3.25rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.125rem 0.625rem 0 0;
+    letter-spacing: -0.04em;
+  }
+
+  .qn-about-card {
+    background: var(--color-bone);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .qn-about-card-title {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-stone) !important;
+    margin: 0 0 1.25rem !important;
+    letter-spacing: 0.12em !important;
+    font-family: var(--font-sans) !important;
+  }
+
+  .qn-about-data {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .qn-about-data dt {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-stone);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .qn-about-data dd {
+    font-size: 0.9375rem;
+    color: var(--color-ink-soft);
+    margin: 0.25rem 0 0;
+    line-height: 1.5;
+  }
+
+  .qn-about-data a {
+    color: var(--color-brand-600);
+  }
+
+  @media (min-width: 900px) {
+    .qn-about-grid {
+      grid-template-columns: 1.6fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

@@ -1,0 +1,214 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const sectorLabels = {
+  alarmas: "Alarmas",
+  energia: "Energía",
+  telefonia: "Telefonía",
+  inmuebles: "Inmuebles",
+  general: "General",
+};
+
+const dateFormatter = new Intl.DateTimeFormat("es-ES", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  schemaType="Article"
+>
+  <article class="qn-article">
+    <header class="qn-article-header">
+      <div class="qn-container qn-article-header-inner">
+        <p class="qn-article-meta">
+          <a href="/blog" class="qn-article-back">← Volver al blog</a>
+        </p>
+        <p class="qn-article-tag-row">
+          <span class={`qn-post-tag qn-post-tag-${post.data.sector}`}>{sectorLabels[post.data.sector]}</span>
+          <time datetime={post.data.pubDate.toISOString()}>{dateFormatter.format(post.data.pubDate)}</time>
+        </p>
+        <h1 class="qn-display-lg qn-article-title">{post.data.title}</h1>
+        <p class="qn-article-desc">{post.data.description}</p>
+        <p class="qn-article-author">Por {post.data.author}</p>
+      </div>
+    </header>
+
+    <div class="qn-container">
+      <div class="qn-article-body">
+        <Content />
+      </div>
+
+      <div class="qn-article-cta">
+        <p class="qn-eyebrow">¿Te ayudamos?</p>
+        <h3 class="qn-display-md">¿Quieres que comparemos tu caso?</h3>
+        <p>Sin compromiso. Sin spam. Te llamamos en menos de 24h laborables y te explicamos qué opciones tienes.</p>
+        <a href="/contacto" class="qn-btn-accent">Solicitar asesoramiento gratuito →</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .qn-article-header {
+    padding-block: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--color-bone) 0%, white 100%);
+  }
+
+  .qn-article-header-inner {
+    max-width: 760px;
+  }
+
+  .qn-article-meta {
+    margin: 0 0 1.5rem;
+  }
+
+  .qn-article-back {
+    font-size: 0.875rem;
+    color: var(--color-stone);
+    transition: color 0.15s ease;
+  }
+
+  .qn-article-back:hover {
+    color: var(--color-brand-600);
+  }
+
+  .qn-article-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin: 0 0 1.5rem;
+    font-size: 0.8125rem;
+    color: var(--color-stone);
+  }
+
+  .qn-post-tag {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    background: var(--color-brand-100);
+    color: var(--color-brand-600);
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6875rem;
+  }
+
+  .qn-post-tag-alarmas { background: #FFE3D6; color: #B63D17; }
+  .qn-post-tag-energia { background: #FFF1C9; color: #855A0B; }
+  .qn-post-tag-telefonia { background: var(--color-brand-100); color: var(--color-brand-700); }
+  .qn-post-tag-inmuebles { background: #DCEFE3; color: #1F6E40; }
+
+  .qn-article-title {
+    margin: 0 0 1rem;
+    font-size: clamp(1.875rem, 4vw, 2.75rem) !important;
+  }
+
+  .qn-article-desc {
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: var(--color-graphite);
+    margin: 0 0 1.25rem;
+  }
+
+  .qn-article-author {
+    font-size: 0.875rem;
+    color: var(--color-stone);
+    margin: 0;
+  }
+
+  .qn-article-body {
+    max-width: 720px;
+    margin-inline: auto;
+    padding-block: clamp(2rem, 4vw, 3rem);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-soft);
+  }
+
+  .qn-article-body :global(h2) {
+    font-size: 1.625rem;
+    margin: 2.5rem 0 1rem;
+  }
+
+  .qn-article-body :global(h3) {
+    font-size: 1.25rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .qn-article-body :global(p) { margin: 0 0 1.25rem; }
+
+  .qn-article-body :global(ul),
+  .qn-article-body :global(ol) {
+    margin: 0 0 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .qn-article-body :global(li) { margin: 0 0 0.5rem; }
+
+  .qn-article-body :global(a) {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  .qn-article-body :global(strong) { color: var(--color-brand-600); font-weight: 600; }
+
+  .qn-article-body :global(blockquote) {
+    border-left: 3px solid var(--color-accent-500);
+    padding-left: 1.25rem;
+    margin: 2rem 0;
+    color: var(--color-graphite);
+    font-style: italic;
+  }
+
+  .qn-article-body :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--color-fog);
+    margin: 2.5rem 0;
+  }
+
+  .qn-article-body :global(code) {
+    background: var(--color-bone);
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: "SFMono-Regular", "Menlo", monospace;
+  }
+
+  .qn-article-cta {
+    max-width: 720px;
+    margin: 3rem auto 4rem;
+    padding: 2.25rem;
+    background: var(--color-bone);
+    border-radius: var(--radius-xl);
+    text-align: left;
+  }
+
+  .qn-article-cta h3 {
+    margin: 1rem 0 0.75rem;
+  }
+
+  .qn-article-cta p {
+    color: var(--color-graphite);
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+</style>

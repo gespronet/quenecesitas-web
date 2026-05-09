@@ -1,0 +1,100 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SectorHero from "~/components/SectorHero.astro";
+import ContactForm from "~/components/ContactForm.astro";
+import FAQ from "~/components/FAQ.astro";
+
+const benefits = [
+  "Luz y gas: comparamos todas las comercializadoras del mercado libre",
+  "Análisis de tu factura actual sin coste",
+  "Cambio de compañía sin papeleo: nos ocupamos de todo",
+  "Te avisamos si tu tarifa actual ya es competitiva",
+];
+
+const faqs = [
+  {
+    question: "¿Cómo sabéis qué tarifa me conviene?",
+    answer: "Lo primero es ver tu factura actual: potencia contratada, consumo medio, horario de uso y tipo de tarifa. Con esos datos comparamos qué te ofrecerían las distintas comercializadoras y elegimos contigo la que más se ajusta a tu perfil.",
+  },
+  {
+    question: "¿Y si mi tarifa actual ya es buena?",
+    answer: "Te lo decimos. No vamos a recomendarte un cambio que no te convenga solo por hacer una venta. Si ya tienes una buena tarifa, lo más honesto es que te quedes donde estás. Eso sí, conviene revisarlo cada cierto tiempo porque el mercado cambia constantemente.",
+  },
+  {
+    question: "¿Tengo que hacer yo el cambio o lo hacéis vosotros?",
+    answer: "Lo hacemos nosotros. Una vez que decides la compañía, gestionamos toda la portabilidad: contrato nuevo, baja de la antigua, lectura del contador. Tú solo firmas. El servicio no se corta en ningún momento.",
+  },
+  {
+    question: "¿Trabajáis con luz y gas a la vez?",
+    answer: "Sí. Si tienes ambos servicios, podemos compararlos juntos o por separado. A veces conviene tener cada uno con compañía distinta y otras veces sale mejor agruparlos. Te enseñamos las dos opciones con números reales.",
+  },
+];
+---
+
+<BaseLayout
+  title="Energía: luz y gas multimarca"
+  description="Comparamos tarifas de luz y gas entre todas las comercializadoras del mercado libre. Análisis gratuito de tu factura. Cambio sin papeleo."
+  schemaType="Service"
+>
+  <SectorHero
+    category="Sector · Energía"
+    title="La factura más baja del mercado,"
+    highlight="sin que tengas que mover un dedo."
+    description="Comparamos tu factura de luz y gas con todas las comercializadoras del mercado libre. Si encontramos algo mejor, gestionamos el cambio por ti. Si no, te decimos que te quedes donde estás."
+    benefits={benefits}
+  />
+
+  <section class="qn-sector-form" aria-labelledby="energia-form-heading">
+    <div class="qn-container qn-sector-form-grid">
+      <div>
+        <p class="qn-eyebrow">Análisis de factura</p>
+        <h2 id="energia-form-heading" class="qn-display-lg qn-sector-form-title">
+          Pásanos tu factura.<br /><span>Te decimos cuánto puedes ahorrar.</span>
+        </h2>
+        <p class="qn-sector-form-lead">
+          Cuéntanos cómo ponernos en contacto contigo y te explicamos cómo enviarnos la factura. En menos de 24h laborables tendrás la comparativa con tres o cuatro alternativas reales y el ahorro estimado.
+        </p>
+      </div>
+      <ContactForm origen="energia" title="Análisis gratuito de tu factura" description="Te llamamos para que nos pases tu factura de la forma más cómoda." />
+    </div>
+  </section>
+
+  <FAQ items={faqs} title="Sobre luz, gas y comparativas" />
+</BaseLayout>
+
+<style>
+  .qn-sector-form {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background: var(--color-bone);
+  }
+
+  .qn-sector-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-sector-form-title {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .qn-sector-form-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-sector-form-lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-graphite);
+    margin: 0;
+    max-width: 30rem;
+  }
+
+  @media (min-width: 900px) {
+    .qn-sector-form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

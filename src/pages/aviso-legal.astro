@@ -1,0 +1,127 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const lastUpdate = "9 de mayo de 2026";
+---
+
+<BaseLayout
+  title="Aviso legal"
+  description="Aviso legal de queNECESITAS, marca de Gespronet Axencia de Marketing e Deseño S.L."
+  noindex={false}
+>
+  <section class="qn-legal">
+    <div class="qn-container qn-legal-inner">
+      <p class="qn-eyebrow">Información legal</p>
+      <h1 class="qn-display-lg qn-legal-title">Aviso legal</h1>
+      <p class="qn-legal-update">Última actualización: {lastUpdate}</p>
+
+      <div class="qn-legal-body">
+        <h2>1. Datos identificativos del titular</h2>
+        <p>
+          En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa al usuario de los siguientes datos del titular del sitio web:
+        </p>
+        <ul>
+          <li><strong>Marca comercial:</strong> queNECESITAS</li>
+          <li><strong>Razón social:</strong> Gespronet Axencia de Marketing e Deseño S.L.</li>
+          <li><strong>CIF:</strong> B75490136</li>
+          <li><strong>Domicilio social:</strong> Rúa do Souto 1, Porto de Santa Cruz, 15179 Oleiros (A Coruña), España</li>
+          <li><strong>Teléfono:</strong> 672 274 969</li>
+          <li><strong>Correo electrónico:</strong> info@quenecesitashoy.es</li>
+        </ul>
+
+        <h2>2. Objeto</h2>
+        <p>
+          El presente aviso legal regula el uso del sitio web <strong>quenecesitashoy.es</strong> (en adelante, "el sitio web"), titularidad de Gespronet Axencia de Marketing e Deseño S.L. (en adelante, "el titular").
+        </p>
+        <p>
+          La navegación por el sitio web atribuye la condición de usuario del mismo e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este aviso legal en la versión publicada en el momento del acceso.
+        </p>
+
+        <h2>3. Condiciones de uso</h2>
+        <p>
+          El usuario se compromete a hacer un uso adecuado de los contenidos y servicios que el titular ofrece a través del sitio web y, con carácter enunciativo pero no limitativo, a no emplearlos para incurrir en actividades ilícitas, ilegales o contrarias a la buena fe y al orden público.
+        </p>
+
+        <h2>4. Propiedad intelectual e industrial</h2>
+        <p>
+          Todos los contenidos del sitio web, entendiendo por estos a título meramente enunciativo los textos, fotografías, gráficos, imágenes, iconos, tecnología, software, así como su diseño gráfico y códigos fuente, constituyen una obra cuya propiedad pertenece al titular, sin que puedan entenderse cedidos al usuario ninguno de los derechos de explotación reconocidos por la normativa vigente en materia de propiedad intelectual sobre los mismos.
+        </p>
+        <p>
+          Las marcas, nombres comerciales o signos distintivos son titularidad del titular o de terceros, sin que pueda entenderse que el acceso al sitio web atribuya ningún derecho sobre las citadas marcas, nombres comerciales y/o signos distintivos.
+        </p>
+
+        <h2>5. Exclusión de garantías y responsabilidad</h2>
+        <p>
+          El titular no se hace responsable, en ningún caso, de los daños y perjuicios de cualquier naturaleza que pudieran ocasionar, a título enunciativo: errores u omisiones en los contenidos, falta de disponibilidad del sitio web o la transmisión de virus o programas maliciosos en los contenidos, a pesar de haber adoptado todas las medidas tecnológicas necesarias para evitarlo.
+        </p>
+
+        <h2>6. Modificaciones</h2>
+        <p>
+          El titular se reserva el derecho de efectuar sin previo aviso las modificaciones que considere oportunas en el sitio web, pudiendo cambiar, suprimir o añadir tanto los contenidos y servicios que se presten a través del mismo como la forma en la que estos aparezcan presentados o localizados.
+        </p>
+
+        <h2>7. Enlaces</h2>
+        <p>
+          En el caso de que en el sitio web se dispusiesen enlaces o hipervínculos hacia otros sitios de Internet, el titular no ejercerá ningún tipo de control sobre dichos sitios y contenidos. En ningún caso el titular asumirá responsabilidad alguna por los contenidos de algún enlace perteneciente a un sitio web ajeno.
+        </p>
+
+        <h2>8. Derecho de exclusión</h2>
+        <p>
+          El titular se reserva el derecho a denegar o retirar el acceso al sitio web y/o los servicios ofrecidos sin necesidad de preaviso, a instancia propia o de un tercero, a aquellos usuarios que incumplan el presente aviso legal.
+        </p>
+
+        <h2>9. Generalidades</h2>
+        <p>
+          El titular perseguirá el incumplimiento de las presentes condiciones así como cualquier utilización indebida de su sitio web ejerciendo todas las acciones civiles y penales que le puedan corresponder en derecho.
+        </p>
+
+        <h2>10. Legislación aplicable y jurisdicción</h2>
+        <p>
+          La relación entre el titular y el usuario se regirá por la normativa española vigente. Para la resolución de cualquier controversia, las partes se someten a los Juzgados y Tribunales de A Coruña, salvo que la legislación aplicable disponga otra cosa.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-legal {
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6rem);
+  }
+
+  .qn-legal-inner {
+    max-width: 780px;
+  }
+
+  .qn-legal-title {
+    margin: 1rem 0 0.5rem;
+  }
+
+  .qn-legal-update {
+    font-size: 0.875rem;
+    color: var(--color-stone);
+    margin: 0 0 2.5rem;
+  }
+
+  .qn-legal-body {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+
+  .qn-legal-body h2 {
+    font-size: 1.25rem;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .qn-legal-body p { margin: 0 0 1rem; }
+
+  .qn-legal-body ul {
+    margin: 0 0 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .qn-legal-body li { margin: 0 0 0.4rem; }
+
+  .qn-legal-body strong { color: var(--color-brand-600); font-weight: 600; }
+</style>

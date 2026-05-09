@@ -1,0 +1,265 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="qn-footer">
+  <div class="qn-container">
+
+    <div class="qn-footer-cta">
+      <div>
+        <p class="qn-eyebrow">¿Hablamos?</p>
+        <h2 class="qn-display-md qn-footer-cta-title">
+          Cuéntanos qué necesitas.<br /><span>Nosotros buscamos la mejor opción.</span>
+        </h2>
+      </div>
+      <a href="/contacto" class="qn-btn-accent">Solicitar asesoramiento gratuito →</a>
+    </div>
+
+    <div class="qn-footer-grid">
+      <div class="qn-footer-col qn-footer-brand">
+        <img src="/logo-white.svg" alt="queNECESITAS" width="100" height="64" class="qn-footer-logo" />
+        <p class="qn-footer-claim">
+          Comparamos alarmas, energía, telefonía e inmuebles entre las mejores compañías del mercado. Multimarca y sin compromisos. Galicia.
+        </p>
+        <div class="qn-social">
+          <a href="https://www.instagram.com/quenecesitashoy" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/quenecesitashoy" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="qn-footer-col">
+        <h4 class="qn-footer-h">Sectores</h4>
+        <ul>
+          <li><a href="/alarmas">Alarmas</a></li>
+          <li><a href="/energia">Energía</a></li>
+          <li><a href="/telefonia">Telefonía</a></li>
+          <li><a href="/inmuebles">Inmuebles</a></li>
+        </ul>
+      </div>
+
+      <div class="qn-footer-col">
+        <h4 class="qn-footer-h">queNECESITAS</h4>
+        <ul>
+          <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="qn-footer-col">
+        <h4 class="qn-footer-h">Contacto</h4>
+        <ul class="qn-footer-contact">
+          <li>
+            <a href="tel:+34672274969">672 274 969</a>
+          </li>
+          <li>
+            <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
+          </li>
+          <li>
+            Lunes a viernes<br />8:00 — 16:00
+          </li>
+          <li class="qn-footer-address">
+            Rúa do Souto 1<br />
+            Porto de Santa Cruz<br />
+            15179 Oleiros, A Coruña
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qn-footer-bottom">
+      <p class="qn-footer-legal">
+        © {year} queNECESITAS · Marca de Gespronet Axencia de Marketing e Deseño S.L. · CIF B75490136
+      </p>
+      <ul class="qn-footer-legal-links">
+        <li><a href="/aviso-legal">Aviso legal</a></li>
+        <li><a href="/politica-privacidad">Privacidad</a></li>
+        <li><a href="/politica-cookies">Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .qn-footer {
+    background: var(--color-brand-600);
+    color: rgba(255, 255, 255, 0.85);
+    padding-block: 4rem 2rem;
+    margin-top: 6rem;
+  }
+
+  .qn-footer .qn-eyebrow {
+    color: var(--color-accent-300);
+  }
+
+  .qn-footer .qn-eyebrow::before {
+    background: var(--color-accent-500);
+  }
+
+  .qn-footer-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    margin-bottom: 3.5rem;
+  }
+
+  .qn-footer-cta-title {
+    color: white !important;
+    margin: 0.5rem 0 0;
+  }
+
+  .qn-footer-cta-title span {
+    color: var(--color-accent-300);
+  }
+
+  .qn-footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .qn-footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .qn-footer-logo {
+    height: 60px;
+    width: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .qn-footer-claim {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    max-width: 380px;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0 0 1.5rem;
+  }
+
+  .qn-social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .qn-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-md);
+    color: white;
+    transition: all 0.2s ease;
+  }
+
+  .qn-social a:hover {
+    background: var(--color-accent-500);
+    border-color: var(--color-accent-500);
+  }
+
+  .qn-footer-h {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-300);
+    margin: 0 0 1.125rem;
+  }
+
+  .qn-footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .qn-footer-col a {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9375rem;
+    transition: color 0.15s ease;
+  }
+
+  .qn-footer-col a:hover {
+    color: white;
+  }
+
+  .qn-footer-contact li {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .qn-footer-address {
+    margin-top: 0.5rem;
+    font-size: 0.875rem !important;
+  }
+
+  .qn-footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .qn-footer-legal {
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .qn-footer-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .qn-footer-legal-links a {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8125rem;
+    transition: color 0.15s ease;
+  }
+
+  .qn-footer-legal-links a:hover {
+    color: white;
+  }
+
+  @media (min-width: 640px) {
+    .qn-footer-cta {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .qn-footer-grid {
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    }
+    .qn-footer-brand {
+      grid-column: auto;
+    }
+    .qn-footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+</style>

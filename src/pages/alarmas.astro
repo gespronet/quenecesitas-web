@@ -1,0 +1,104 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SectorHero from "~/components/SectorHero.astro";
+import ContactForm from "~/components/ContactForm.astro";
+import FAQ from "~/components/FAQ.astro";
+
+const benefits = [
+  "Comparamos las marcas líderes del mercado de seguridad",
+  "Asesoramiento gratuito según tu vivienda o negocio",
+  "Conexión a Central Receptora de Alarmas (CRA) homologada",
+  "Sin compromisos ocultos ni letra pequeña",
+];
+
+const faqs = [
+  {
+    question: "¿Trabajáis con todas las compañías de alarmas?",
+    answer: "Trabajamos con las marcas líderes del mercado español. Nuestro objetivo es que elijas según servicio y precio reales, no según las comisiones que cobre el comercial. Si tu vivienda o negocio tiene requisitos especiales, te lo decimos antes de empezar.",
+  },
+  {
+    question: "¿Cuánto cuesta el asesoramiento?",
+    answer: "Cero. El asesoramiento es completamente gratuito. Las compañías nos pagan por traerles clientes bien informados — tú no pagas nada extra por contratar a través de nosotros.",
+  },
+  {
+    question: "¿Y si ya tengo alarma con otra compañía?",
+    answer: "Lo revisamos contigo. Si lo que tienes ya es competitivo, te lo decimos sin tratar de venderte nada. Si encontramos algo mejor en cobertura o precio, te explicamos cómo cambiar sin quedarte desprotegido en el proceso.",
+  },
+  {
+    question: "¿En qué zonas instaláis?",
+    answer: "Toda Galicia. Tenemos especial cobertura en A Coruña, Oleiros, Sada, Bergondo y comarca, donde nuestro equipo comercial atiende personalmente. En el resto de Galicia trabajamos con las redes de instalación de cada compañía.",
+  },
+  {
+    question: "¿Cuánto tarda la instalación?",
+    answer: "Depende de la compañía y del tipo de instalación, pero lo habitual es de 3 a 7 días desde que firmas. En casos urgentes podemos priorizar la instalación con la compañía elegida.",
+  },
+];
+---
+
+<BaseLayout
+  title="Alarmas multimarca en Galicia"
+  description="Comparamos las mejores compañías de alarmas y elegimos contigo. Asesoramiento gratuito, sin compromisos ocultos. Cobertura en A Coruña y toda Galicia."
+  schemaType="Service"
+>
+  <SectorHero
+    category="Sector · Alarmas"
+    title="Tu seguridad,"
+    highlight="con la compañía que más te conviene."
+    description="Comparamos las mejores marcas de alarmas del mercado: precios, cobertura, conexión a CRA y atención. Te enseñamos los números claros para que elijas tú, no nosotros."
+    benefits={benefits}
+  />
+
+  <section class="qn-sector-form" aria-labelledby="alarmas-form-heading">
+    <div class="qn-container qn-sector-form-grid">
+      <div>
+        <p class="qn-eyebrow">Solicita comparativa</p>
+        <h2 id="alarmas-form-heading" class="qn-display-lg qn-sector-form-title">
+          Cuéntanos qué quieres proteger.<br /><span>Te llamamos hoy mismo.</span>
+        </h2>
+        <p class="qn-sector-form-lead">
+          Vivienda, segunda residencia, local comercial, nave… Cada caso necesita una solución distinta. Cuéntanos lo básico y te preparamos una comparativa real con los mejores presupuestos del mercado.
+        </p>
+      </div>
+      <ContactForm origen="alarmas" title="Comparativa gratuita de alarmas" description="Sin compromiso. Te llamamos en menos de 24h laborables." />
+    </div>
+  </section>
+
+  <FAQ items={faqs} title="Sobre alarmas, compañías y cómo trabajamos" />
+</BaseLayout>
+
+<style>
+  .qn-sector-form {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background: var(--color-bone);
+  }
+
+  .qn-sector-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-sector-form-title {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .qn-sector-form-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-sector-form-lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-graphite);
+    margin: 0;
+    max-width: 30rem;
+  }
+
+  @media (min-width: 900px) {
+    .qn-sector-form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

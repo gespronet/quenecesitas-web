@@ -1,0 +1,123 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Hero from "~/components/Hero.astro";
+import StatsBar from "~/components/StatsBar.astro";
+import ServiceGrid from "~/components/ServiceGrid.astro";
+import ProcessSteps from "~/components/ProcessSteps.astro";
+import WhyDifferent from "~/components/WhyDifferent.astro";
+import ContactForm from "~/components/ContactForm.astro";
+---
+
+<BaseLayout
+  title="queNECESITAS · Multimarca en Galicia"
+  description="Comparamos alarmas, energía, telefonía e inmuebles entre las mejores compañías. Multimarca, sin compromisos ocultos. Asesoramiento gratuito en Galicia."
+>
+  <Hero
+    title="No nos casamos con nadie."
+    highlight="Solo con tu beneficio."
+    description="Comparamos alarmas, energía, telefonía e inmuebles entre las mejores compañías del mercado. Sin filtros comerciales, sin compromisos ocultos. Tú eliges, nosotros nos ocupamos del papeleo."
+  />
+
+  <StatsBar />
+
+  <ServiceGrid />
+
+  <ProcessSteps />
+
+  <WhyDifferent />
+
+  <section class="qn-home-form" aria-labelledby="home-form-heading">
+    <div class="qn-container qn-home-form-grid">
+      <div>
+        <p class="qn-eyebrow">Empezamos</p>
+        <h2 id="home-form-heading" class="qn-display-lg qn-home-form-title">
+          Cuéntanos qué necesitas.<br /><span>Te llamamos en 24h.</span>
+        </h2>
+        <p class="qn-home-form-lead">
+          Sin compromiso. Sin spam. Solo una conversación honesta para entender qué buscas y proponerte la mejor opción del mercado.
+        </p>
+        <ul class="qn-home-form-list">
+          <li>Asesoramiento gratuito y multimarca</li>
+          <li>Equipo comercial local en Galicia</li>
+          <li>Atención de lunes a viernes, 8:00 — 16:00</li>
+        </ul>
+      </div>
+      <ContactForm origen="home" showSectorSelect={true} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-home-form {
+    padding-block: clamp(4rem, 7vw, 6rem);
+  }
+
+  .qn-home-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-home-form-title {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .qn-home-form-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-home-form-lead {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-graphite);
+    margin: 0 0 1.5rem;
+    max-width: 30rem;
+  }
+
+  .qn-home-form-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .qn-home-form-list li {
+    position: relative;
+    padding-left: 1.75rem;
+    color: var(--color-ink-soft);
+    font-size: 0.9375rem;
+  }
+
+  .qn-home-form-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 18px;
+    height: 18px;
+    background: var(--color-brand-100);
+    border-radius: 50%;
+  }
+
+  .qn-home-form-list li::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0.875rem;
+    width: 6px;
+    height: 3px;
+    border-left: 2px solid var(--color-brand-600);
+    border-bottom: 2px solid var(--color-brand-600);
+    transform: rotate(-45deg);
+  }
+
+  @media (min-width: 900px) {
+    .qn-home-form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

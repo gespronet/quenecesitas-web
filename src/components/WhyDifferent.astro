@@ -1,0 +1,149 @@
+---
+const reasons = [
+  {
+    title: "No nos casamos con nadie",
+    body: "Trabajamos con todas las marcas líderes. Sin contratos exclusivos. Sin comisiones que nos atan. Por eso podemos decirte la verdad sobre qué te conviene.",
+  },
+  {
+    title: "Comparamos por ti",
+    body: "Tarifas, condiciones, letra pequeña, permanencias. Hacemos el trabajo aburrido. Tú recibes opciones claras y eliges con datos.",
+  },
+  {
+    title: "Asesoramiento sin coste",
+    body: "Cobramos a las compañías por traerles clientes bien informados. A ti no te cuesta nada. Si no encontramos algo mejor que lo que ya tienes, te lo decimos.",
+  },
+  {
+    title: "Equipo local en Galicia",
+    body: "No somos un call center. Somos vecinos. Atendemos en castelán e galego, conocemos el mercado de A Coruña, Oleiros, Sada y alrededores.",
+  },
+];
+---
+
+<section class="qn-why" aria-labelledby="why-heading">
+  <div class="qn-container qn-why-inner">
+    <div class="qn-why-intro">
+      <p class="qn-eyebrow qn-eyebrow-light">Por qué somos distintos</p>
+      <h2 id="why-heading" class="qn-display-lg qn-why-title">
+        La industria no estaba pensada<br /><span>para el cliente.</span><br />Nosotros sí.
+      </h2>
+      <p class="qn-why-lead">
+        Las grandes compañías llevan décadas vendiéndote lo que les conviene a ellas. queNECESITAS nace con la idea contraria: si hay una opción mejor en otra compañía, te la enseñamos.
+      </p>
+    </div>
+
+    <div class="qn-why-grid">
+      {reasons.map((reason) => (
+        <div class="qn-reason">
+          <div class="qn-reason-mark" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 class="qn-reason-title">{reason.title}</h3>
+          <p class="qn-reason-body">{reason.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .qn-why {
+    padding-block: clamp(4rem, 7vw, 6rem);
+    background: var(--color-brand-600);
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .qn-why::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 106, 61, 0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+  .qn-why-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .qn-eyebrow-light {
+    color: var(--color-accent-300) !important;
+  }
+
+  .qn-eyebrow-light::before {
+    background: var(--color-accent-500) !important;
+  }
+
+  .qn-why-title {
+    color: white !important;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .qn-why-title span {
+    color: var(--color-accent-300);
+  }
+
+  .qn-why-lead {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    max-width: 32rem;
+  }
+
+  .qn-why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .qn-reason {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 1.5rem;
+  }
+
+  .qn-reason-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-accent-500);
+    color: white;
+    margin-bottom: 1rem;
+  }
+
+  .qn-reason-title {
+    font-size: 1.25rem;
+    color: white !important;
+    margin: 0 0 0.625rem;
+  }
+
+  .qn-reason-body {
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .qn-why-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .qn-why-inner {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+    }
+  }
+</style>

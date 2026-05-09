@@ -1,0 +1,109 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const lastUpdate = "9 de mayo de 2026";
+---
+
+<BaseLayout
+  title="Política de privacidad"
+  description="Política de privacidad de queNECESITAS conforme al RGPD y a la LOPDGDD."
+>
+  <section class="qn-legal">
+    <div class="qn-container qn-legal-inner">
+      <p class="qn-eyebrow">Información legal</p>
+      <h1 class="qn-display-lg qn-legal-title">Política de privacidad</h1>
+      <p class="qn-legal-update">Última actualización: {lastUpdate}</p>
+
+      <div class="qn-legal-body">
+        <h2>1. Responsable del tratamiento</h2>
+        <ul>
+          <li><strong>Razón social:</strong> Gespronet Axencia de Marketing e Deseño S.L.</li>
+          <li><strong>CIF:</strong> B75490136</li>
+          <li><strong>Domicilio:</strong> Rúa do Souto 1, Porto de Santa Cruz, 15179 Oleiros (A Coruña)</li>
+          <li><strong>Email de contacto:</strong> info@quenecesitashoy.es</li>
+          <li><strong>Teléfono:</strong> 672 274 969</li>
+        </ul>
+
+        <h2>2. Finalidad del tratamiento</h2>
+        <p>Los datos personales que nos facilites a través de los formularios del sitio web serán tratados con las siguientes finalidades:</p>
+        <ul>
+          <li>Atender tu solicitud de información, asesoramiento o presupuesto.</li>
+          <li>Contactar contigo por teléfono, email o cualquier otro medio que nos hayas facilitado.</li>
+          <li>Gestionar la relación comercial y, en su caso, la prestación del servicio que solicites.</li>
+          <li>Remitirte comunicaciones comerciales sobre nuestros servicios, siempre que hayas consentido expresamente.</li>
+        </ul>
+
+        <h2>3. Base legal</h2>
+        <p>La base legal para el tratamiento de tus datos es:</p>
+        <ul>
+          <li><strong>Consentimiento del interesado</strong> (artículo 6.1.a RGPD), prestado al marcar la casilla de aceptación de la presente política antes de enviar el formulario.</li>
+          <li><strong>Ejecución de un contrato</strong> (artículo 6.1.b RGPD) cuando los datos sean necesarios para prestarte el servicio solicitado.</li>
+          <li><strong>Interés legítimo</strong> (artículo 6.1.f RGPD) para responder a tus consultas y mantener una relación comercial.</li>
+        </ul>
+
+        <h2>4. Plazo de conservación</h2>
+        <p>
+          Tus datos serán conservados durante el tiempo estrictamente necesario para cumplir con la finalidad para la que fueron recabados y, posteriormente, durante el plazo legalmente establecido para atender posibles responsabilidades derivadas de la relación.
+        </p>
+
+        <h2>5. Destinatarios</h2>
+        <p>
+          Tus datos no serán cedidos a terceros, salvo obligación legal. Podrán acceder a ellos los proveedores de servicios necesarios para la prestación de los nuestros (alojamiento web, herramientas de email marketing y CRM), siempre con las debidas garantías y con contratos de encargado de tratamiento conforme al RGPD.
+        </p>
+        <p>
+          En caso de que la solicitud requiera presentar tu información a una compañía colaboradora (alarmas, energía, telefonía o inmuebles) para preparar la comparativa, te informaremos previamente y solo lo haremos con tu autorización expresa.
+        </p>
+
+        <h2>6. Derechos del interesado</h2>
+        <p>Tienes derecho a:</p>
+        <ul>
+          <li><strong>Acceder</strong> a tus datos personales.</li>
+          <li><strong>Rectificar</strong> los datos inexactos o incompletos.</li>
+          <li><strong>Suprimir</strong> los datos cuando, entre otros motivos, ya no sean necesarios.</li>
+          <li><strong>Limitar</strong> el tratamiento.</li>
+          <li><strong>Oponerte</strong> al tratamiento.</li>
+          <li><strong>Portabilidad</strong> de los datos.</li>
+          <li><strong>Retirar el consentimiento</strong> en cualquier momento, sin que ello afecte a la licitud del tratamiento previo.</li>
+          <li><strong>Reclamar</strong> ante la Agencia Española de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>).</li>
+        </ul>
+        <p>
+          Para ejercer cualquiera de estos derechos puedes escribirnos a <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a> o al domicilio postal indicado en el apartado 1, indicando claramente el derecho que deseas ejercer y adjuntando copia de tu DNI o documento equivalente.
+        </p>
+
+        <h2>7. Medidas de seguridad</h2>
+        <p>
+          El responsable adopta las medidas técnicas y organizativas necesarias para garantizar la seguridad de los datos de carácter personal y evitar su alteración, pérdida, tratamiento o acceso no autorizado, conforme al estado actual de la técnica y a la naturaleza de los datos almacenados.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-legal {
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6rem);
+  }
+  .qn-legal-inner { max-width: 780px; }
+  .qn-legal-title { margin: 1rem 0 0.5rem; }
+  .qn-legal-update {
+    font-size: 0.875rem;
+    color: var(--color-stone);
+    margin: 0 0 2.5rem;
+  }
+  .qn-legal-body {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-ink-soft);
+  }
+  .qn-legal-body h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+  .qn-legal-body p { margin: 0 0 1rem; }
+  .qn-legal-body ul { margin: 0 0 1.25rem; padding-left: 1.25rem; }
+  .qn-legal-body li { margin: 0 0 0.4rem; }
+  .qn-legal-body strong { color: var(--color-brand-600); font-weight: 600; }
+  .qn-legal-body a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+</style>

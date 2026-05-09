@@ -1,0 +1,121 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  description: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Multimarca · Galicia",
+  title,
+  highlight,
+  description,
+  primaryCta = { label: "Solicitar asesoramiento gratuito", href: "/contacto" },
+  secondaryCta = { label: "Cómo trabajamos", href: "#proceso" },
+} = Astro.props;
+---
+
+<section class="qn-hero">
+  <div class="qn-hero-bg" aria-hidden="true"></div>
+
+  <div class="qn-container qn-hero-content">
+    <p class="qn-eyebrow qn-reveal">{eyebrow}</p>
+
+    <h1 class="qn-display-xl qn-hero-title qn-reveal qn-reveal-delay-1">
+      {title}
+      {highlight && <><br /><span class="qn-hero-highlight">{highlight}</span></>}
+    </h1>
+
+    <p class="qn-hero-lead qn-reveal qn-reveal-delay-2">
+      {description}
+    </p>
+
+    <div class="qn-hero-ctas qn-reveal qn-reveal-delay-3">
+      <a href={primaryCta.href} class="qn-btn-accent">
+        {primaryCta.label}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href={secondaryCta.href} class="qn-btn-ghost">
+        {secondaryCta.label}
+      </a>
+    </div>
+  </div>
+
+  <svg class="qn-hero-deco" viewBox="0 0 800 600" aria-hidden="true">
+    <defs>
+      <pattern id="qn-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.2" fill="currentColor" />
+      </pattern>
+    </defs>
+    <rect width="800" height="600" fill="url(#qn-dots)" />
+  </svg>
+</section>
+
+<style>
+  .qn-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(4rem, 8vw, 7rem) clamp(3rem, 6vw, 5rem);
+  }
+
+  .qn-hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 85% 15%, rgba(255, 106, 61, 0.08), transparent 45%),
+      radial-gradient(circle at 10% 80%, rgba(0, 34, 146, 0.05), transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .qn-hero-deco {
+    position: absolute;
+    top: -10%;
+    right: -15%;
+    width: 60%;
+    max-width: 600px;
+    color: rgba(0, 34, 146, 0.08);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .qn-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+  }
+
+  .qn-hero-title {
+    margin: 1.25rem 0 1.75rem;
+  }
+
+  .qn-hero-highlight {
+    color: var(--color-accent-500);
+    position: relative;
+    display: inline-block;
+  }
+
+  .qn-hero-lead {
+    font-size: clamp(1rem, 1.4vw, 1.1875rem);
+    line-height: 1.55;
+    color: var(--color-graphite);
+    max-width: 36rem;
+    margin: 0 0 2rem;
+  }
+
+  .qn-hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .qn-hero-ctas {
+      gap: 1rem;
+    }
+  }
+</style>

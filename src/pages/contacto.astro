@@ -1,0 +1,170 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ContactForm from "~/components/ContactForm.astro";
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Habla con queNECESITAS: comparativas gratuitas de alarmas, energía, telefonía e inmuebles en Galicia. Llámanos al 672 274 969 o escríbenos."
+>
+  <section class="qn-contact-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Hablamos</p>
+      <h1 class="qn-display-xl qn-contact-title">
+        Tres formas de empezar.<br /><span>Tú eliges la más cómoda.</span>
+      </h1>
+      <p class="qn-contact-lead">
+        Llamada, email o formulario: como prefieras. Atendemos de lunes a viernes de 8:00 a 16:00 desde nuestras oficinas en Oleiros.
+      </p>
+    </div>
+  </section>
+
+  <section class="qn-contact-main">
+    <div class="qn-container qn-contact-grid">
+      <div class="qn-contact-info">
+        <div class="qn-contact-card">
+          <div class="qn-contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <p class="qn-contact-label">Llámanos</p>
+          <a href="tel:+34672274969" class="qn-contact-value">672 274 969</a>
+          <p class="qn-contact-hint">Lunes a viernes · 8:00 — 16:00</p>
+        </div>
+
+        <div class="qn-contact-card">
+          <div class="qn-contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <p class="qn-contact-label">Escríbenos</p>
+          <a href="mailto:info@quenecesitashoy.es" class="qn-contact-value">info@quenecesitashoy.es</a>
+          <p class="qn-contact-hint">Respondemos en menos de 24h laborables</p>
+        </div>
+
+        <div class="qn-contact-card">
+          <div class="qn-contact-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <p class="qn-contact-label">Visítanos</p>
+          <p class="qn-contact-value qn-contact-address">
+            Rúa do Souto 1<br />
+            Porto de Santa Cruz<br />
+            15179 Oleiros, A Coruña
+          </p>
+          <p class="qn-contact-hint">Concertando cita previamente</p>
+        </div>
+      </div>
+
+      <div class="qn-contact-form-side">
+        <ContactForm
+          origen="contacto"
+          title="O cuéntanos por aquí"
+          description="Rellena el formulario y te llamamos cuando mejor te venga."
+          showSectorSelect={true}
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-contact-hero {
+    padding-block: clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+    background:
+      linear-gradient(180deg, var(--color-bone) 0%, white 100%);
+  }
+
+  .qn-contact-title {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .qn-contact-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-contact-lead {
+    font-size: 1.125rem;
+    color: var(--color-graphite);
+    line-height: 1.55;
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  .qn-contact-main {
+    padding-bottom: clamp(4rem, 7vw, 6rem);
+  }
+
+  .qn-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-contact-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .qn-contact-card {
+    background: white;
+    border: 1px solid var(--color-fog);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .qn-contact-card:hover {
+    border-color: var(--color-brand-200);
+  }
+
+  .qn-contact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-brand-100);
+    color: var(--color-brand-600);
+    margin-bottom: 1rem;
+  }
+
+  .qn-contact-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-stone);
+    margin: 0 0 0.5rem;
+  }
+
+  .qn-contact-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-brand-600);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin: 0 0 0.5rem;
+  }
+
+  .qn-contact-address {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .qn-contact-hint {
+    font-size: 0.8125rem;
+    color: var(--color-stone);
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .qn-contact-grid {
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3.5rem;
+    }
+  }
+</style>

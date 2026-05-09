@@ -1,0 +1,100 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SectorHero from "~/components/SectorHero.astro";
+import ContactForm from "~/components/ContactForm.astro";
+import FAQ from "~/components/FAQ.astro";
+
+const benefits = [
+  "Compraventa y alquiler en A Coruña, Oleiros, Sada y Bergondo",
+  "Asesoramiento personal y honesto",
+  "Conocemos el precio real de cada zona y barrio",
+  "Acompañamiento en toda la operación: visitas, negociación y firma",
+];
+
+const faqs = [
+  {
+    question: "¿En qué zonas trabajáis?",
+    answer: "Estamos especializados en A Coruña, Oleiros, Sada y Bergondo. Conocemos cada barrio y urbanización, los precios reales de mercado y las particularidades de cada zona. Si tu inmueble está fuera de esta área pero quieres trabajar con nosotros, lo valoramos caso por caso.",
+  },
+  {
+    question: "¿Cobráis por captación o por venta?",
+    answer: "Por venta cerrada. La captación, la valoración y las visitas son sin coste para el propietario. Solo cobramos cuando se firma la operación, así que tenemos el mismo objetivo que tú: vender bien y al mejor precio posible.",
+  },
+  {
+    question: "¿Cómo valoráis el inmueble?",
+    answer: "Hacemos un análisis comparativo de mercado: revisamos qué se está vendiendo (no solo qué se publica) en tu zona, en qué plazos y a qué precio real. Te presentamos un rango con argumentos, no un número arbitrario. Si tienes prisa, hablamos de la estrategia de precio para vender en menos tiempo.",
+  },
+  {
+    question: "Soy comprador, no vendedor. ¿Me ayudáis?",
+    answer: "Sí. Si nos cuentas qué buscas (zona, presupuesto, tipología) te avisamos cuando aparezcan inmuebles que encajen con tu perfil, no solo los nuestros. Y te acompañamos en visitas, negociación y firma sin coste para ti.",
+  },
+];
+---
+
+<BaseLayout
+  title="Inmuebles en A Coruña, Oleiros, Sada y Bergondo"
+  description="Compraventa y alquiler de inmuebles en A Coruña, Oleiros, Sada y Bergondo. Valoración gratuita y asesoramiento honesto. Conocemos cada zona."
+  schemaType="Service"
+>
+  <SectorHero
+    category="Sector · Inmuebles"
+    title="Tu casa al precio justo,"
+    highlight="con quien conoce la zona."
+    description="Compraventa y alquiler en A Coruña, Oleiros, Sada y Bergondo. Te ayudamos a vender al mejor precio posible o a encontrar el inmueble que encaja con lo que buscas. Sin presiones, con datos reales del mercado."
+    benefits={benefits}
+  />
+
+  <section class="qn-sector-form" aria-labelledby="inmuebles-form-heading">
+    <div class="qn-container qn-sector-form-grid">
+      <div>
+        <p class="qn-eyebrow">Vendo / Compro / Alquilo</p>
+        <h2 id="inmuebles-form-heading" class="qn-display-lg qn-sector-form-title">
+          Cuéntanos tu situación.<br /><span>Te llamamos para hablarlo con calma.</span>
+        </h2>
+        <p class="qn-sector-form-lead">
+          Tanto si quieres vender, comprar o alquilar, lo primero es entender bien qué buscas. Cuéntanos lo básico por aquí y te llamamos para escucharte sin presiones, sin compromisos.
+        </p>
+      </div>
+      <ContactForm origen="inmuebles" title="Cuéntanos qué buscas" description="Compraventa o alquiler. Te llamamos en menos de 24h laborables." />
+    </div>
+  </section>
+
+  <FAQ items={faqs} title="Sobre inmuebles, valoraciones y zonas" />
+</BaseLayout>
+
+<style>
+  .qn-sector-form {
+    padding-block: clamp(3rem, 6vw, 5rem);
+    background: var(--color-bone);
+  }
+
+  .qn-sector-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .qn-sector-form-title {
+    margin: 1rem 0 1.25rem;
+  }
+
+  .qn-sector-form-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-sector-form-lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-graphite);
+    margin: 0;
+    max-width: 30rem;
+  }
+
+  @media (min-width: 900px) {
+    .qn-sector-form-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+</style>

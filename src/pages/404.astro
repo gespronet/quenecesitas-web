@@ -1,0 +1,87 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o ha sido movida."
+  noindex={true}
+>
+  <section class="qn-404">
+    <div class="qn-container qn-404-inner">
+      <p class="qn-eyebrow">Error 404</p>
+      <h1 class="qn-display-xl qn-404-title">
+        Esto no era<br /><span>lo que necesitabas.</span>
+      </h1>
+      <p class="qn-404-lead">
+        La página que buscas no existe o se ha movido. Pero no pasa nada — desde aquí puedes volver al inicio o ir directamente a uno de nuestros sectores.
+      </p>
+      <div class="qn-404-ctas">
+        <a href="/" class="qn-btn-accent">Volver al inicio</a>
+        <a href="/contacto" class="qn-btn-ghost">Hablar con nosotros</a>
+      </div>
+
+      <ul class="qn-404-links">
+        <li><a href="/alarmas">Alarmas →</a></li>
+        <li><a href="/energia">Energía →</a></li>
+        <li><a href="/telefonia">Telefonía →</a></li>
+        <li><a href="/inmuebles">Inmuebles →</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .qn-404 {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .qn-404-inner {
+    max-width: 720px;
+  }
+
+  .qn-404-title {
+    margin: 1rem 0 1.5rem;
+  }
+
+  .qn-404-title span {
+    color: var(--color-accent-500);
+  }
+
+  .qn-404-lead {
+    font-size: 1.125rem;
+    color: var(--color-graphite);
+    line-height: 1.6;
+    margin: 0 0 2rem;
+    max-width: 32rem;
+  }
+
+  .qn-404-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .qn-404-links {
+    list-style: none;
+    padding: 1.75rem 0 0;
+    margin: 0;
+    border-top: 1px solid var(--color-fog);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .qn-404-links a {
+    color: var(--color-brand-600);
+    font-weight: 500;
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 640px) {
+    .qn-404-links {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
