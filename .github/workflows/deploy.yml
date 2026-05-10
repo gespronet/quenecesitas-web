@@ -1,49 +1,41 @@
-name: Deploy a Hostinger (SFTP)
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      # 1. Obtener el código de su repositorio
+      - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      # 2. Preparar el entorno de Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: '20' # Puede cambiar el '20' por la versión que utilice su proyecto
 
-      - name: Install dependencies
-        run: npm ci
+      # 3. Instalar las dependencias del proyecto
+      - name: Instalar dependencias
+        run: npm ci 
+        # Nota: 'npm ci' es la práctica recomendada para entornos automatizados 
+        # ya que lee el package-lock.json y es más estricto y rápido que 'npm install'.
 
-      - name: Build static site
-        env:
-          PUBLIC_N8N_WEBHOOK_URL: ${{ secrets.PUBLIC_N8N_WEBHOOK_URL }}
-          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+      # 4. Generar la carpeta ./dist/
+      - name: Compilar el proyecto (Build)
         run: npm run build
 
-      - name: Setup SSH key
+      # 5. (Opcional pero recomendado) Preparar la llave SSH para rsync
+      - name: Preparar llave SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+        # Asegúrese de que el nombre del secreto coincida con el que tiene en GitHub
 
+      # 6. Desplegar los archivos a Hostinger
       - name: Deploy via rsync over SSH
         run: |
           rsync -avz --delete \
-            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
             --exclude='.git*' \
             --exclude='node_modules' \
             ./dist/ \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET_DIR }}
-
-      - name: Cleanup SSH key
-        if: always()
-        run: rm -f ~/.ssh/id_ed25519
