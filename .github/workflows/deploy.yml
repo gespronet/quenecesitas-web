@@ -1,36 +1,41 @@
+name: Deploy to Hostinger
+
+# ESTE ES EL BLOQUE QUE FALTABA (El gatillo)
+on:
+  push:
+    branches:
+      - main # Cambie 'main' por 'master' si su rama principal se llama así
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Obtener el código de su repositorio
+      # 1. Obtener el código
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      # 2. Preparar el entorno de Node.js
+      # 2. Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Puede cambiar el '20' por la versión que utilice su proyecto
+          node-version: '20'
 
-      # 3. Instalar las dependencias del proyecto
+      # 3. Instalar dependencias
       - name: Instalar dependencias
-        run: npm ci 
-        # Nota: 'npm ci' es la práctica recomendada para entornos automatizados 
-        # ya que lee el package-lock.json y es más estricto y rápido que 'npm install'.
+        run: npm ci
 
-      # 4. Generar la carpeta ./dist/
+      # 4. Compilar el proyecto
       - name: Compilar el proyecto (Build)
         run: npm run build
 
-      # 5. (Opcional pero recomendado) Preparar la llave SSH para rsync
+      # 5. Preparar la llave SSH
       - name: Preparar llave SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-        # Asegúrese de que el nombre del secreto coincida con el que tiene en GitHub
 
-      # 6. Desplegar los archivos a Hostinger
+      # 6. Desplegar con rsync
       - name: Deploy via rsync over SSH
         run: |
           rsync -avz --delete \
