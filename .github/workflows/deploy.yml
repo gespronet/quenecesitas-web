@@ -1,36 +1,86 @@
-name: Build para Hostinger
+name: Deploy a Hostinger (SFTP)
 
 on:
   push:
-    branches:
-      - main # Cambie a 'master' si su rama principal se llama así
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-  build-and-upload:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # 1. Obtener el código
-      - name: Checkout del código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. Configurar Node.js
-      - name: Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+          cache: "npm"
 
-      # 3. Instalar dependencias
-      - name: Instalar dependencias
+      - name: Install dependencies
         run: npm ci
 
-      # 4. Compilar el proyecto (Esto genera la carpeta dist)
-      - name: Compilar el proyecto
+      - name: Debug · Verificar secrets disponibles
+        env:
+          PUBLIC_N8N_WEBHOOK_URL: ${{ secrets.PUBLIC_N8N_WEBHOOK_URL }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+        run: |
+          echo "===== DEBUG SECRETS ====="
+          if [ -z "$PUBLIC_N8N_WEBHOOK_URL" ]; then
+            echo "❌ PUBLIC_N8N_WEBHOOK_URL está VACÍO o NO DEFINIDO"
+          else
+            echo "✅ PUBLIC_N8N_WEBHOOK_URL está definido"
+            echo "Longitud del valor: ${#PUBLIC_N8N_WEBHOOK_URL} caracteres"
+            echo "Primeros 30 caracteres: ${PUBLIC_N8N_WEBHOOK_URL:0:30}..."
+          fi
+          if [ -z "$PUBLIC_SITE_URL" ]; then
+            echo "❌ PUBLIC_SITE_URL está VACÍO o NO DEFINIDO"
+          else
+            echo "✅ PUBLIC_SITE_URL está definido: $PUBLIC_SITE_URL"
+          fi
+          echo "========================="
+
+      - name: Build static site
+        env:
+          PUBLIC_N8N_WEBHOOK_URL: ${{ secrets.PUBLIC_N8N_WEBHOOK_URL }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
         run: npm run build
 
-      # 5. Guardar la carpeta dist como un archivo descargable
-      - name: Empaquetar y guardar dist
-        uses: actions/upload-artifact@v4
-        with:
-          name: archivos-para-hostinger
-          path: ./dist/
-          retention-days: 7 # El archivo zip se guardará en GitHub por 7 días
+      - name: Debug · Verificar que el HTML compilado contiene la URL
+        run: |
+          echo "===== DEBUG BUILD ====="
+          if grep -r "WEBHOOK_NOT_CONFIGURED" dist/ > /dev/null 2>&1; then
+            echo "❌ El HTML compilado AÚN tiene WEBHOOK_NOT_CONFIGURED"
+            echo "Archivos afectados:"
+            grep -rl "WEBHOOK_NOT_CONFIGURED" dist/ | head -5
+          else
+            echo "✅ WEBHOOK_NOT_CONFIGURED ya no aparece en el build"
+          fi
+          if grep -r "n8n.gespronet.cloud" dist/ > /dev/null 2>&1; then
+            echo "✅ La URL del webhook está en el HTML compilado"
+          else
+            echo "❌ La URL del webhook NO está en el HTML compilado"
+          fi
+          echo "======================="
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          head -1 ~/.ssh/id_ed25519 | grep -q "BEGIN" || (echo "ERROR: clave privada malformada" && exit 1)
+
+      - name: Deploy via rsync over SSH
+        run: |
+          rsync -avz \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR" \
+            --exclude='.git*' \
+            --exclude='node_modules' \
+            ./dist/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_TARGET_DIR }}
+
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/id_ed25519
