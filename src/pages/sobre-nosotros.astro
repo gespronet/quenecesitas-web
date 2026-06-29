@@ -1,147 +1,243 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const seo = {
+  title: "Sobre nosotros · queNECESITAS",
+  description: "Inmobiliaria local en A Coruña, Oleiros, Sada y Bergondo. Equipo propio con experiencia en mediación, derecho hipotecario y operaciones de inversión.",
+};
 ---
 
-<BaseLayout
-  title="Sobre nosotros"
-  description="queNECESITAS es una marca de Gespronet Axencia de Marketing e Deseño S.L. Equipo comercial multimarca en Galicia, con base en Oleiros."
->
-  <section class="qn-about">
-    <div class="qn-container">
-      <p class="qn-eyebrow">Quiénes somos</p>
-      <h1 class="qn-display-xl qn-about-title">
-        Una marca con una idea simple:<br /><span>el cliente primero.</span>
-      </h1>
+<BaseLayout {...seo}>
+  <Header />
 
-      <div class="qn-about-grid">
-        <div class="qn-about-prose">
+  <main>
+
+    <section class="qn-about-hero">
+      <div class="qn-container">
+        <p class="qn-eyebrow">Sobre nosotros</p>
+        <h1 class="qn-display-xl">
+          Somos de aquí. Y trabajamos como tal.
+        </h1>
+        <p class="qn-about-lead">
+          queNECESITAS es la línea inmobiliaria y de inversión de Gespronet, una empresa con sede en Oleiros que lleva años trabajando el mercado local de A Coruña y comarca. Lo que hacemos lo hacemos con criterio, sin franquicia, sin guion corporativo. Atendemos personalmente, conocemos las zonas y respetamos tu tiempo.
+        </p>
+      </div>
+    </section>
+
+    <section class="qn-about-body">
+      <div class="qn-container qn-about-grid">
+
+        <div>
+          <h2 class="qn-display-lg">Qué hacemos</h2>
           <p>
-            queNECESITAS nace dentro de Gespronet Axencia de Marketing e Deseño S.L., una empresa gallega con base en Oleiros que lleva años trabajando con clientes finales en sectores muy distintos: alarmas, energía, telefonía e inmuebles.
+            Dos líneas de trabajo claras:
           </p>
-          <p>
-            En todos ellos vimos lo mismo: el cliente acaba contratando lo que el comercial tiene que vender, no lo que más le conviene. Las grandes compañías llevan décadas optimizando su captación, y la decisión final del usuario casi nunca es del todo informada.
-          </p>
-          <p>
-            Por eso creamos queNECESITAS. La idea es sencilla: si trabajamos con todas las marcas, no tenemos un incentivo para empujarte hacia ninguna. Te enseñamos los números reales, te explicamos las diferencias y tú decides. El asesoramiento es gratuito porque las compañías nos pagan por traerles clientes bien informados — no tienes que pagar nada extra.
-          </p>
-          <p>
-            Operamos desde Galicia, con un equipo comercial local que conoce el mercado y atiende en castelán e galego. Nuestra zona principal de inmuebles es A Coruña, Oleiros, Sada y Bergondo. En el resto de servicios trabajamos en toda la comunidad.
-          </p>
+          <ul class="qn-about-bullets">
+            <li>
+              <strong>Mediación inmobiliaria.</strong>
+              Captamos y vendemos viviendas, bajos comerciales y suelo en A Coruña, Oleiros, Sada, Bergondo, Cambre y Culleredo. Trabajamos con un número controlado de inmuebles porque a cada cliente le damos tiempo y dedicación real.
+            </li>
+            <li>
+              <strong>Activos de inversión.</strong>
+              Selección y due diligence de activos NPL, subastas judiciales y lotes inmobiliarios para inversores que buscan operaciones bien analizadas. Trabajamos con bancos, sareb y entidades financieras.
+            </li>
+          </ul>
         </div>
 
-        <aside class="qn-about-card">
-          <h2 class="qn-about-card-title">Datos legales</h2>
-          <dl class="qn-about-data">
-            <dt>Marca comercial</dt>
-            <dd>queNECESITAS</dd>
-            <dt>Razón social</dt>
-            <dd>Gespronet Axencia de Marketing e Deseño S.L.</dd>
-            <dt>CIF</dt>
-            <dd>B75490136</dd>
-            <dt>Domicilio</dt>
-            <dd>Rúa do Souto 1<br />Porto de Santa Cruz<br />15179 Oleiros, A Coruña</dd>
-            <dt>Teléfono</dt>
-            <dd><a href="tel:+34672274969">672 274 969</a></dd>
-            <dt>Email</dt>
-            <dd><a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a></dd>
-            <dt>Horario</dt>
-            <dd>Lunes a viernes<br />8:00 — 16:00</dd>
-          </dl>
-        </aside>
+        <div>
+          <h2 class="qn-display-lg">Cómo lo hacemos</h2>
+          <p>
+            Detrás de cada operación hay tres cosas que nos importan:
+          </p>
+          <ul class="qn-about-bullets">
+            <li>
+              <strong>Honestidad operativa.</strong>
+              Te decimos lo que vale tu inmueble, no lo que quieres oír. Si una operación no nos convence, te lo decimos. Si la comisión es alta para tu caso, te lo explicamos.
+            </li>
+            <li>
+              <strong>Criterio profesional.</strong>
+              Formación en derecho hipotecario, experiencia en operaciones financieras, conocimiento del mercado local. Lo cercano no significa improvisado.
+            </li>
+            <li>
+              <strong>Cero protocolos vacíos.</strong>
+              No tenemos centralita, ni mánager regional, ni guion comercial. Hablas con quien lleva tu caso. Punto.
+            </li>
+          </ul>
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="qn-about-empresa">
+      <div class="qn-container">
+        <h2 class="qn-display-lg">La empresa detrás</h2>
+        <div class="qn-about-empresa-grid">
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">Razón social</span>
+            <span class="qn-about-data-value">Gespronet Axencia de Marketing e Deseño, S.L.</span>
+          </div>
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">CIF</span>
+            <span class="qn-about-data-value">B75490136</span>
+          </div>
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">Sede</span>
+            <span class="qn-about-data-value">Rúa do Souto 1, Porto de Santa Cruz<br />15179 Oleiros · A Coruña</span>
+          </div>
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">Teléfono</span>
+            <span class="qn-about-data-value"><a href="tel:672274969">672 274 969</a></span>
+          </div>
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">Email</span>
+            <span class="qn-about-data-value"><a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a></span>
+          </div>
+          <div class="qn-about-data">
+            <span class="qn-about-data-label">Horario</span>
+            <span class="qn-about-data-value">Lunes a viernes, 8:00 — 16:00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="qn-about-cta">
+      <div class="qn-container">
+        <h2 class="qn-display-lg">¿Hablamos?</h2>
+        <p>Si tienes un inmueble que vender, estás buscando casa, o te interesa la inversión en activos, lo natural es que llamemos.</p>
+        <div class="qn-about-cta-actions">
+          <a href="tel:672274969" class="qn-btn-accent">Llamar · 672 274 969</a>
+          <a href="/contacto" class="qn-btn-outline">Formulario de contacto</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
 </BaseLayout>
 
 <style>
-  .qn-about {
-    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+  .qn-about-hero {
+    padding: 5rem 0 4rem;
+    background: linear-gradient(180deg, var(--color-brand-50) 0%, var(--color-bone) 100%);
   }
-
-  .qn-about-title {
-    margin: 1rem 0 3rem;
-    max-width: 18ch;
+  .qn-about-hero h1 {
+    margin: 0.75rem 0 1.5rem;
+    max-width: 22ch;
   }
-
-  .qn-about-title span {
-    color: var(--color-accent-500);
-  }
-
-  .qn-about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: start;
-  }
-
-  .qn-about-prose p {
+  .qn-about-lead {
     font-size: 1.0625rem;
     line-height: 1.7;
-    color: var(--color-ink-soft);
-    margin: 0 0 1.25rem;
-  }
-
-  .qn-about-prose p:first-of-type::first-letter {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--color-brand-600);
-    font-size: 3.25rem;
-    line-height: 0.85;
-    float: left;
-    margin: 0.125rem 0.625rem 0 0;
-    letter-spacing: -0.04em;
-  }
-
-  .qn-about-card {
-    background: var(--color-bone);
-    border-radius: var(--radius-xl);
-    padding: 1.75rem;
-    position: sticky;
-    top: 100px;
-  }
-
-  .qn-about-card-title {
-    font-size: 0.75rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-stone) !important;
-    margin: 0 0 1.25rem !important;
-    letter-spacing: 0.12em !important;
-    font-family: var(--font-sans) !important;
-  }
-
-  .qn-about-data {
+    color: var(--color-graphite);
+    max-width: 65ch;
     margin: 0;
+  }
+
+  .qn-about-body {
+    padding: 5rem 0;
+  }
+  .qn-about-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
   }
-
-  .qn-about-data dt {
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-stone);
-    font-weight: 600;
+  .qn-about-grid h2 { margin-bottom: 1rem; }
+  .qn-about-grid > div > p {
+    color: var(--color-graphite);
+    margin: 0 0 1.5rem;
+    line-height: 1.65;
+  }
+  .qn-about-bullets {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .qn-about-bullets li {
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.65;
+    color: var(--color-graphite);
+  }
+  .qn-about-bullets li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-500);
+    font-weight: 700;
+  }
+  .qn-about-bullets strong {
+    color: var(--color-ink);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
   }
 
-  .qn-about-data dd {
-    font-size: 0.9375rem;
-    color: var(--color-ink-soft);
-    margin: 0.25rem 0 0;
-    line-height: 1.5;
+  .qn-about-empresa {
+    background: var(--color-paper);
+    padding: 5rem 0;
   }
-
+  .qn-about-empresa h2 { margin-bottom: 2.5rem; }
+  .qn-about-empresa-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .qn-about-data {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-mist);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .qn-about-data-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-brand-700);
+    font-weight: 600;
+  }
+  .qn-about-data-value {
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.4;
+  }
   .qn-about-data a {
-    color: var(--color-brand-600);
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .qn-about-data a:hover {
+    color: var(--color-brand-700);
+    text-decoration: underline;
   }
 
-  @media (min-width: 900px) {
-    .qn-about-grid {
-      grid-template-columns: 1.6fr 1fr;
-      gap: 4rem;
-    }
+  .qn-about-cta {
+    padding: 5rem 0;
+    text-align: center;
+  }
+  .qn-about-cta p {
+    color: var(--color-graphite);
+    line-height: 1.65;
+    margin: 1rem auto 2rem;
+    max-width: 55ch;
+  }
+  .qn-about-cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .qn-about-grid { grid-template-columns: 1fr; }
+    .qn-about-empresa-grid { grid-template-columns: 1fr; }
   }
 </style>

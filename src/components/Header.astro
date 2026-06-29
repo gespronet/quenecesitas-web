@@ -1,218 +1,149 @@
 ---
-const navItems = [
-  { href: "/alarmas", label: "Alarmas" },
-  { href: "/energia", label: "Energía" },
-  { href: "/telefonia", label: "Telefonía" },
-  { href: "/inmuebles", label: "Inmuebles" },
-  { href: "/blog", label: "Blog" },
-];
+const { current } = Astro.props;
+const path = Astro.url.pathname;
 
-const currentPath = Astro.url.pathname;
+const isActive = (p) => path === p || path.startsWith(p + "/");
 ---
 
 <header class="qn-header">
   <div class="qn-container qn-header-inner">
-    <a href="/" class="qn-logo-link" aria-label="queNECESITAS - inicio">
-      <img src="/logo.svg" alt="queNECESITAS" width="76" height="48" class="qn-logo-img" />
+    <a href="/" class="qn-logo-link" aria-label="queNECESITAS — Inicio">
+      <img src="/logo.svg" alt="queNECESITAS" width="180" height="48" class="qn-logo" />
     </a>
 
-    <nav class="qn-nav-desktop" aria-label="Navegación principal">
-      {navItems.map(item => (
-        <a
-          href={item.href}
-          class:list={[
-            "qn-nav-link",
-            { "qn-nav-link-active": currentPath.startsWith(item.href) }
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
+    <nav class="qn-nav" aria-label="Navegación principal">
+      <ul class="qn-nav-list">
+        <li><a href="/inmuebles" class={isActive("/inmuebles") ? "is-current" : ""}>Inmuebles</a></li>
+        <li><a href="/activos-inversion" class={isActive("/activos-inversion") ? "is-current" : ""}>Activos de inversión</a></li>
+        <li><a href="/sobre-nosotros" class={isActive("/sobre-nosotros") ? "is-current" : ""}>Sobre nosotros</a></li>
+        <li><a href="/blog" class={isActive("/blog") ? "is-current" : ""}>Blog</a></li>
+        <li><a href="/contacto" class="qn-nav-cta">Contacto</a></li>
+      </ul>
     </nav>
 
-    <a href="/contacto" class="qn-btn-accent qn-header-cta">
-      Te llamamos
-    </a>
-
-    <button class="qn-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="qn-mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+    <button class="qn-burger" id="qn-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="qn-mobile-menu">
+      <span></span><span></span><span></span>
     </button>
   </div>
 
   <div class="qn-mobile-menu" id="qn-mobile-menu" hidden>
-    <nav class="qn-container qn-mobile-nav" aria-label="Navegación móvil">
-      {navItems.map(item => (
-        <a href={item.href} class="qn-mobile-link">{item.label}</a>
-      ))}
-      <a href="/contacto" class="qn-btn-accent qn-mobile-cta">Te llamamos</a>
-    </nav>
+    <ul>
+      <li><a href="/inmuebles">Inmuebles</a></li>
+      <li><a href="/activos-inversion">Activos de inversión</a></li>
+      <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/contacto">Contacto</a></li>
+      <li class="qn-mobile-tel"><a href="tel:672274969">Llámanos · 672 274 969</a></li>
+    </ul>
   </div>
 </header>
+
+<script>
+  const burger = document.querySelector(".qn-burger");
+  const menu = document.getElementById("qn-mobile-menu");
+  burger?.addEventListener("click", () => {
+    const expanded = burger.getAttribute("aria-expanded") === "true";
+    burger.setAttribute("aria-expanded", String(!expanded));
+    if (menu) menu.hidden = expanded;
+  });
+</script>
 
 <style>
   .qn-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid rgba(0, 34, 146, 0.06);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--color-mist);
   }
-
   .qn-header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-    height: 72px;
+    min-height: 4.5rem;
   }
-
-  .qn-logo-link {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .qn-logo-img {
-    height: 44px;
+  .qn-logo {
+    height: 2.25rem;
     width: auto;
+    display: block;
   }
-
-  .qn-nav-desktop {
-    display: none;
-    align-items: center;
-    gap: 2rem;
-    flex: 1;
-    justify-content: center;
-  }
-
-  .qn-nav-link {
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--color-ink-soft);
-    position: relative;
-    padding: 0.25rem 0;
-    transition: color 0.2s ease;
-  }
-
-  .qn-nav-link:hover {
-    color: var(--color-brand-600);
-  }
-
-  .qn-nav-link-active {
-    color: var(--color-brand-600);
-  }
-
-  .qn-nav-link-active::after {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--color-accent-500);
-    border-radius: 2px;
-  }
-
-  .qn-header-cta {
-    display: none !important;
-    padding: 0.625rem 1.125rem !important;
-    font-size: 0.875rem !important;
-  }
-
-  .qn-burger {
+  .qn-nav-list {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 40px;
-    height: 40px;
+    gap: 1.75rem;
+    list-style: none;
+    margin: 0;
     padding: 0;
-    background: transparent;
-    border: 1px solid var(--color-fog);
-    border-radius: var(--radius-md);
-    cursor: pointer;
+    align-items: center;
   }
-
+  .qn-nav-list a {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: color 0.2s;
+  }
+  .qn-nav-list a:hover,
+  .qn-nav-list a.is-current {
+    color: var(--color-brand-700);
+  }
+  .qn-nav-cta {
+    background: var(--color-brand-700);
+    color: white !important;
+    padding: 0.625rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600 !important;
+  }
+  .qn-nav-cta:hover {
+    background: var(--color-brand-800) !important;
+  }
+  .qn-burger {
+    display: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 4px;
+  }
   .qn-burger span {
     display: block;
-    width: 18px;
+    width: 22px;
     height: 2px;
-    background: var(--color-brand-600);
-    border-radius: 2px;
-    margin-inline: auto;
-    transition: all 0.25s ease;
+    background: var(--color-ink);
+    border-radius: 1px;
   }
-
-  .qn-burger[aria-expanded="true"] span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-  .qn-burger[aria-expanded="true"] span:nth-child(2) {
-    opacity: 0;
-  }
-  .qn-burger[aria-expanded="true"] span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
   .qn-mobile-menu {
-    border-top: 1px solid rgba(0, 34, 146, 0.08);
-    background: white;
+    border-top: 1px solid var(--color-mist);
+    padding: 1rem;
   }
-
-  .qn-mobile-menu[hidden] {
-    display: none;
-  }
-
-  .qn-mobile-nav {
+  .qn-mobile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    padding-block: 1rem;
     gap: 0.25rem;
   }
-
-  .qn-mobile-link {
-    font-size: 1.0625rem;
+  .qn-mobile-menu a {
+    display: block;
+    padding: 0.875rem;
+    color: var(--color-ink);
+    text-decoration: none;
     font-weight: 500;
-    color: var(--color-ink-soft);
-    padding: 0.875rem 0;
-    border-bottom: 1px solid var(--color-fog);
+    border-radius: 0.5rem;
+  }
+  .qn-mobile-menu a:hover {
+    background: var(--color-paper);
+  }
+  .qn-mobile-tel a {
+    color: var(--color-brand-700) !important;
+    font-weight: 600 !important;
   }
 
-  .qn-mobile-link:last-of-type {
-    border-bottom: none;
-  }
-
-  .qn-mobile-cta {
-    margin-top: 0.75rem;
-    justify-content: center;
-  }
-
-  @media (min-width: 900px) {
-    .qn-nav-desktop { display: flex; }
-    .qn-header-cta { display: inline-flex !important; }
-    .qn-burger { display: none; }
-    .qn-mobile-menu { display: none !important; }
+  @media (max-width: 768px) {
+    .qn-nav { display: none; }
+    .qn-burger { display: flex; }
   }
 </style>
-
-<script>
-  const burger = document.querySelector<HTMLButtonElement>(".qn-burger");
-  const menu = document.getElementById("qn-mobile-menu");
-
-  burger?.addEventListener("click", () => {
-    const expanded = burger.getAttribute("aria-expanded") === "true";
-    burger.setAttribute("aria-expanded", String(!expanded));
-    if (menu) menu.hidden = expanded;
-  });
-
-  // Cerrar menú al navegar
-  document.querySelectorAll(".qn-mobile-link").forEach(link => {
-    link.addEventListener("click", () => {
-      burger?.setAttribute("aria-expanded", "false");
-      if (menu) menu.hidden = true;
-    });
-  });
-</script>

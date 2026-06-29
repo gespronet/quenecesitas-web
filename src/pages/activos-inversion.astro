@@ -1,0 +1,337 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ContactForm from "../components/ContactForm.astro";
+
+const seo = {
+  title: "Activos de inversión · NPL, subastas y lotes inmobiliarios · queNECESITAS",
+  description: "Selección y análisis previo de activos NPL, subastas judiciales y lotes inmobiliarios para inversores. Due diligence rigurosa antes de presentar la operación.",
+};
+---
+
+<BaseLayout {...seo}>
+  <Header />
+
+  <main>
+
+    <!-- HERO ACTIVOS -->
+    <section class="qn-act-hero">
+      <div class="qn-container">
+        <p class="qn-eyebrow">Inversión</p>
+        <h1 class="qn-display-xl">
+          Activos seleccionados, no listados sin filtrar.
+        </h1>
+        <p class="qn-act-hero-lead">
+          Trabajamos con NPL, subastas judiciales y lotes inmobiliarios procedentes de bancos, sareb y entidades financieras. Lo que llega a tu mesa pasa antes por nuestro análisis: cargas, situación registral, ratios de rentabilidad y escenarios de salida.
+        </p>
+        <div class="qn-act-hero-ctas">
+          <a href="#contacto" class="qn-btn-accent">Hablar con un asesor</a>
+          <a href="#proceso" class="qn-btn-outline">Ver cómo trabajamos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPOS DE ACTIVO -->
+    <section class="qn-act-types">
+      <div class="qn-container">
+        <div class="qn-section-head">
+          <p class="qn-eyebrow">Qué tipo de operaciones</p>
+          <h2 class="qn-display-lg">Tres líneas de producto.</h2>
+        </div>
+        <div class="qn-act-grid">
+
+          <article class="qn-act-card">
+            <div class="qn-act-card-num">01</div>
+            <h3>Activos NPL</h3>
+            <p>
+              Préstamos hipotecarios fallidos que vienen con su inmueble asociado. Lo importante es la calidad del subyacente, no el descuento sobre el principal. Hacemos análisis ratio préstamo-valor y proyección de recuperación realista.
+            </p>
+            <span class="qn-act-card-tag">Para perfil paciente con vehículo propio</span>
+          </article>
+
+          <article class="qn-act-card">
+            <div class="qn-act-card-num">02</div>
+            <h3>Subastas judiciales</h3>
+            <p>
+              Inmuebles que se adjudican en procedimiento de ejecución. Mucho descuento aparente, mucho riesgo si no se hace la due diligence bien. Te acompañamos en la revisión registral, cargas ocultas y plan de desocupación.
+            </p>
+            <span class="qn-act-card-tag">Para inversores con tolerancia a la complejidad</span>
+          </article>
+
+          <article class="qn-act-card">
+            <div class="qn-act-card-num">03</div>
+            <h3>Lotes inmobiliarios</h3>
+            <p>
+              Carteras de activos que las entidades sacan al mercado en bloque. Acceso restringido — la mayoría no se anuncian al público. Solo te presentamos lotes donde hayamos podido analizar el detalle pieza por pieza.
+            </p>
+            <span class="qn-act-card-tag">Para family office y vehículos institucionales</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section class="qn-act-process" id="proceso">
+      <div class="qn-container">
+        <div class="qn-section-head">
+          <p class="qn-eyebrow">Cómo trabajamos</p>
+          <h2 class="qn-display-lg">Due diligence antes de la propuesta.</h2>
+        </div>
+
+        <ol class="qn-act-steps">
+          <li>
+            <div class="qn-act-step-num">01</div>
+            <h3>Conocemos tu perfil</h3>
+            <p>Tipo de activo que te interesa, ticket de inversión, horizonte temporal, restricciones jurídicas o fiscales. Solo así filtramos lo relevante.</p>
+          </li>
+          <li>
+            <div class="qn-act-step-num">02</div>
+            <h3>Análisis previo del activo</h3>
+            <p>Revisión registral, cargas, situación ocupacional, ratios de rentabilidad bruta y neta, escenarios de salida. Te entregamos un informe sintético con los puntos críticos.</p>
+          </li>
+          <li>
+            <div class="qn-act-step-num">03</div>
+            <h3>Presentación con criterio</h3>
+            <p>Solo te presentamos operaciones que pasen nuestro filtro. Si una operación tiene un riesgo que no nos convence, te lo decimos antes de gastar tu tiempo.</p>
+          </li>
+          <li>
+            <div class="qn-act-step-num">04</div>
+            <h3>Acompañamiento al cierre</h3>
+            <p>Coordinación con notaría, registro, asesoría jurídica y financiera. Te dejamos cerrada la operación, no a medio camino.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- POR QUÉ -->
+    <section class="qn-act-why">
+      <div class="qn-container qn-act-why-inner">
+        <div>
+          <p class="qn-eyebrow">Por qué con nosotros</p>
+          <h2 class="qn-display-lg">Vamos a fondo. No vendemos humo.</h2>
+          <ul class="qn-act-points">
+            <li>
+              <strong>Análisis cuantitativo serio.</strong>
+              No proyectamos rentabilidades teóricas. Trabajamos con ratios reales del mercado gallego.
+            </li>
+            <li>
+              <strong>Conocimiento jurídico-financiero.</strong>
+              Detrás del análisis hay formación en derecho hipotecario, procedimientos de ejecución y operaciones financieras complejas.
+            </li>
+            <li>
+              <strong>Red local de tasadores y abogados.</strong>
+              Para validar valoraciones y resolver contingencias específicas de cada activo, en Galicia.
+            </li>
+            <li>
+              <strong>Discreción.</strong>
+              Las operaciones no se hablan más de lo necesario. Tu nombre y tu interés no aparecen en ningún sitio.
+            </li>
+          </ul>
+        </div>
+        <aside class="qn-act-contact-box" id="contacto">
+          <p class="qn-eyebrow">Empezar es discreto</p>
+          <h3 class="qn-display-md">Cuéntanos qué tipo de activo te interesa.</h3>
+          <p>Te llamamos en menos de 24h laborables. Sin compromiso, sin spam.</p>
+          <ContactForm origen="activos-inversion" sector="activos" cta="Hablar con un asesor" />
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .qn-act-hero {
+    padding: 5rem 0 4rem;
+    background: linear-gradient(180deg, var(--color-brand-900) 0%, var(--color-brand-800) 100%);
+    color: white;
+  }
+  .qn-act-hero .qn-eyebrow { color: rgba(255,255,255,0.7); }
+  .qn-act-hero h1 {
+    color: white;
+    margin: 0.75rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-act-hero-lead {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    max-width: 62ch;
+    margin: 0 0 2rem;
+  }
+  .qn-act-hero-ctas {
+    display: flex;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+  .qn-act-hero .qn-btn-outline {
+    border-color: rgba(255,255,255,0.4);
+    color: white;
+  }
+  .qn-act-hero .qn-btn-outline:hover {
+    background: white;
+    color: var(--color-brand-900);
+  }
+
+  .qn-act-types {
+    padding: 6rem 0;
+  }
+  .qn-act-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .qn-act-card {
+    background: white;
+    border: 1px solid var(--color-mist);
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .qn-act-card-num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-accent-500);
+    letter-spacing: 0.05em;
+  }
+  .qn-act-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  .qn-act-card p {
+    color: var(--color-graphite);
+    line-height: 1.65;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+  .qn-act-card-tag {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-mist);
+    color: var(--color-brand-700);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .qn-act-process {
+    background: var(--color-paper);
+    padding: 6rem 0;
+    scroll-margin-top: 5rem;
+  }
+  .qn-act-steps {
+    list-style: none;
+    padding: 0;
+    margin: 3rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .qn-act-steps li {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-mist);
+  }
+  .qn-act-step-num {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-brand-700);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .qn-act-steps h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .qn-act-steps p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-graphite);
+    margin: 0;
+  }
+
+  .qn-act-why {
+    padding: 6rem 0;
+    scroll-margin-top: 5rem;
+  }
+  .qn-act-why-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .qn-act-points {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .qn-act-points li {
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.65;
+    color: var(--color-graphite);
+  }
+  .qn-act-points li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-500);
+    font-weight: 700;
+  }
+  .qn-act-points strong {
+    color: var(--color-ink);
+    display: block;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+  }
+  .qn-act-contact-box {
+    background: var(--color-brand-700);
+    color: white;
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+    position: sticky;
+    top: 6rem;
+  }
+  .qn-act-contact-box .qn-eyebrow { color: rgba(255,255,255,0.6); }
+  .qn-act-contact-box h3 {
+    color: white;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .qn-act-contact-box p {
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 900px) {
+    .qn-act-grid {
+      grid-template-columns: 1fr;
+    }
+    .qn-act-steps {
+      grid-template-columns: 1fr;
+    }
+    .qn-act-why-inner {
+      grid-template-columns: 1fr;
+    }
+    .qn-act-contact-box {
+      position: static;
+    }
+  }
+</style>

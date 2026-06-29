@@ -1,123 +1,579 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import Hero from "~/components/Hero.astro";
-import StatsBar from "~/components/StatsBar.astro";
-import ServiceGrid from "~/components/ServiceGrid.astro";
-import ProcessSteps from "~/components/ProcessSteps.astro";
-import WhyDifferent from "~/components/WhyDifferent.astro";
-import ContactForm from "~/components/ContactForm.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const seo = {
+  title: "queNECESITAS · Inmuebles e inversión en A Coruña, Oleiros, Sada y Bergondo",
+  description: "Inmobiliaria local en A Coruña y comarca. Vendemos y captamos viviendas con criterio y trato directo. También gestionamos activos de inversión seleccionados.",
+};
 ---
 
-<BaseLayout
-  title="queNECESITAS · Multimarca en Galicia"
-  description="Comparamos alarmas, energía, telefonía e inmuebles entre las mejores compañías. Multimarca, sin compromisos ocultos. Asesoramiento gratuito en Galicia."
->
-  <Hero
-    title="No nos casamos con nadie."
-    highlight="Solo con tu beneficio."
-    description="Comparamos alarmas, energía, telefonía e inmuebles entre las mejores compañías del mercado. Sin filtros comerciales, sin compromisos ocultos. Tú eliges, nosotros nos ocupamos del papeleo."
-  />
+<BaseLayout {...seo}>
+  <Header />
 
-  <StatsBar />
+  <main>
 
-  <ServiceGrid />
-
-  <ProcessSteps />
-
-  <WhyDifferent />
-
-  <section class="qn-home-form" aria-labelledby="home-form-heading">
-    <div class="qn-container qn-home-form-grid">
-      <div>
-        <p class="qn-eyebrow">Empezamos</p>
-        <h2 id="home-form-heading" class="qn-display-lg qn-home-form-title">
-          Cuéntanos qué necesitas.<br /><span>Te llamamos en 24h.</span>
-        </h2>
-        <p class="qn-home-form-lead">
-          Sin compromiso. Sin spam. Solo una conversación honesta para entender qué buscas y proponerte la mejor opción del mercado.
-        </p>
-        <ul class="qn-home-form-list">
-          <li>Asesoramiento gratuito y multimarca</li>
-          <li>Equipo comercial local en Galicia</li>
-          <li>Atención de lunes a viernes, 8:00 — 16:00</li>
-        </ul>
+    <!-- HERO -->
+    <section class="qn-hero">
+      <div class="qn-container qn-hero-inner">
+        <div class="qn-hero-content">
+          <p class="qn-eyebrow">A Coruña · Oleiros · Sada · Bergondo</p>
+          <h1 class="qn-display-xl qn-hero-title">
+            Tu próxima casa o tu próxima inversión. Las dos en buenas manos.
+          </h1>
+          <p class="qn-hero-tag">
+            No nos casamos con nadie. Solo con tu beneficio.
+          </p>
+          <p class="qn-hero-lead">
+            Mediación inmobiliaria local con criterio profesional. Te ayudamos a vender tu inmueble o a encontrar el que buscas — y también seleccionamos activos para inversores.
+          </p>
+          <div class="qn-hero-ctas">
+            <a href="/inmuebles#vender" class="qn-btn-accent">Quiero vender mi inmueble</a>
+            <a href="/inmuebles" class="qn-btn-outline">Quiero comprar</a>
+          </div>
+          <p class="qn-hero-secondary">
+            ¿Buscas activos de inversión? <a href="/activos-inversion">Ver oportunidades</a>
+          </p>
+        </div>
+        <div class="qn-hero-visual" aria-hidden="true">
+          <div class="qn-hero-card qn-hero-card-1">
+            <span class="qn-hero-card-label">Inmuebles</span>
+            <span class="qn-hero-card-title">A Coruña y comarca</span>
+            <span class="qn-hero-card-sub">Viviendas, bajos y suelo</span>
+          </div>
+          <div class="qn-hero-card qn-hero-card-2">
+            <span class="qn-hero-card-label">Inversión</span>
+            <span class="qn-hero-card-title">Activos seleccionados</span>
+            <span class="qn-hero-card-sub">NPL y subastas judiciales</span>
+          </div>
+        </div>
       </div>
-      <ContactForm origen="home" showSectorSelect={true} />
-    </div>
-  </section>
+    </section>
+
+    <!-- STATSBAR -->
+    <section class="qn-stats">
+      <div class="qn-container qn-stats-grid">
+        <div>
+          <strong>4 comarcas</strong>
+          <span>A Coruña, Oleiros, Sada y Bergondo como zonas naturales de trabajo</span>
+        </div>
+        <div>
+          <strong>Equipo propio</strong>
+          <span>Sin franquicia ni intermediarios; tratas con quien gestiona tu inmueble</span>
+        </div>
+        <div>
+          <strong>Asesoría sin compromiso</strong>
+          <span>Valoración gratuita y orientación honesta antes de firmar nada</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="qn-services">
+      <div class="qn-container">
+        <div class="qn-section-head">
+          <p class="qn-eyebrow">Qué hacemos</p>
+          <h2 class="qn-display-lg">Dos líneas de trabajo, un mismo criterio.</h2>
+        </div>
+
+        <div class="qn-services-grid">
+
+          <article class="qn-service-card qn-service-card-primary">
+            <span class="qn-service-tag">Servicio principal</span>
+            <h3 class="qn-display-md">Mediación inmobiliaria</h3>
+            <p>
+              Captamos y vendemos viviendas, bajos comerciales y suelo en A Coruña, Oleiros, Sada y Bergondo. Conocemos el mercado real de cada barrio — no inflamos precios para alimentar comisiones y no aceptamos encargos que no podamos defender.
+            </p>
+            <ul class="qn-service-points">
+              <li>Valoración honesta y razonada antes de firmar</li>
+              <li>Plan de comercialización claro y con plazos</li>
+              <li>Contratos sin letra pequeña</li>
+              <li>Atención personal de principio a fin</li>
+            </ul>
+            <div class="qn-service-ctas">
+              <a href="/inmuebles" class="qn-btn-primary">Ver inmuebles disponibles</a>
+              <a href="/inmuebles#vender" class="qn-btn-text">Vende tu inmueble →</a>
+            </div>
+          </article>
+
+          <article class="qn-service-card">
+            <span class="qn-service-tag qn-service-tag-secondary">Inversión</span>
+            <h3 class="qn-display-md">Activos de inversión</h3>
+            <p>
+              Para perfiles inversores: activos NPL, lotes inmobiliarios y subastas judiciales con due diligence previa. Trabajamos con bancos, sareb y entidades financieras, y filtramos las operaciones antes de presentártelas.
+            </p>
+            <ul class="qn-service-points">
+              <li>Análisis previo de cargas y situación registral</li>
+              <li>Ratios de rentabilidad realistas, no proyectados</li>
+              <li>Acompañamiento legal y financiero hasta el cierre</li>
+            </ul>
+            <div class="qn-service-ctas">
+              <a href="/activos-inversion" class="qn-btn-primary">Ver oportunidades</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- POR QUÉ -->
+    <section class="qn-why">
+      <div class="qn-container">
+        <div class="qn-section-head">
+          <p class="qn-eyebrow">Por qué queNECESITAS</p>
+          <h2 class="qn-display-lg">Somos de aquí. Y se nota.</h2>
+        </div>
+
+        <div class="qn-why-grid">
+          <div class="qn-why-item">
+            <div class="qn-why-num">01</div>
+            <h3>Conocemos la zona</h3>
+            <p>Sabemos qué bloques tienen ascensor, qué calles son tranquilas a las 22:00 y qué barrios se están moviendo. Eso no lo da un buscador.</p>
+          </div>
+          <div class="qn-why-item">
+            <div class="qn-why-num">02</div>
+            <h3>Equipo propio, no franquicia</h3>
+            <p>No somos una marca enchufada a un sistema nacional. Las decisiones se toman aquí, con el comercial que lleva tu caso. Cero capas de protocolo entre tú y nosotros.</p>
+          </div>
+          <div class="qn-why-item">
+            <div class="qn-why-num">03</div>
+            <h3>Criterio profesional</h3>
+            <p>Detrás del trato cercano hay formación jurídica, experiencia en operaciones financieras y rigor en la valoración. Lo cercano no significa improvisado.</p>
+          </div>
+          <div class="qn-why-item">
+            <div class="qn-why-num">04</div>
+            <h3>Honestidad desde el primer minuto</h3>
+            <p>Comisión clara, contrato sin sorpresas y la verdad sobre tu inmueble — aunque a veces no sea lo que esperabas oír. Preferimos perder un encargo a sobreofrecer y decepcionarte.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO TRABAJAMOS -->
+    <section class="qn-process">
+      <div class="qn-container">
+        <div class="qn-section-head">
+          <p class="qn-eyebrow">Cómo trabajamos</p>
+          <h2 class="qn-display-lg">Un proceso claro, sin sorpresas.</h2>
+        </div>
+
+        <ol class="qn-process-steps">
+          <li>
+            <div class="qn-process-step">01</div>
+            <h3>Contacto inicial</h3>
+            <p>Te llamamos en menos de 24h laborables. Te escuchamos antes de hablar — qué buscas, qué tienes, qué te preocupa.</p>
+          </li>
+          <li>
+            <div class="qn-process-step">02</div>
+            <h3>Valoración y estudio</h3>
+            <p>Visita al inmueble, análisis del mercado de la zona y propuesta honesta de precio o de oportunidad. Sin compromiso.</p>
+          </li>
+          <li>
+            <div class="qn-process-step">03</div>
+            <h3>Plan a medida</h3>
+            <p>Si decides trabajar con nosotros, definimos pasos, plazos y comisión por escrito. Sabes exactamente qué va a pasar.</p>
+          </li>
+          <li>
+            <div class="qn-process-step">04</div>
+            <h3>Cierre y acompañamiento</h3>
+            <p>Te acompañamos hasta la firma — gestión de visitas, negociación, papeleo y notaría. Después seguimos disponibles para lo que surja.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ZONA DE ACTIVIDAD -->
+    <section class="qn-area">
+      <div class="qn-container qn-area-inner">
+        <div>
+          <p class="qn-eyebrow">Dónde trabajamos</p>
+          <h2 class="qn-display-lg">A Coruña y comarca, en detalle.</h2>
+          <p class="qn-area-lead">
+            Conocemos cada zona porque vivimos aquí. Si tu inmueble está en alguno de estos municipios — o lo buscas allí — somos el sitio donde llamar.
+          </p>
+          <ul class="qn-area-list">
+            <li><strong>A Coruña capital</strong> — todos los barrios</li>
+            <li><strong>Oleiros</strong> — Santa Cruz, Mera, Perillo, Bastiagueiro, Liáns</li>
+            <li><strong>Sada</strong> — centro, Carnoedo, Mondego</li>
+            <li><strong>Bergondo</strong> — Bergondiño, Guísamo, Vixoi</li>
+            <li><strong>Cambre y Culleredo</strong> — núcleos urbanos</li>
+          </ul>
+        </div>
+        <div class="qn-area-visual" aria-hidden="true">
+          <div class="qn-area-pin qn-area-pin-1">A Coruña</div>
+          <div class="qn-area-pin qn-area-pin-2">Oleiros</div>
+          <div class="qn-area-pin qn-area-pin-3">Sada</div>
+          <div class="qn-area-pin qn-area-pin-4">Bergondo</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
 </BaseLayout>
 
 <style>
-  .qn-home-form {
-    padding-block: clamp(4rem, 7vw, 6rem);
+  /* HERO */
+  .qn-hero {
+    padding: 5rem 0 6rem;
+    background: linear-gradient(180deg, var(--color-bone) 0%, white 100%);
   }
-
-  .qn-home-form-grid {
+  .qn-hero-inner {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: start;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
   }
-
-  .qn-home-form-title {
-    margin: 1rem 0 1.5rem;
+  .qn-hero-title {
+    margin: 0.75rem 0 1.25rem;
+    max-width: 18ch;
   }
-
-  .qn-home-form-title span {
-    color: var(--color-accent-500);
-  }
-
-  .qn-home-form-lead {
+  .qn-hero-tag {
+    font-style: italic;
+    color: var(--color-brand-700);
     font-size: 1.0625rem;
-    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+  .qn-hero-lead {
+    font-size: 1.0625rem;
+    line-height: 1.65;
     color: var(--color-graphite);
-    margin: 0 0 1.5rem;
-    max-width: 30rem;
+    max-width: 52ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas {
+    display: flex;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .qn-hero-secondary {
+    font-size: 0.9375rem;
+    color: var(--color-graphite);
+    margin: 0;
+  }
+  .qn-hero-secondary a {
+    color: var(--color-brand-700);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .qn-hero-secondary a:hover { text-decoration: underline; }
+
+  .qn-hero-visual {
+    position: relative;
+    height: 380px;
+  }
+  .qn-hero-card {
+    position: absolute;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 50px -20px rgba(0, 27, 118, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    border: 1px solid var(--color-mist);
+  }
+  .qn-hero-card-1 {
+    top: 0;
+    left: 0;
+    width: 260px;
+    background: var(--color-brand-700);
+    color: white;
+    border: 0;
+  }
+  .qn-hero-card-1 .qn-hero-card-label { color: rgba(255,255,255,0.7); }
+  .qn-hero-card-1 .qn-hero-card-sub { color: rgba(255,255,255,0.85); }
+
+  .qn-hero-card-2 {
+    bottom: 0;
+    right: 0;
+    width: 240px;
+  }
+  .qn-hero-card-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-brand-700);
+    font-weight: 600;
+  }
+  .qn-hero-card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .qn-hero-card-sub {
+    font-size: 0.875rem;
+    color: var(--color-graphite);
   }
 
-  .qn-home-form-list {
+  /* STATS */
+  .qn-stats {
+    background: var(--color-brand-900);
+    color: white;
+    padding: 3rem 0;
+  }
+  .qn-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+  .qn-stats-grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .qn-stats-grid strong {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.01em;
+  }
+  .qn-stats-grid span {
+    font-size: 0.9375rem;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  /* SERVICIOS */
+  .qn-services {
+    padding: 6rem 0;
+  }
+  .qn-section-head {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .qn-section-head .qn-eyebrow {
+    margin-bottom: 0.5rem;
+  }
+  .qn-services-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 2rem;
+  }
+  .qn-service-card {
+    background: white;
+    border: 1px solid var(--color-mist);
+    border-radius: 1.25rem;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .qn-service-card-primary {
+    background: var(--color-brand-50);
+    border-color: var(--color-brand-100);
+  }
+  .qn-service-tag {
+    display: inline-block;
+    background: var(--color-brand-700);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    align-self: flex-start;
+  }
+  .qn-service-tag-secondary {
+    background: var(--color-graphite);
+  }
+  .qn-service-card h3 { margin: 0; }
+  .qn-service-card p {
+    color: var(--color-graphite);
+    line-height: 1.65;
+    margin: 0;
+  }
+  .qn-service-points {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
+    gap: 0.5rem;
   }
-
-  .qn-home-form-list li {
+  .qn-service-points li {
+    padding-left: 1.5rem;
     position: relative;
-    padding-left: 1.75rem;
-    color: var(--color-ink-soft);
     font-size: 0.9375rem;
+    color: var(--color-graphite);
   }
-
-  .qn-home-form-list li::before {
-    content: "";
+  .qn-service-points li::before {
+    content: "→";
     position: absolute;
     left: 0;
-    top: 0.5rem;
-    width: 18px;
-    height: 18px;
-    background: var(--color-brand-100);
-    border-radius: 50%;
+    color: var(--color-accent-500);
+    font-weight: 700;
+  }
+  .qn-service-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .qn-btn-text {
+    color: var(--color-brand-700);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .qn-btn-text:hover { text-decoration: underline; }
+
+  /* POR QUÉ */
+  .qn-why {
+    background: var(--color-paper);
+    padding: 6rem 0;
+  }
+  .qn-why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .qn-why-item {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-mist);
+  }
+  .qn-why-num {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-accent-500);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .qn-why-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+  }
+  .qn-why-item p {
+    color: var(--color-graphite);
+    line-height: 1.65;
+    margin: 0;
   }
 
-  .qn-home-form-list li::after {
-    content: "";
+  /* PROCESO */
+  .qn-process {
+    padding: 6rem 0;
+  }
+  .qn-process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    counter-reset: step;
+  }
+  .qn-process-steps li {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-mist);
+  }
+  .qn-process-step {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-brand-700);
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+  }
+  .qn-process-steps h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .qn-process-steps p {
+    font-size: 0.9375rem;
+    color: var(--color-graphite);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* ZONA */
+  .qn-area {
+    background: var(--color-brand-900);
+    color: white;
+    padding: 6rem 0;
+  }
+  .qn-area-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .qn-area .qn-eyebrow { color: rgba(255,255,255,0.6); }
+  .qn-area h2 { color: white; }
+  .qn-area-lead {
+    color: rgba(255,255,255,0.85);
+    line-height: 1.65;
+    margin: 1rem 0 2rem;
+    max-width: 50ch;
+  }
+  .qn-area-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .qn-area-list li {
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 0.5rem;
+    font-size: 0.9375rem;
+  }
+  .qn-area-list strong { color: white; }
+  .qn-area-visual {
+    position: relative;
+    height: 360px;
+  }
+  .qn-area-pin {
     position: absolute;
-    left: 6px;
-    top: 0.875rem;
-    width: 6px;
-    height: 3px;
-    border-left: 2px solid var(--color-brand-600);
-    border-bottom: 2px solid var(--color-brand-600);
-    transform: rotate(-45deg);
+    background: white;
+    color: var(--color-brand-900);
+    padding: 0.625rem 1rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   }
+  .qn-area-pin-1 { top: 20%; left: 30%; }
+  .qn-area-pin-2 { top: 45%; left: 60%; }
+  .qn-area-pin-3 { top: 15%; right: 10%; }
+  .qn-area-pin-4 { bottom: 25%; left: 10%; }
 
-  @media (min-width: 900px) {
-    .qn-home-form-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .qn-hero-inner,
+    .qn-area-inner {
+      grid-template-columns: 1fr;
+    }
+    .qn-hero-visual,
+    .qn-area-visual {
+      display: none;
+    }
+    .qn-stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .qn-services-grid {
+      grid-template-columns: 1fr;
+    }
+    .qn-why-grid {
+      grid-template-columns: 1fr;
+    }
+    .qn-process-steps {
+      grid-template-columns: 1fr;
     }
   }
 </style>
