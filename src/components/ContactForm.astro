@@ -4,6 +4,7 @@ const {
   sector = "general",
   cta = "Enviar solicitud",
   mostrarSector = false,
+  mensajePrefill = "",
 } = Astro.props;
 
 const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || "";
@@ -42,7 +43,7 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://quenecesitashoy.es";
 
   <div class="qn-field">
     <label for={`qn-${origen}-mensaje`}>Mensaje (opcional)</label>
-    <textarea id={`qn-${origen}-mensaje`} name="mensaje" rows="4" placeholder="Cuéntanos brevemente qué necesitas..."></textarea>
+    <textarea id={`qn-${origen}-mensaje`} name="mensaje" rows="4" placeholder="Cuéntanos brevemente qué necesitas...">{mensajePrefill}</textarea>
   </div>
 
   <label class="qn-checkbox">

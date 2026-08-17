@@ -1,7 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import ContactForm from "../components/ContactForm.astro";
 
 const seo = {
@@ -11,9 +9,6 @@ const seo = {
 ---
 
 <BaseLayout {...seo}>
-  <Header />
-
-  <main>
 
     <section class="qn-contacto-hero">
       <div class="qn-container">
@@ -69,9 +64,6 @@ const seo = {
       </div>
     </section>
 
-  </main>
-
-  <Footer />
 </BaseLayout>
 
 <style>

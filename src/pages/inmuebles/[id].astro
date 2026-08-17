@@ -1,0 +1,763 @@
+---
+import { getImage, Picture } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import {
+  fetchPublishedProperties,
+  fetchPropertyPhotos,
+  attachSignedPhotos,
+  formatPrecio,
+  formatSuperficie,
+  EXTRAS,
+  ENERGY_COLORS,
+  getYouTubeId,
+} from "../../lib/properties.js";
+
+export async function getStaticPaths() {
+  // Ancho/calidad de la foto grande (galería principal + lightbox). Las
+  // miniaturas se optimizan aparte, directamente en el markup, con <Picture>.
+  // Declarados aquí dentro porque Astro compila getStaticPaths en un scope
+  // de módulo separado del resto del frontmatter: las const de fuera no llegan.
+  const DISPLAY_WIDTH = 1600;
+  const DISPLAY_QUALITY = 78;
+
+  const properties = await fetchPublishedProperties();
+  return Promise.all(
+    properties.map(async (property) => {
+      const rawPhotos = await fetchPropertyPhotos(property.id);
+      const signedPhotos = (await attachSignedPhotos(rawPhotos)).filter((p) => p.signedUrl);
+
+      // Foto grande pre-comprimida a WebP: la usan tanto la imagen principal
+      // como el lightbox, que la intercambian por JS (por eso necesitan una
+      // única URL ya resuelta, en vez de un <Picture> con varios <source>).
+      const photos = await Promise.all(
+        signedPhotos.map(async (photo) => {
+          const optimized = await getImage({
+            src: photo.signedUrl,
+            width: DISPLAY_WIDTH,
+            format: "webp",
+            quality: DISPLAY_QUALITY,
+            inferSize: true,
+          });
+          return { ...photo, displayUrl: optimized.src };
+        })
+      );
+
+      return {
+        params: { id: String(property.id) },
+        props: { property, photos },
+      };
+    })
+  );
+}
+
+const { property, photos } = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://quenecesitashoy.es";
+const canonicalUrl = `${siteUrl}/inmuebles/${property.id}`;
+
+const descripcionCorta = (property.descripcion_web || "")
+  .replace(/\s+/g, " ")
+  .trim()
+  .slice(0, 160);
+
+const seo = {
+  title: `${property.titulo || "Inmueble"} - ${property.tipo_inmueble || "Inmueble"} en ${property.localidad || "A Coruña"} | queNECESITAS`,
+  description:
+    descripcionCorta ||
+    `Inmueble en venta en ${property.localidad || "A Coruña"}. Contacta con nosotros para más información.`,
+  image: photos[0]?.displayUrl,
+  canonical: canonicalUrl,
+};
+
+const extrasActivos = EXTRAS.filter((e) => property[e.key] === true);
+
+const energia = (property.certificado_energetico || "").toString().toUpperCase().trim();
+const energiaColor = ENERGY_COLORS[energia];
+
+const youtubeId = getYouTubeId(property.video_url);
+
+const referenciaTexto = property.referencia || property.titulo || "este inmueble";
+const mensajePrefill = `Me interesa el inmueble ${referenciaTexto}`;
+
+const telefonoContacto = "672274969";
+const whatsappTexto = encodeURIComponent(
+  `Hola, me interesa el inmueble "${property.titulo || referenciaTexto}" — ${canonicalUrl}`
+);
+
+const features = [
+  property.superficie_construida != null && {
+    icon: "🏠",
+    label: "Superficie construida",
+    value: formatSuperficie(property.superficie_construida),
+  },
+  property.superficie_util != null && {
+    icon: "📐",
+    label: "Superficie útil",
+    value: formatSuperficie(property.superficie_util),
+  },
+  property.habitaciones != null && { icon: "🛏", label: "Habitaciones", value: property.habitaciones },
+  property.banos != null && { icon: "🚿", label: "Baños", value: property.banos },
+  property.planta != null && property.planta !== "" && { icon: "🏢", label: "Planta", value: property.planta },
+  property.orientacion && { icon: "🧭", label: "Orientación", value: property.orientacion },
+  property.ano_construccion != null && {
+    icon: "📅",
+    label: "Año construcción",
+    value: property.ano_construccion,
+  },
+].filter(Boolean);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  name: property.titulo,
+  description: descripcionCorta,
+  url: canonicalUrl,
+  ...(photos[0]?.displayUrl ? { image: [new URL(photos[0].displayUrl, siteUrl).toString()] } : {}),
+  offers: {
+    "@type": "Offer",
+    ...(property.precio != null ? { price: property.precio } : {}),
+    priceCurrency: "EUR",
+    availability:
+      property.estado_venta === "Disponible"
+        ? "https://schema.org/InStock"
+        : "https://schema.org/LimitedAvailability",
+  },
+  address: {
+    "@type": "PostalAddress",
+    ...(property.direccion ? { streetAddress: property.direccion } : {}),
+    ...(property.localidad ? { addressLocality: property.localidad } : {}),
+    ...(property.provincia ? { addressRegion: property.provincia } : {}),
+    ...(property.codigo_postal ? { postalCode: property.codigo_postal } : {}),
+    addressCountry: "ES",
+  },
+  ...(property.superficie_construida
+    ? {
+        floorSize: {
+          "@type": "QuantitativeValue",
+          value: property.superficie_construida,
+          unitCode: "MTK",
+        },
+      }
+    : {}),
+  ...(property.habitaciones != null ? { numberOfRooms: property.habitaciones } : {}),
+};
+
+const photoUrls = photos.map((p) => p.displayUrl);
+---
+
+<BaseLayout {...seo}>
+    <div class="qn-container qn-ficha-back">
+      <a href="/inmuebles#en-venta">← Volver a inmuebles</a>
+    </div>
+
+    <!-- GALERÍA -->
+    <section class="qn-container qn-gal-section">
+      <div class="qn-gal-main" id="qn-gal-main">
+        {photos.length > 0 ? (
+          <img
+            id="qn-gal-main-img"
+            src={photos[0].displayUrl}
+            alt={photos[0].nombre || property.titulo || "Foto del inmueble"}
+            loading="eager"
+          />
+        ) : (
+          <div class="qn-gal-empty" role="img" aria-label="Sin fotos disponibles">🏠</div>
+        )}
+      </div>
+
+      {photos.length > 1 && (
+        <div class="qn-gal-thumbs" id="qn-gal-thumbs">
+          {photos.map((photo, i) => (
+            <button type="button" class="qn-gal-thumb" data-index={i} aria-label={`Ver foto ${i + 1}`}>
+              <Picture
+                src={photo.signedUrl}
+                inferSize
+                width={200}
+                quality={65}
+                formats={["avif", "webp"]}
+                fallbackFormat="webp"
+                alt={photo.nombre || `Foto ${i + 1}`}
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <div class="qn-container qn-ficha-grid">
+      <!-- COLUMNA PRINCIPAL -->
+      <div class="qn-ficha-main">
+
+        <!-- CABECERA -->
+        <section class="qn-ficha-header">
+          {property.tipo_inmueble && <p class="qn-eyebrow">{property.tipo_inmueble}</p>}
+          <h1 class="qn-display-xl qn-ficha-title">{property.titulo || "Inmueble en venta"}</h1>
+
+          <p class="qn-ficha-location">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-7.58 8-13a8 8 0 1 0-16 0c0 5.42 8 13 8 13Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            {[property.direccion, property.zona_barrio, property.localidad, property.municipio].filter(Boolean).join(", ")}
+          </p>
+
+          <div class="qn-ficha-header-meta">
+            <p class="qn-ficha-price">{formatPrecio(property.precio)}</p>
+            {property.estado_venta && (
+              <span class={`qn-ficha-estado qn-ficha-estado-${(property.estado_venta || "").toLowerCase()}`}>
+                {property.estado_venta}
+              </span>
+            )}
+            {property.referencia && <span class="qn-ficha-ref">Ref. {property.referencia}</span>}
+          </div>
+        </section>
+
+        <!-- CARACTERÍSTICAS -->
+        {features.length > 0 && (
+          <section class="qn-ficha-features">
+            {features.map((f) => (
+              <div class="qn-feature">
+                <span class="qn-feature-icon" aria-hidden="true">{f.icon}</span>
+                <div>
+                  <span class="qn-feature-value">{f.value}</span>
+                  <span class="qn-feature-label">{f.label}</span>
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+
+        <!-- DESCRIPCIÓN -->
+        {property.descripcion_web && (
+          <section class="qn-ficha-desc">
+            <h2 class="qn-display-md">Descripción</h2>
+            <p>{property.descripcion_web}</p>
+          </section>
+        )}
+
+        <!-- EXTRAS -->
+        {extrasActivos.length > 0 && (
+          <section class="qn-ficha-extras">
+            <h2 class="qn-display-md">Extras y equipamiento</h2>
+            <div class="qn-extras-grid">
+              {extrasActivos.map((e) => (
+                <span class="qn-extra-badge">
+                  <span aria-hidden="true">{e.icon}</span> {e.label}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- CERTIFICADO ENERGÉTICO -->
+        {energia && energiaColor && (
+          <section class="qn-ficha-energia">
+            <h2 class="qn-display-md">Certificado energético</h2>
+            <div class="qn-energia-row">
+              <span class="qn-energia-badge" style={`background:${energiaColor.bg};color:${energiaColor.fg}`}>
+                {energia}
+              </span>
+              {property.consumo_energetico != null && (
+                <span class="qn-energia-consumo">Consumo: {property.consumo_energetico} kWh/m² año</span>
+              )}
+            </div>
+          </section>
+        )}
+
+        <!-- VÍDEO -->
+        {youtubeId && (
+          <section class="qn-ficha-video">
+            <h2 class="qn-display-md">Vídeo</h2>
+            <div class="qn-video-wrap">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+                title={`Vídeo de ${property.titulo || "el inmueble"}`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </section>
+        )}
+
+        <!-- FORMULARIO DE CONTACTO -->
+        <section class="qn-ficha-contact" id="contacto-form">
+          <p class="qn-eyebrow">¿Te interesa?</p>
+          <h2 class="qn-display-lg">Pide información sin compromiso.</h2>
+          <p class="qn-ficha-contact-lead">
+            Te respondemos en menos de 24h laborables con disponibilidad para visitarlo.
+          </p>
+          <ContactForm
+            origen="inmueble-detalle"
+            sector="inmuebles"
+            cta="Solicitar información"
+            mensajePrefill={mensajePrefill}
+          />
+        </section>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="qn-ficha-sidebar">
+        <div class="qn-ficha-sidebar-inner">
+          <p class="qn-ficha-sidebar-price">{formatPrecio(property.precio)}</p>
+          {property.estado_venta && (
+            <span class={`qn-ficha-estado qn-ficha-estado-${(property.estado_venta || "").toLowerCase()}`}>
+              {property.estado_venta}
+            </span>
+          )}
+
+          <a href="#contacto-form" class="qn-btn-accent qn-ficha-sidebar-btn">Solicitar información</a>
+          <a href={`tel:${telefonoContacto}`} class="qn-btn-outline qn-ficha-sidebar-btn">
+            📞 Llamar ahora · {telefonoContacto.replace(/(\d{3})(?=\d)/g, "$1 ")}
+          </a>
+          <a
+            href={`https://wa.me/34${telefonoContacto}?text=${whatsappTexto}`}
+            target="_blank"
+            rel="noopener"
+            class="qn-ficha-sidebar-whatsapp"
+          >
+            💬 Compartir por WhatsApp
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    {photoUrls.length > 0 && (
+      <div class="qn-lightbox" id="qn-lightbox" hidden>
+        <button type="button" class="qn-lightbox-close" id="qn-lightbox-close" aria-label="Cerrar">✕</button>
+        {photoUrls.length > 1 && (
+          <button type="button" class="qn-lightbox-prev" id="qn-lightbox-prev" aria-label="Foto anterior">‹</button>
+        )}
+        <img class="qn-lightbox-img" id="qn-lightbox-img" src={photoUrls[0]} alt="" />
+        {photoUrls.length > 1 && (
+          <button type="button" class="qn-lightbox-next" id="qn-lightbox-next" aria-label="Foto siguiente">›</button>
+        )}
+      </div>
+    )}
+
+    <script define:vars={{ photoUrls }}>
+      const mainImg = document.getElementById("qn-gal-main-img");
+      const thumbs = document.querySelectorAll(".qn-gal-thumb");
+      const lightbox = document.getElementById("qn-lightbox");
+      const lightboxImg = document.getElementById("qn-lightbox-img");
+      let currentIndex = 0;
+
+      function showMain(index) {
+        if (!photoUrls[index] || !mainImg) return;
+        currentIndex = index;
+        mainImg.src = photoUrls[index];
+      }
+
+      function openLightbox(index) {
+        if (!photoUrls[index] || !lightbox || !lightboxImg) return;
+        currentIndex = index;
+        lightboxImg.src = photoUrls[index];
+        lightbox.hidden = false;
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        if (!lightbox) return;
+        lightbox.hidden = true;
+        document.body.style.overflow = "";
+      }
+
+      function navigate(delta) {
+        if (photoUrls.length === 0) return;
+        currentIndex = (currentIndex + delta + photoUrls.length) % photoUrls.length;
+        if (lightboxImg) lightboxImg.src = photoUrls[currentIndex];
+        showMain(currentIndex);
+      }
+
+      thumbs.forEach((thumb) => {
+        thumb.addEventListener("click", () => showMain(Number(thumb.dataset.index)));
+      });
+
+      mainImg?.addEventListener("click", () => openLightbox(currentIndex));
+
+      document.getElementById("qn-lightbox-close")?.addEventListener("click", closeLightbox);
+      document.getElementById("qn-lightbox-prev")?.addEventListener("click", () => navigate(-1));
+      document.getElementById("qn-lightbox-next")?.addEventListener("click", () => navigate(1));
+      lightbox?.addEventListener("click", (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (!lightbox || lightbox.hidden) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") navigate(-1);
+        if (e.key === "ArrowRight") navigate(1);
+      });
+
+      let touchStartX = 0;
+      lightbox?.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+      lightbox?.addEventListener("touchend", (e) => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) navigate(dx > 0 ? -1 : 1);
+      }, { passive: true });
+    </script>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</BaseLayout>
+
+<style>
+  .qn-ficha-back {
+    padding: 1.5rem 0 0;
+  }
+  .qn-ficha-back a {
+    color: var(--color-graphite);
+    font-size: 0.875rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .qn-ficha-back a:hover {
+    color: var(--color-brand-700);
+  }
+
+  /* GALERÍA */
+  .qn-gal-section {
+    padding: 1.5rem 0 2rem;
+  }
+  .qn-gal-main {
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background: var(--color-paper);
+  }
+  .qn-gal-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+    display: block;
+  }
+  .qn-gal-empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--color-mist);
+  }
+  .qn-gal-thumbs {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .qn-gal-thumb {
+    flex: 0 0 auto;
+    width: 96px;
+    height: 72px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 2px solid transparent;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+  }
+  .qn-gal-thumb:hover,
+  .qn-gal-thumb:focus-visible {
+    border-color: var(--color-brand-700);
+  }
+  .qn-gal-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* LIGHTBOX */
+  .qn-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 15, 0.92);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qn-lightbox-img {
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+  }
+  .qn-lightbox-close,
+  .qn-lightbox-prev,
+  .qn-lightbox-next {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qn-lightbox-close {
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.125rem;
+  }
+  .qn-lightbox-prev,
+  .qn-lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+  }
+  .qn-lightbox-prev { left: 1rem; }
+  .qn-lightbox-next { right: 1rem; }
+  .qn-lightbox-close:hover,
+  .qn-lightbox-prev:hover,
+  .qn-lightbox-next:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  /* GRID FICHA */
+  .qn-ficha-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3rem;
+    align-items: start;
+    padding-bottom: 6rem;
+  }
+  .qn-ficha-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    min-width: 0;
+  }
+
+  /* CABECERA */
+  .qn-ficha-title {
+    margin: 0.5rem 0 1rem;
+  }
+  .qn-ficha-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-graphite);
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+  }
+  .qn-ficha-location svg {
+    flex-shrink: 0;
+    color: var(--color-accent-500);
+  }
+  .qn-ficha-header-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .qn-ficha-price {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-brand-600);
+    margin: 0;
+  }
+  .qn-ficha-estado {
+    display: inline-block;
+    padding: 0.4rem 0.875rem;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+  .qn-ficha-estado-disponible {
+    background: #E4F4E9;
+    color: #1F6E40;
+  }
+  .qn-ficha-estado-reservado {
+    background: #FDEBD9;
+    color: #B6631A;
+  }
+  .qn-ficha-ref {
+    color: var(--color-graphite);
+    font-size: 0.875rem;
+  }
+
+  /* FEATURES */
+  .qn-ficha-features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    background: var(--color-paper);
+    border-radius: 1rem;
+    padding: 1.75rem;
+  }
+  .qn-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .qn-feature-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+  .qn-feature-value {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    color: var(--color-ink);
+  }
+  .qn-feature-label {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-graphite);
+  }
+
+  /* DESCRIPCIÓN */
+  .qn-ficha-desc h2,
+  .qn-ficha-extras h2,
+  .qn-ficha-energia h2,
+  .qn-ficha-video h2 {
+    margin: 0 0 1rem;
+  }
+  .qn-ficha-desc p {
+    color: var(--color-ink);
+    line-height: 1.75;
+    white-space: pre-line;
+    margin: 0;
+  }
+
+  /* EXTRAS */
+  .qn-extras-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .qn-extra-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-accent-50);
+    color: var(--color-accent-500);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+  }
+
+  /* ENERGÍA */
+  .qn-energia-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .qn-energia-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+  .qn-energia-consumo {
+    color: var(--color-graphite);
+    font-size: 0.9375rem;
+  }
+
+  /* VÍDEO */
+  .qn-video-wrap {
+    position: relative;
+    padding-top: 56.25%;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: black;
+  }
+  .qn-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* CONTACTO */
+  .qn-ficha-contact {
+    scroll-margin-top: 5rem;
+    background: var(--color-brand-700);
+    color: white;
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+  }
+  .qn-ficha-contact .qn-eyebrow { color: rgba(255,255,255,0.65); }
+  .qn-ficha-contact h2 { color: white; margin: 0.5rem 0 0.75rem; }
+  .qn-ficha-contact-lead {
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 1.5rem;
+  }
+
+  /* SIDEBAR */
+  .qn-ficha-sidebar-inner {
+    position: sticky;
+    top: 6rem;
+    background: white;
+    border: 1px solid var(--color-mist);
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .qn-ficha-sidebar-price {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-brand-600);
+    margin: 0;
+  }
+  .qn-ficha-sidebar-btn {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+  .qn-ficha-sidebar-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    text-align: center;
+  }
+  .qn-ficha-sidebar-whatsapp:hover {
+    background: #1DA851;
+  }
+
+  @media (max-width: 960px) {
+    .qn-ficha-grid {
+      grid-template-columns: 1fr;
+    }
+    .qn-ficha-sidebar-inner {
+      position: static;
+    }
+    .qn-ficha-features {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .qn-ficha-price { font-size: 1.75rem; }
+    .qn-ficha-sidebar-price { font-size: 1.5rem; }
+  }
+</style>

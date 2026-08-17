@@ -1,0 +1,221 @@
+---
+import { Picture } from "astro:assets";
+import { formatPrecio, formatSuperficie } from "../lib/properties.js";
+
+const { property, mainPhotoUrl } = Astro.props;
+
+const {
+  id,
+  titulo,
+  tipo_inmueble,
+  localidad,
+  municipio,
+  precio,
+  superficie_construida,
+  habitaciones,
+  banos,
+  terraza,
+  garaje,
+  ascensor,
+  estado_venta,
+} = property;
+
+const destacados = [
+  terraza && { icon: "☀️", label: "Terraza" },
+  garaje && { icon: "🚗", label: "Garaje" },
+  ascensor && { icon: "🛗", label: "Ascensor" },
+].filter(Boolean);
+---
+
+<article
+  class="qn-property-card"
+  data-tipo={tipo_inmueble || ""}
+  data-localidad={localidad || ""}
+  data-precio={precio ?? ""}
+  data-habitaciones={habitaciones ?? 0}
+>
+  <a href={`/inmuebles/${id}`} class="qn-property-photo-link" aria-hidden="true" tabindex="-1">
+    {mainPhotoUrl ? (
+      <Picture
+        src={mainPhotoUrl}
+        inferSize
+        width={640}
+        quality={75}
+        formats={["avif", "webp"]}
+        fallbackFormat="webp"
+        alt={titulo || "Inmueble"}
+        loading="lazy"
+        decoding="async"
+        class="qn-property-photo"
+      />
+    ) : (
+      <div class="qn-property-photo qn-property-photo-empty" role="img" aria-label="Sin foto disponible">🏠</div>
+    )}
+    {estado_venta === "Reservado" && <span class="qn-property-reservado">Reservado</span>}
+    {tipo_inmueble && <span class="qn-property-badge">{tipo_inmueble}</span>}
+  </a>
+
+  <div class="qn-property-body">
+    <h3 class="qn-property-title">
+      <a href={`/inmuebles/${id}`}>{titulo || "Inmueble en venta"}</a>
+    </h3>
+    <p class="qn-property-location">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-7.58 8-13a8 8 0 1 0-16 0c0 5.42 8 13 8 13Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      {[localidad, municipio].filter(Boolean).join(", ") || "Consultar zona"}
+    </p>
+
+    <p class="qn-property-price">{formatPrecio(precio)}</p>
+
+    <div class="qn-property-stats">
+      {formatSuperficie(superficie_construida) && (
+        <span><span aria-hidden="true">📐</span> {formatSuperficie(superficie_construida)}</span>
+      )}
+      {habitaciones != null && <span><span aria-hidden="true">🛏</span> {habitaciones}</span>}
+      {banos != null && <span><span aria-hidden="true">🚿</span> {banos}</span>}
+    </div>
+
+    {destacados.length > 0 && (
+      <div class="qn-property-extras">
+        {destacados.map((d) => (
+          <span class="qn-property-extra"><span aria-hidden="true">{d.icon}</span> {d.label}</span>
+        ))}
+      </div>
+    )}
+
+    <a href={`/inmuebles/${id}`} class="qn-btn-primary qn-property-cta">Ver inmueble</a>
+  </div>
+</article>
+
+<style>
+  .qn-property-card {
+    background: white;
+    border: 1px solid var(--color-mist);
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: qn-card-in 0.5s ease both;
+  }
+  .qn-property-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 34, 146, 0.12);
+  }
+  @keyframes qn-card-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .qn-property-card { animation: none; }
+  }
+
+  .qn-property-photo-link {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    background: var(--color-paper);
+  }
+  .qn-property-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .qn-property-photo-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--color-mist);
+  }
+  .qn-property-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-brand-700);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+  .qn-property-reservado {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: #B63D17;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  .qn-property-body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+  .qn-property-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.3;
+  }
+  .qn-property-title a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+  .qn-property-title a:hover {
+    color: var(--color-brand-700);
+  }
+  .qn-property-location {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-graphite);
+  }
+  .qn-property-location svg {
+    flex-shrink: 0;
+    color: var(--color-accent-500);
+  }
+  .qn-property-price {
+    margin: 0.25rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-brand-600);
+  }
+  .qn-property-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-ink);
+  }
+  .qn-property-extras {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+  .qn-property-extra {
+    font-size: 0.75rem;
+    background: var(--color-accent-50);
+    color: var(--color-accent-500);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .qn-property-cta {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    text-align: center;
+    justify-content: center;
+  }
+</style>
