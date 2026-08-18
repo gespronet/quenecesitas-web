@@ -37,9 +37,12 @@ async function restFetch(path) {
 
 /** Inmuebles publicados y disponibles/reservados, para el catálogo. */
 export async function fetchPublishedProperties() {
-  return restFetch(
+  const data = await restFetch(
     "/properties?select=*&publicado_web=eq.true&estado_venta=in.(Disponible,Reservado)&order=id.desc"
   );
+  console.log('[inmuebles] total:', data?.length, 'error:', data?.error);
+
+  return data;
 }
 
 /** Un inmueble publicado por id, para la ficha individual. */
