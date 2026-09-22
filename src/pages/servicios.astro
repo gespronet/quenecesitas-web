@@ -1,0 +1,266 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ServicePoints from "@components/ServicePoints.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+
+const seo = {
+  title: "Servicios cotidianos · Alarmas, energía y telefonía",
+  description:
+    "Comparador local con criterio. Alarmas, energía y telefonía para particulares y micronegocios en A Coruña, Oleiros, Sada y Bergondo.",
+};
+
+const servicios = [
+  {
+    key: "alarmas",
+    color: "var(--qn-alarmas)",
+    bg: "var(--qn-alarmas-50)",
+    label: "Alarmas",
+    tag: "Seguridad · Hogar y negocio",
+    text: "Comparamos Prosegur, Verisure y Segurma. Te decimos qué te cuadra según tu vivienda, tu negocio y tu presupuesto real.",
+    features: ["Instalación", "CRA 24h", "Sin permanencia*"],
+    href: "/alarmas",
+  },
+  {
+    key: "energia",
+    color: "var(--qn-energia)",
+    bg: "var(--qn-energia-50)",
+    label: "Energía",
+    tag: "Luz y gas · Optimización",
+    text: "Analizamos tu factura, buscamos la comercializadora con mejor precio real y gestionamos el cambio. Ahorro sin dolor.",
+    features: ["Auditoría factura", "Comparativa real", "Cambio gestionado"],
+    href: "/energia",
+  },
+  {
+    key: "telefonia",
+    color: "var(--qn-telefonia)",
+    bg: "var(--qn-telefonia-50)",
+    label: "Telefonía",
+    tag: "Fibra y móvil",
+    text: "Fibra, móvil y centralitas para hogar o pyme. Comparamos LOWI, Vodafone y otros. Pagas por lo que necesitas, no más.",
+    features: ["Fibra 1Gb+", "5G", "Portabilidad"],
+    href: "/telefonia",
+  },
+];
+
+const puntos = [
+  {
+    title: "No nos casamos con nadie",
+    description:
+      "Trabajamos con varias compañías en cada servicio. Comparamos por ti y te decimos cuál te cuadra — no la que nos deja más margen.",
+  },
+  {
+    title: "Coste cero para ti",
+    description:
+      "En estos servicios cobramos comisión al proveedor, no al cliente. Nuestro trabajo no te sale más caro que ir directo.",
+  },
+  {
+    title: "Gestión completa",
+    description:
+      "Portabilidad, contratos, instalación, cambio de comercializadora. Lo gestionamos nosotros de principio a fin.",
+  },
+  {
+    title: "Después seguimos aquí",
+    description:
+      "Cualquier duda con la factura, incidencia o cambio, tienes un teléfono local al que llamar. Sin filtros.",
+  },
+];
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* HERO */}
+  <section class="qn-hub-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Servicios cotidianos</p>
+      <h1 class="qn-display-xl qn-hub-hero-title">
+        Alarmas, energía y telefonía. Comparados por gente que vive aquí.
+      </h1>
+      <p class="qn-hub-hero-lead">
+        Trabajamos con varios proveedores en cada servicio para que no tengas que elegir a ciegas. Te llamamos, escuchamos qué necesitas y te decimos qué opción te cuadra. Sin coste para ti.
+      </p>
+      <div class="qn-hero-ctas">
+        <a href="/contacto" class="qn-btn qn-btn-accent">Que nos llamen</a>
+        <a href="tel:672274969" class="qn-btn qn-btn-outline">672 274 969</a>
+      </div>
+    </div>
+  </section>
+
+  {/* 3 CARDS */}
+  <section class="qn-bloque">
+    <div class="qn-container">
+      <div class="qn-cards-grid">
+        {servicios.map((s) => (
+          <a href={s.href} class="qn-card qn-card-hub" style={`--card-accent: ${s.color}; --card-bg: ${s.bg}`}>
+            <div class="qn-card-tag">
+              <span class="qn-card-dot"></span>
+              {s.tag}
+            </div>
+            <h2 class="qn-card-title qn-card-title-lg">{s.label}</h2>
+            <p class="qn-card-text">{s.text}</p>
+            <ul class="qn-card-features">
+              {s.features.map((f) => <li>{f}</li>)}
+            </ul>
+            <span class="qn-card-link">
+              Ver más de {s.label.toLowerCase()}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <p class="qn-hub-note">
+        <small>* Depende del proveedor y del equipo elegido. Te lo confirmamos por escrito antes de contratar.</small>
+      </p>
+    </div>
+  </section>
+
+  <ServicePoints
+    eyebrow="Cómo funcionamos"
+    title="Comparador con criterio, sin líos."
+    points={puntos}
+    layout="grid"
+    background="paper"
+  />
+
+  <ContactCTABlock
+    title="¿Empezamos por dónde tú digas?"
+    intro="Cuéntanos qué necesitas — una alarma para casa, ahorrar en la factura de luz, cambiar de tarifa — y te llamamos en menos de 24h."
+    variant="form"
+    background="brand"
+    origen="servicios-hub"
+    sector="servicios"
+    cta="Que me llamen"
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .qn-hub-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  }
+  .qn-hub-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-hub-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .qn-bloque { padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 6rem); }
+
+  .qn-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 700px) {
+    .qn-cards-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .qn-cards-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .qn-card {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-2xl);
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    text-decoration: none;
+    color: var(--qn-ink);
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base), border-color var(--qn-transition-base);
+    position: relative;
+    overflow: hidden;
+  }
+  .qn-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-accent);
+    opacity: 0;
+    transition: opacity var(--qn-transition-base);
+  }
+  .qn-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--qn-shadow-lg);
+    border-color: transparent;
+  }
+  .qn-card:hover::before { opacity: 1; }
+  .qn-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-graphite);
+  }
+  .qn-card-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--card-accent);
+  }
+  .qn-card-title-lg {
+    font-size: var(--qn-fs-2xl);
+    font-weight: var(--qn-fw-bold);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0.25rem 0 0;
+  }
+  .qn-card-text {
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
+  }
+  .qn-card-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+  .qn-card-features li {
+    background: var(--card-bg);
+    color: var(--card-accent);
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
+  }
+  .qn-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--card-accent);
+    font-weight: var(--qn-fw-semibold);
+    font-size: var(--qn-fs-md);
+    margin-top: auto;
+    padding-top: 0.75rem;
+    transition: gap var(--qn-transition-base);
+  }
+  .qn-card:hover .qn-card-link { gap: 0.625rem; }
+
+  .qn-hub-note {
+    margin-top: 2rem;
+    color: var(--qn-stone);
+    font-size: var(--qn-fs-sm);
+    text-align: center;
+  }
+</style>

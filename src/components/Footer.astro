@@ -1,203 +1,303 @@
 ---
 const year = new Date().getFullYear();
+
+const services = [
+  { label: "Alarmas", href: "/alarmas" },
+  { label: "Energía", href: "/energia" },
+  { label: "Telefonía", href: "/telefonia" },
+];
+
+const inmobiliaria = [
+  { label: "Compraventa", href: "/inmobiliaria" },
+  { label: "Venta directa (activos)", href: "/venta-directa" },
+  { label: "NPL para inversores", href: "/npl" },
+];
+
+const empresa = [
+  { label: "Ciberseguridad empresarial", href: "/ciberseguridad" },
+  { label: "Sobre nosotros", href: "/nosotros" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contacto", href: "/contacto" },
+];
+
+const legal = [
+  { label: "Aviso legal", href: "/aviso-legal" },
+  { label: "Política de privacidad", href: "/politica-privacidad" },
+  { label: "Política de cookies", href: "/politica-cookies" },
+];
 ---
 
 <footer class="qn-footer">
-  <div class="qn-container">
-
-    <div class="qn-footer-cta">
+  {/* CTA superior */}
+  <section class="qn-footer-cta-wrap">
+    <div class="qn-container qn-footer-cta">
       <div>
-        <p class="qn-eyebrow">¿Hablamos?</p>
+        <p class="qn-eyebrow qn-eyebrow-inverted">Hablemos</p>
         <h2 class="qn-display-md qn-footer-cta-title">
-          Cuéntanos qué necesitas y te llamamos en menos de 24h.
+          Cuéntanos qué necesitas y te llamamos en menos de 24 horas laborables.
         </h2>
       </div>
       <div class="qn-footer-cta-actions">
-        <a href="tel:672274969" class="qn-btn-accent">Llamar · 672 274 969</a>
-        <a href="/contacto" class="qn-btn-outline-white">Formulario de contacto</a>
+        <a href="tel:672274969" class="qn-btn qn-btn-accent">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Llamar · 672 274 969
+        </a>
+        <a href="/contacto" class="qn-btn qn-btn-outline-white">Formulario</a>
       </div>
     </div>
+  </section>
 
-    <div class="qn-footer-grid">
+  {/* Grid principal */}
+  <div class="qn-container qn-footer-main">
 
-      <div>
-        <img src="/logo-white.svg" alt="queNECESITAS" width="160" height="48" class="qn-footer-logo" />
-        <p class="qn-footer-tag">No nos casamos con nadie. Solo con tu beneficio.</p>
-        <address class="qn-footer-addr">
-          <strong>Gespronet Axencia de Marketing e Deseño, S.L.</strong><br />
-          Rúa do Souto 1, Porto de Santa Cruz<br />
-          15179 Oleiros · A Coruña<br />
-          <a href="tel:672274969">672 274 969</a><br />
-          <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
-        </address>
-      </div>
-
-      <div>
-        <h3 class="qn-footer-h">Servicios</h3>
-        <ul class="qn-footer-list">
-          <li><a href="/inmuebles">Inmuebles en A Coruña y comarca</a></li>
-          <li><a href="/activos-inversion">Activos de inversión</a></li>
-          <li><a href="/inmuebles#vender">Vende tu inmueble con nosotros</a></li>
-          <li><a href="/contacto">Hablar con un asesor</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="qn-footer-h">Conócenos</h3>
-        <ul class="qn-footer-list">
-          <li><a href="/sobre-nosotros">Sobre nosotros</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/contacto">Contacto</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="qn-footer-h">Legal</h3>
-        <ul class="qn-footer-list">
-          <li><a href="/aviso-legal">Aviso legal</a></li>
-          <li><a href="/politica-privacidad">Política de privacidad</a></li>
-          <li><a href="/politica-cookies">Política de cookies</a></li>
-        </ul>
-        <div class="qn-footer-social">
-          <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          </a>
-        </div>
-      </div>
-
+    <div class="qn-footer-brand">
+      <img src="/logo-white.svg" alt="queNECESITAS" width="160" height="42" class="qn-footer-logo" />
+      <p class="qn-footer-tag">
+        En Galicia, con criterio local.<br />Sin franquicia.
+      </p>
+      <address class="qn-footer-addr">
+        <strong>Gespronet Axencia de Marketing e Deseño, S.L.</strong><br />
+        Rúa do Souto 1, Porto de Santa Cruz<br />
+        15179 Oleiros · A Coruña<br /><br />
+        <a href="tel:672274969">672 274 969</a><br />
+        <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
+      </address>
     </div>
 
-    <div class="qn-footer-bottom">
-      <p>© {year} Gespronet Axencia de Marketing e Deseño, S.L. · CIF B75490136 · Todos los derechos reservados.</p>
-    </div>
+    <nav class="qn-footer-col" aria-label="Servicios">
+      <h3 class="qn-footer-h">Servicios</h3>
+      <ul class="qn-footer-list">
+        {services.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
 
+    <nav class="qn-footer-col" aria-label="Inmobiliaria e inversión">
+      <h3 class="qn-footer-h">Inmobiliaria e inversión</h3>
+      <ul class="qn-footer-list">
+        {inmobiliaria.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="qn-footer-col" aria-label="Empresa">
+      <h3 class="qn-footer-h">Empresa</h3>
+      <ul class="qn-footer-list">
+        {empresa.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+
+      <div class="qn-footer-social">
+        <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn queNECESITAS" target="_blank" rel="noopener noreferrer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+  </div>
+
+  {/* Barra inferior */}
+  <div class="qn-container qn-footer-bottom">
+    <p class="qn-footer-copy">
+      © {year} Gespronet Axencia de Marketing e Deseño, S.L. · CIF B75490136
+    </p>
+    <ul class="qn-footer-legal">
+      {legal.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
   </div>
 </footer>
 
 <style>
   .qn-footer {
-    background: var(--color-brand-900);
-    color: var(--color-bone);
-    padding: 5rem 0 2rem;
-    margin-top: 6rem;
+    background: var(--qn-brand-900);
+    color: var(--qn-bone);
+    margin-top: clamp(4rem, 8vw, 6rem);
   }
+
+  .qn-eyebrow-inverted {
+    color: var(--qn-accent-500) !important;
+  }
+
+  /* CTA superior */
+  .qn-footer-cta-wrap {
+    padding: clamp(3rem, 5vw, 4.5rem) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, var(--qn-brand-950) 0%, var(--qn-brand-900) 100%);
+  }
+
   .qn-footer-cta {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr;
     gap: 2rem;
     align-items: end;
-    padding-bottom: 3rem;
-    margin-bottom: 3rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
+
   .qn-footer-cta-title {
-    color: white;
-    max-width: 30ch;
-    margin: 0.5rem 0 0;
+    color: var(--qn-white);
+    margin-top: 0.5rem;
+    max-width: 32ch;
   }
+
   .qn-footer-cta-actions {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
   }
-  .qn-btn-outline-white {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white !important;
-    padding: 0.75rem 1.5rem;
-    border-radius: 999px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    transition: all 0.2s;
-  }
-  .qn-btn-outline-white:hover {
-    background: white;
-    color: var(--color-brand-700) !important;
-  }
-  .qn-footer-grid {
+
+  /* Grid principal */
+  .qn-footer-main {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
+    padding: clamp(3rem, 5vw, 4rem) var(--qn-container-padding);
   }
+
+  .qn-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
   .qn-footer-logo {
-    height: 2.25rem;
+    height: 2rem;
     width: auto;
-    margin-bottom: 1.25rem;
   }
+
   .qn-footer-tag {
     font-style: italic;
-    opacity: 0.7;
-    margin: 0 0 1.5rem;
-    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
   }
+
   .qn-footer-addr {
     font-style: normal;
-    line-height: 1.7;
-    font-size: 0.875rem;
-    opacity: 0.85;
-  }
-  .qn-footer-addr a {
-    color: white;
-    text-decoration: none;
-  }
-  .qn-footer-addr a:hover { text-decoration: underline; }
-  .qn-footer-h {
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: white;
-    margin: 0 0 1rem;
-    font-weight: 600;
-  }
-  .qn-footer-list {
-    list-style: none;
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-relaxed);
+    color: rgba(255, 255, 255, 0.75);
     margin: 0;
-    padding: 0;
+  }
+
+  .qn-footer-addr strong {
+    color: var(--qn-white);
+    font-weight: var(--qn-fw-semibold);
+  }
+
+  .qn-footer-addr a {
+    color: var(--qn-white);
+    transition: opacity var(--qn-transition-base);
+  }
+
+  .qn-footer-addr a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  .qn-footer-h {
+    font-size: var(--qn-fs-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-white);
+    font-weight: var(--qn-fw-semibold);
+    margin: 0 0 1.25rem;
+  }
+
+  .qn-footer-list {
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
   }
+
   .qn-footer-list a {
-    color: var(--color-bone);
-    opacity: 0.85;
-    text-decoration: none;
-    font-size: 0.9375rem;
-    transition: opacity 0.2s;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: var(--qn-fs-md);
+    transition: color var(--qn-transition-base);
+    display: inline-block;
   }
-  .qn-footer-list a:hover { opacity: 1; }
+
+  .qn-footer-list a:hover {
+    color: var(--qn-white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .qn-footer-social {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     display: flex;
     gap: 0.75rem;
   }
+
   .qn-footer-social a {
-    color: white;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  .qn-footer-social a:hover { opacity: 1; }
-  .qn-footer-bottom {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.8125rem;
-    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--qn-white);
+    border-radius: var(--qn-radius-pill);
+    transition: background var(--qn-transition-base);
   }
 
-  @media (max-width: 1024px) {
-    .qn-footer-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-    }
+  .qn-footer-social a:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
-  @media (max-width: 640px) {
+
+  /* Barra inferior */
+  .qn-footer-bottom {
+    padding: 1.5rem var(--qn-container-padding);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-size: var(--qn-fs-sm);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .qn-footer-copy {
+    margin: 0;
+  }
+
+  .qn-footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .qn-footer-legal a {
+    color: rgba(255, 255, 255, 0.6);
+    transition: color var(--qn-transition-base);
+  }
+
+  .qn-footer-legal a:hover {
+    color: var(--qn-white);
+  }
+
+  /* Responsive */
+  @media (min-width: 768px) {
     .qn-footer-cta {
-      grid-template-columns: 1fr;
-      align-items: start;
+      grid-template-columns: 1.5fr auto;
     }
-    .qn-footer-grid {
-      grid-template-columns: 1fr;
+
+    .qn-footer-main {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+
+    .qn-footer-bottom {
+      flex-direction: row;
+      align-items: center;
     }
   }
 </style>

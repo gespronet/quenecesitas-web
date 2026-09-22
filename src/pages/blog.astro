@@ -1,0 +1,126 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+
+const seo = {
+  title: "Blog · queNECESITAS",
+  description:
+    "Artículos sobre inmobiliaria, inversión, servicios cotidianos y ciberseguridad — con criterio local y sin marketing barato.",
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  <section class="qn-blog-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Blog</p>
+      <h1 class="qn-display-xl qn-blog-hero-title">
+        Lo que aprendemos, contado con criterio.
+      </h1>
+      <p class="qn-blog-hero-lead">
+        Estamos preparando el blog. La idea: publicar artículos útiles sobre lo que sabemos hacer — mercado inmobiliario gallego, análisis de operaciones NPL, comparativas honestas de proveedores, dudas típicas de ciberseguridad. Sin relleno y sin listicles genéricos.
+      </p>
+    </div>
+  </section>
+
+  <section class="qn-blog-empty">
+    <div class="qn-container qn-container-narrow">
+      <div class="qn-blog-empty-inner">
+        <div class="qn-blog-empty-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <line x1="10" y1="9" x2="8" y2="9" />
+          </svg>
+        </div>
+        <h2 class="qn-display-md">Aún no hay artículos publicados.</h2>
+        <p>
+          Cuando empecemos a publicar, aparecerán aquí. Si quieres que te avisemos con las primeras entradas, mándanos un email a <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a> con el asunto "Blog" y te avisaremos.
+        </p>
+        <div class="qn-blog-empty-ctas">
+          <a href="/contacto" class="qn-btn qn-btn-outline">Contacto</a>
+          <a href="/" class="qn-btn qn-btn-primary">Volver al inicio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactCTABlock
+    title="Mientras tanto, ¿hablamos?"
+    intro="Si tienes algún tema concreto sobre el que te gustaría escribir sobre, o quieres consultarnos sin esperar al primer artículo, cuéntanoslo."
+    variant="buttons"
+    background="brand"
+    origen="blog-vacio"
+    sector="general"
+    cta=""
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .qn-blog-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  }
+  .qn-blog-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 20ch;
+  }
+  .qn-blog-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .qn-blog-empty {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-blog-empty-inner {
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-2xl);
+    padding: clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+  }
+  .qn-blog-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px; height: 72px;
+    background: var(--qn-white);
+    color: var(--qn-brand-700);
+    border-radius: var(--qn-radius-pill);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--qn-shadow-md);
+  }
+  .qn-blog-empty-inner h2 {
+    margin: 0 0 1rem;
+  }
+  .qn-blog-empty-inner p {
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    max-width: 55ch;
+    margin: 0 auto 2rem;
+    font-size: var(--qn-fs-md);
+  }
+  .qn-blog-empty-inner a {
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-semibold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .qn-blog-empty-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+</style>

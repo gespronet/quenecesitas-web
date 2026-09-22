@@ -1,104 +1,133 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import SectorHero from "~/components/SectorHero.astro";
-import ContactForm from "~/components/ContactForm.astro";
-import FAQ from "~/components/FAQ.astro";
+import ServiceLayout from "@layouts/ServiceLayout.astro";
 
-const benefits = [
-  "Comparamos las marcas líderes del mercado de seguridad",
-  "Asesoramiento gratuito según tu vivienda o negocio",
-  "Conexión a Central Receptora de Alarmas (CRA) homologada",
-  "Sin compromisos ocultos ni letra pequeña",
-];
+const data = {
+  slug: "alarmas",
+  serviceName: "Alarmas",
+  accentVar: "--qn-alarmas",
+  accentBg: "--qn-alarmas-50",
+  eyebrow: "Seguridad · Hogar y negocio",
+  h1: "Alarmas para tu casa o tu negocio, comparadas con criterio.",
+  heroLead:
+    "Trabajamos con Prosegur, Verisure y Segurma. Te decimos cuál compañía te cuadra según tu tipo de vivienda o negocio, sin cuota inflada ni permanencia opaca. Instalación y CRA 24h, con soporte local.",
+  ctaPrimary: "Solicitar comparativa",
+  ctaSecondary: "672 274 969",
 
-const faqs = [
-  {
-    question: "¿Trabajáis con todas las compañías de alarmas?",
-    answer: "Trabajamos con las marcas líderes del mercado español. Nuestro objetivo es que elijas según servicio y precio reales, no según las comisiones que cobre el comercial. Si tu vivienda o negocio tiene requisitos especiales, te lo decimos antes de empezar.",
-  },
-  {
-    question: "¿Cuánto cuesta el asesoramiento?",
-    answer: "Cero. El asesoramiento es completamente gratuito. Las compañías nos pagan por traerles clientes bien informados — tú no pagas nada extra por contratar a través de nosotros.",
-  },
-  {
-    question: "¿Y si ya tengo alarma con otra compañía?",
-    answer: "Lo revisamos contigo. Si lo que tienes ya es competitivo, te lo decimos sin tratar de venderte nada. Si encontramos algo mejor en cobertura o precio, te explicamos cómo cambiar sin quedarte desprotegido en el proceso.",
-  },
-  {
-    question: "¿En qué zonas instaláis?",
-    answer: "Toda Galicia. Tenemos especial cobertura en A Coruña, Oleiros, Sada, Bergondo y comarca, donde nuestro equipo comercial atiende personalmente. En el resto de Galicia trabajamos con las redes de instalación de cada compañía.",
-  },
-  {
-    question: "¿Cuánto tarda la instalación?",
-    answer: "Depende de la compañía y del tipo de instalación, pero lo habitual es de 3 a 7 días desde que firmas. En casos urgentes podemos priorizar la instalación con la compañía elegida.",
-  },
-];
+  providersTitle: "Trabajamos con las tres grandes.",
+  providersLead:
+    "Cada compañía es fuerte en algo distinto. Analizamos tu caso y te decimos cuál se adapta mejor — no imponemos ninguna.",
+  providers: [
+    {
+      name: "Prosegur",
+      desc: "Fuerte en negocios y locales comerciales. CRA propia con años de trayectoria.",
+    },
+    {
+      name: "Verisure",
+      desc: "Bueno para vivienda con niveles altos de servicio y respuesta rápida.",
+    },
+    {
+      name: "Segurma",
+      desc: "Alternativa competitiva en precio con equipamiento sólido y flexibilidad.",
+    },
+  ],
+
+  featuresTitle: "Instalación, monitoreo y respuesta.",
+  featuresLead:
+    "El servicio completo, sin sorpresas ni letra pequeña. Comparamos precio, equipamiento y condiciones para tu caso concreto.",
+  features: [
+    {
+      title: "Estudio previo",
+      desc: "Visita gratuita a tu vivienda o local para analizar puntos débiles y cobertura necesaria.",
+    },
+    {
+      title: "Instalación técnica",
+      desc: "Instaladores certificados. Equipamiento anti-inhibición y conexión a CRA 24h.",
+    },
+    {
+      title: "CRA 24h",
+      desc: "Central Receptora de Alarmas homologada. Contacto con Guardia Civil o Policía si es necesario.",
+    },
+    {
+      title: "Soporte local",
+      desc: "Si hay una incidencia con la factura o el equipo, nos llamas a nosotros. Sin call center nacional.",
+    },
+  ],
+
+  steps: [
+    {
+      title: "Nos cuentas qué proteges",
+      description: "Piso, unifamiliar, local comercial, oficina, nave. Cada caso es distinto.",
+    },
+    {
+      title: "Comparamos las tres",
+      description: "Con datos reales de las tres compañías para tu caso, sin favoritismos.",
+    },
+    {
+      title: "Recomendamos y contratas",
+      description: "Te decimos cuál te cuadra y por qué. Firmas directamente con la compañía elegida.",
+    },
+    {
+      title: "Seguimos disponibles",
+      description: "Si algún día tienes un problema, tienes teléfono local al que llamar.",
+    },
+  ],
+
+  puntosTitle: "Por qué comparamos alarmas.",
+  puntos: [
+    {
+      title: "Precio real",
+      description:
+        "El precio de una alarma cambia mucho según la compañía y el tipo de instalación. Comparamos para que no pagues más de lo necesario.",
+    },
+    {
+      title: "Sin permanencia opaca",
+      description:
+        "Te decimos exactamente cuánto es la permanencia, qué pasa si te das de baja y qué te queda por pagar. Por escrito antes de firmar.",
+    },
+    {
+      title: "Equipamiento adecuado",
+      description:
+        "No es lo mismo un piso en un tercero que un bajo comercial. Ajustamos el equipamiento a lo que realmente necesitas — ni más, ni menos.",
+    },
+    {
+      title: "Post-venta local",
+      description:
+        "Cuando surja una incidencia, nos llamas a nosotros. Hablas con quien contrató por ti, no con una centralita nacional.",
+    },
+  ],
+
+  faqs: [
+    {
+      question: "¿Cuánto cuesta comparar con vosotros?",
+      answer:
+        "Cero. La comparativa es gratuita. Nosotros cobramos comisión de la compañía elegida, no del cliente. Contratando con nosotros pagas lo mismo que si fueras directo — con la ventaja de haber comparado antes.",
+    },
+    {
+      question: "¿Podéis instalar en cualquier sitio?",
+      answer:
+        "Sí, trabajamos en toda A Coruña y comarca (Oleiros, Sada, Bergondo, Cambre, Culleredo). En zonas más alejadas también, aunque el tiempo de respuesta de la compañía puede variar — te lo confirmamos antes de firmar.",
+    },
+    {
+      question: "¿Puedo probar la alarma antes de comprometerme a la cuota?",
+      answer:
+        "Algunas compañías tienen periodo de prueba, otras no. Te decimos con exactitud las condiciones de cada una en tu caso concreto antes de firmar. Nunca te empujamos a firmar en la primera visita.",
+    },
+    {
+      question: "¿La conexión al móvil está incluida?",
+      answer:
+        "Depende del paquete. Las apps móviles suelen estar incluidas en los planes estándar, pero funciones avanzadas (visualización cámaras, control por voz) pueden ser extra. Te lo detallamos en la comparativa.",
+    },
+    {
+      question: "¿Qué pasa si me quiero dar de baja?",
+      answer:
+        "Depende de la permanencia contratada y del equipo. Te explicamos claro qué te va a costar la baja anticipada según cada compañía, antes de que firmes. Si nos preguntas después de firmar, seguimos disponibles para ayudarte.",
+    },
+  ],
+
+  ctaTitle: "¿Comparamos tu caso?",
+  ctaIntro:
+    "Cuéntanos si es para vivienda o negocio y en qué zona. Te preparamos la comparativa de las tres compañías y te llamamos en menos de 24h laborables.",
+};
 ---
 
-<BaseLayout
-  title="Alarmas multimarca en Galicia"
-  description="Comparamos las mejores compañías de alarmas y elegimos contigo. Asesoramiento gratuito, sin compromisos ocultos. Cobertura en A Coruña y toda Galicia."
-  schemaType="Service"
->
-  <SectorHero
-    category="Sector · Alarmas"
-    title="Tu seguridad,"
-    highlight="con la compañía que más te conviene."
-    description="Comparamos las mejores marcas de alarmas del mercado: precios, cobertura, conexión a CRA y atención. Te enseñamos los números claros para que elijas tú, no nosotros."
-    benefits={benefits}
-  />
-
-  <section class="qn-sector-form" aria-labelledby="alarmas-form-heading">
-    <div class="qn-container qn-sector-form-grid">
-      <div>
-        <p class="qn-eyebrow">Solicita comparativa</p>
-        <h2 id="alarmas-form-heading" class="qn-display-lg qn-sector-form-title">
-          Cuéntanos qué quieres proteger.<br /><span>Te llamamos hoy mismo.</span>
-        </h2>
-        <p class="qn-sector-form-lead">
-          Vivienda, segunda residencia, local comercial, nave… Cada caso necesita una solución distinta. Cuéntanos lo básico y te preparamos una comparativa real con los mejores presupuestos del mercado.
-        </p>
-      </div>
-      <ContactForm origen="alarmas" title="Comparativa gratuita de alarmas" description="Sin compromiso. Te llamamos en menos de 24h laborables." />
-    </div>
-  </section>
-
-  <FAQ items={faqs} title="Sobre alarmas, compañías y cómo trabajamos" />
-</BaseLayout>
-
-<style>
-  .qn-sector-form {
-    padding-block: clamp(3rem, 6vw, 5rem);
-    background: var(--color-bone);
-  }
-
-  .qn-sector-form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
-  .qn-sector-form-title {
-    margin: 1rem 0 1.25rem;
-  }
-
-  .qn-sector-form-title span {
-    color: var(--color-accent-500);
-  }
-
-  .qn-sector-form-lead {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-graphite);
-    margin: 0;
-    max-width: 30rem;
-  }
-
-  @media (min-width: 900px) {
-    .qn-sector-form-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-  }
-</style>
+<ServiceLayout {...data} />

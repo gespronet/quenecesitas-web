@@ -1,100 +1,115 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import SectorHero from "~/components/SectorHero.astro";
-import ContactForm from "~/components/ContactForm.astro";
-import FAQ from "~/components/FAQ.astro";
+import ServiceLayout from "@layouts/ServiceLayout.astro";
 
-const benefits = [
-  "Luz y gas: comparamos todas las comercializadoras del mercado libre",
-  "Análisis de tu factura actual sin coste",
-  "Cambio de compañía sin papeleo: nos ocupamos de todo",
-  "Te avisamos si tu tarifa actual ya es competitiva",
-];
+const data = {
+  slug: "energia",
+  serviceName: "Energía",
+  accentVar: "--qn-energia",
+  accentBg: "--qn-energia-50",
+  eyebrow: "Luz y gas · Optimización",
+  h1: "Optimizamos tu factura eléctrica y de gas — sin líos.",
+  heroLead:
+    "Analizamos tu consumo real, buscamos la comercializadora con mejor precio para tu perfil y gestionamos el cambio de principio a fin. Sin comisiones ocultas, sin permanencia sorpresa, sin que tú tengas que discutir con nadie.",
+  ctaPrimary: "Que analicen mi factura",
+  ctaSecondary: "672 274 969",
 
-const faqs = [
-  {
-    question: "¿Cómo sabéis qué tarifa me conviene?",
-    answer: "Lo primero es ver tu factura actual: potencia contratada, consumo medio, horario de uso y tipo de tarifa. Con esos datos comparamos qué te ofrecerían las distintas comercializadoras y elegimos contigo la que más se ajusta a tu perfil.",
-  },
-  {
-    question: "¿Y si mi tarifa actual ya es buena?",
-    answer: "Te lo decimos. No vamos a recomendarte un cambio que no te convenga solo por hacer una venta. Si ya tienes una buena tarifa, lo más honesto es que te quedes donde estás. Eso sí, conviene revisarlo cada cierto tiempo porque el mercado cambia constantemente.",
-  },
-  {
-    question: "¿Tengo que hacer yo el cambio o lo hacéis vosotros?",
-    answer: "Lo hacemos nosotros. Una vez que decides la compañía, gestionamos toda la portabilidad: contrato nuevo, baja de la antigua, lectura del contador. Tú solo firmas. El servicio no se corta en ningún momento.",
-  },
-  {
-    question: "¿Trabajáis con luz y gas a la vez?",
-    answer: "Sí. Si tienes ambos servicios, podemos compararlos juntos o por separado. A veces conviene tener cada uno con compañía distinta y otras veces sale mejor agruparlos. Te enseñamos las dos opciones con números reales.",
-  },
-];
+  featuresTitle: "Auditoría, comparativa y cambio.",
+  featuresLead:
+    "Nos ocupamos de todo el proceso. Tú solo pasas la factura actual y nosotros hacemos el resto.",
+  features: [
+    {
+      title: "Auditoría de factura",
+      desc: "Miramos qué estás pagando de más y por qué. Potencia contratada, tarifa aplicada, discriminación horaria.",
+    },
+    {
+      title: "Comparativa real",
+      desc: "Con las comercializadoras del mercado libre. Precios reales al momento, no simulaciones.",
+    },
+    {
+      title: "Cambio gestionado",
+      desc: "Nosotros gestionamos el cambio con la nueva comercializadora. Tú no discutes con nadie.",
+    },
+    {
+      title: "Seguimiento posterior",
+      desc: "A los 3 meses revisamos tu factura para confirmar que el ahorro está siendo real.",
+    },
+  ],
+
+  steps: [
+    {
+      title: "Nos pasas la factura actual",
+      description: "Por email, WhatsApp o en persona. Con eso ya podemos empezar el análisis.",
+    },
+    {
+      title: "Análisis y comparativa",
+      description: "Vemos si te ajustan bien la potencia y qué tarifa te encaja mejor entre las opciones reales.",
+    },
+    {
+      title: "Te llamamos con la propuesta",
+      description: "Sin presión ni urgencias. Te explicamos cuánto puedes ahorrar y con qué comercializadora.",
+    },
+    {
+      title: "Gestionamos el cambio",
+      description: "Si decides adelante, nosotros gestionamos la portabilidad. No tienes que llamar a nadie.",
+    },
+  ],
+
+  puntosTitle: "Por qué comparamos energía.",
+  puntos: [
+    {
+      title: "El mercado libre es un lío",
+      description:
+        "Decenas de comercializadoras, tarifas cambiantes, letra pequeña. Nuestro trabajo es descifrar ese lío por ti.",
+    },
+    {
+      title: "Sin coste para el cliente",
+      description:
+        "Cobramos comisión del proveedor final, no del cliente. Nuestro análisis y gestión te sale gratis.",
+    },
+    {
+      title: "Cero verticales",
+      description:
+        "No representamos una comercializadora concreta. Comparamos entre varias y te recomendamos la que te cuadra a ti.",
+    },
+    {
+      title: "Seguimos aquí después",
+      description:
+        "Si en 6 meses el precio sube o quieres revisar, nos llamas. Nuestro trabajo no acaba al firmar.",
+    },
+  ],
+
+  faqs: [
+    {
+      question: "¿Cuánto puedo ahorrar cambiando de comercializadora?",
+      answer:
+        "Depende mucho de la factura actual. En viviendas medias solemos ver entre un 10% y un 25% de ahorro anual cuando el cliente está en tarifa PVPC o en una tarifa fija desactualizada. Cifras concretas te las damos tras auditar tu factura.",
+    },
+    {
+      question: "¿Voy a tener corte de luz durante el cambio?",
+      answer:
+        "No. El cambio de comercializadora es administrativo: la misma red te sigue trayendo la luz, solo cambia quién te la factura. No hay corte ni intervención en tu instalación.",
+    },
+    {
+      question: "¿Qué pasa si la nueva comercializadora me sube el precio en unos meses?",
+      answer:
+        "Si has firmado precio fijo por un periodo (habitual 12 meses), no pueden subirte hasta el fin del contrato. Cuando toca renovación te avisamos y hacemos comparativa de nuevo — sin coste.",
+    },
+    {
+      question: "¿Trabajáis con autoconsumo o placas solares?",
+      answer:
+        "Estamos empezando a comparar comercializadoras que compensan bien el excedente de autoconsumo. Si tienes o vas a instalar placas, cuéntanoslo — te decimos cuál compensa mejor.",
+    },
+    {
+      question: "¿Y gas natural?",
+      answer:
+        "También. Si tienes gas natural en casa, comparamos también esa parte de la factura. Frecuentemente el mismo cambio te ahorra en las dos energías a la vez.",
+    },
+  ],
+
+  ctaTitle: "¿Pasas la factura?",
+  ctaIntro:
+    "Con un vistazo a tu factura actual te decimos si podemos ahorrarte y cuánto. Sin compromiso y sin presión comercial.",
+};
 ---
 
-<BaseLayout
-  title="Energía: luz y gas multimarca"
-  description="Comparamos tarifas de luz y gas entre todas las comercializadoras del mercado libre. Análisis gratuito de tu factura. Cambio sin papeleo."
-  schemaType="Service"
->
-  <SectorHero
-    category="Sector · Energía"
-    title="La factura más baja del mercado,"
-    highlight="sin que tengas que mover un dedo."
-    description="Comparamos tu factura de luz y gas con todas las comercializadoras del mercado libre. Si encontramos algo mejor, gestionamos el cambio por ti. Si no, te decimos que te quedes donde estás."
-    benefits={benefits}
-  />
-
-  <section class="qn-sector-form" aria-labelledby="energia-form-heading">
-    <div class="qn-container qn-sector-form-grid">
-      <div>
-        <p class="qn-eyebrow">Análisis de factura</p>
-        <h2 id="energia-form-heading" class="qn-display-lg qn-sector-form-title">
-          Pásanos tu factura.<br /><span>Te decimos cuánto puedes ahorrar.</span>
-        </h2>
-        <p class="qn-sector-form-lead">
-          Cuéntanos cómo ponernos en contacto contigo y te explicamos cómo enviarnos la factura. En menos de 24h laborables tendrás la comparativa con tres o cuatro alternativas reales y el ahorro estimado.
-        </p>
-      </div>
-      <ContactForm origen="energia" title="Análisis gratuito de tu factura" description="Te llamamos para que nos pases tu factura de la forma más cómoda." />
-    </div>
-  </section>
-
-  <FAQ items={faqs} title="Sobre luz, gas y comparativas" />
-</BaseLayout>
-
-<style>
-  .qn-sector-form {
-    padding-block: clamp(3rem, 6vw, 5rem);
-    background: var(--color-bone);
-  }
-
-  .qn-sector-form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
-  .qn-sector-form-title {
-    margin: 1rem 0 1.25rem;
-  }
-
-  .qn-sector-form-title span {
-    color: var(--color-accent-500);
-  }
-
-  .qn-sector-form-lead {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-graphite);
-    margin: 0;
-    max-width: 30rem;
-  }
-
-  @media (min-width: 900px) {
-    .qn-sector-form-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-  }
-</style>
+<ServiceLayout {...data} />

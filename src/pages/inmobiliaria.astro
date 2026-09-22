@@ -1,0 +1,562 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ContactForm from "@components/ContactForm.astro";
+import ProcessSteps from "@components/ProcessSteps.astro";
+import FAQAccordion from "@components/FAQAccordion.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import { realEstateAgentSchema, faqSchema } from "@lib/seo";
+
+const faqs = [
+  {
+    question: "¿Cuánto cuesta vender con vosotros?",
+    answer:
+      "Trabajamos con una comisión cerrada que pactamos antes de firmar nada, basada en el tipo de inmueble y el plan de comercialización. Sin sorpresas al final ni servicios extra escondidos. Te lo dejamos por escrito.",
+  },
+  {
+    question: "¿Firmo exclusividad?",
+    answer:
+      "Te explicamos las opciones — con y sin exclusividad — y los pros y contras de cada una para tu caso. No te empujamos a ninguna fórmula que no entiendas o no quieras. Hay inmuebles que se venden mejor en exclusiva y otros no.",
+  },
+  {
+    question: "¿En cuánto tiempo se vende un inmueble?",
+    answer:
+      "Depende del precio, la zona y el momento del mercado. En tu primera visita te damos un rango realista basado en operaciones similares cerradas en los últimos meses en tu zona. No prometemos lo que no podemos cumplir.",
+  },
+  {
+    question: "¿Y si la valoración que me dais es más baja de lo que esperaba?",
+    answer:
+      "Te explicamos cómo la hemos calculado y qué referencias usamos. Si crees que tu inmueble vale más, podemos intentarlo a tu precio — pero te diremos honestamente qué probabilidad le damos. No aceptamos encargos imposibles de defender.",
+  },
+  {
+    question: "¿Trabajáis con compradores que vienen del banco con hipoteca aprobada?",
+    answer:
+      "Sí, y de hecho lo agradecemos. Si vienes con financiación pre-aprobada, el proceso es mucho más rápido y limpio. Si no la tienes, también te orientamos sobre qué bancos están dando mejores condiciones para tu perfil.",
+  },
+  {
+    question: "¿En qué se diferencia esto de buscar en Idealista por mi cuenta?",
+    answer:
+      "En Idealista ves lo que está publicado al público — y muchas veces el inmueble lleva semanas o meses ahí. Nosotros tenemos cartera de inmuebles antes de que se publiquen y filtramos por ti. Además, te damos información que el anuncio no dice: por qué se vende, qué problemas reales tiene, si el precio es negociable.",
+  },
+  {
+    question: "¿Solo trabajáis viviendas o también bajos comerciales y suelo?",
+    answer:
+      "Trabajamos viviendas (piso, unifamiliar, dúplex, ático), bajos comerciales, oficinas y suelo. En cada tipología aplicamos el mismo criterio: valoración honesta, plan claro y sin sorpresas en contrato.",
+  },
+];
+
+const steps = [
+  {
+    title: "Contacto inicial",
+    description:
+      "Te llamamos en menos de 24h laborables. Te escuchamos antes de hablar — qué buscas, qué tienes, qué te preocupa.",
+  },
+  {
+    title: "Valoración y estudio",
+    description:
+      "Visita al inmueble, análisis del mercado de la zona y propuesta honesta de precio o de oportunidad. Sin compromiso.",
+  },
+  {
+    title: "Plan a medida",
+    description:
+      "Si decides trabajar con nosotros, definimos pasos, plazos y comisión por escrito. Sabes exactamente qué va a pasar.",
+  },
+  {
+    title: "Cierre y acompañamiento",
+    description:
+      "Te acompañamos hasta la firma — gestión de visitas, negociación, papeleo y notaría. Después seguimos disponibles para lo que surja.",
+  },
+];
+
+const seo = {
+  title: "Inmobiliaria en A Coruña, Oleiros, Sada y Bergondo",
+  description:
+    "Mediación inmobiliaria local con criterio. Vendemos y captamos viviendas, bajos y suelo en A Coruña y comarca. Conoce el mercado real de tu zona.",
+  additionalSchema: [realEstateAgentSchema(), faqSchema(faqs)],
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* HERO */}
+  <section class="qn-inm-hero">
+    <div class="qn-container qn-inm-hero-inner">
+      <div>
+        <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Inmobiliaria local</p>
+        <h1 class="qn-display-xl qn-inm-hero-title">
+          Vender o comprar en A Coruña y comarca, con criterio.
+        </h1>
+        <p class="qn-inm-hero-lead">
+          Conocemos cada zona porque vivimos aquí. Si tienes un inmueble en A Coruña, Oleiros, Sada o Bergondo y quieres venderlo bien, o estás buscando casa con cabeza, somos el sitio donde llamar.
+        </p>
+        <div class="qn-hero-ctas">
+          <a href="#vender" class="qn-btn qn-btn-accent">Vender mi inmueble</a>
+          <a href="#comprar" class="qn-btn qn-btn-outline">Estoy buscando</a>
+        </div>
+      </div>
+      <div class="qn-inm-hero-visual" aria-hidden="true">
+        <div class="qn-inm-card qn-inm-card-1">
+          <span class="qn-inm-card-tag">Piso · Oleiros</span>
+          <span class="qn-inm-card-title">3 hab · 95 m²</span>
+          <span class="qn-inm-card-price">Consultar</span>
+        </div>
+        <div class="qn-inm-card qn-inm-card-2">
+          <span class="qn-inm-card-tag">Casa · Sada</span>
+          <span class="qn-inm-card-title">4 hab · 180 m² + jardín</span>
+          <span class="qn-inm-card-price">Consultar</span>
+        </div>
+        <div class="qn-inm-card qn-inm-card-3">
+          <span class="qn-inm-card-tag">Bajo · A Coruña</span>
+          <span class="qn-inm-card-title">120 m² · centro</span>
+          <span class="qn-inm-card-price">Consultar</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* BLOQUE VENDER */}
+  <section class="qn-inm-vender" id="vender">
+    <div class="qn-container qn-inm-two-col">
+      <div>
+        <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Para propietarios</p>
+        <h2 class="qn-display-lg">Vende tu inmueble con quien conoce tu zona.</h2>
+        <p class="qn-inm-block-lead">
+          Captamos viviendas, bajos comerciales y suelo en A Coruña y comarca. Trabajamos con un número controlado de inmuebles porque a cada cliente le damos tiempo y atención real. Si nos encargas tu venta, sabrás siempre qué está pasando.
+        </p>
+
+        <div class="qn-inm-promises">
+          <div class="qn-inm-promise">
+            <span class="qn-inm-promise-num">01</span>
+            <div>
+              <h3>Valoración honesta</h3>
+              <p>Te decimos lo que vale tu inmueble en el mercado real, no lo que quieres oír. Si te decimos un precio, te enseñamos cómo lo hemos calculado.</p>
+            </div>
+          </div>
+          <div class="qn-inm-promise">
+            <span class="qn-inm-promise-num">02</span>
+            <div>
+              <h3>Plan claro de comercialización</h3>
+              <p>Sabes desde el primer día qué vamos a hacer: fotografía, anuncio, plazos, dónde aparecerá tu inmueble y cómo filtramos a los compradores.</p>
+            </div>
+          </div>
+          <div class="qn-inm-promise">
+            <span class="qn-inm-promise-num">03</span>
+            <div>
+              <h3>Sin contrato sorpresa</h3>
+              <p>La comisión está por escrito desde el principio. Sin servicios "extra" facturados al final ni cláusulas de exclusiva que no se hayan hablado.</p>
+            </div>
+          </div>
+          <div class="qn-inm-promise">
+            <span class="qn-inm-promise-num">04</span>
+            <div>
+              <h3>Hasta la firma y después</h3>
+              <p>Te acompañamos hasta el notario y seguimos disponibles después de cerrar. Si surge cualquier duda, sabes a quién llamar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="qn-inm-form">
+        <div class="qn-inm-form-inner">
+          <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Empezar es gratis</p>
+          <h3 class="qn-display-md">Valoramos tu inmueble sin compromiso.</h3>
+          <p>Déjanos tus datos y te llamamos en menos de 24h laborables para concertar visita.</p>
+          <ContactForm origen="inmobiliaria-vender" sector="inmobiliaria" cta="Solicitar valoración" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* BLOQUE COMPRAR */}
+  <section class="qn-inm-comprar" id="comprar">
+    <div class="qn-container qn-inm-two-col qn-inm-two-col-reverse">
+      <aside class="qn-inm-form qn-inm-form-alt">
+        <div class="qn-inm-form-inner">
+          <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Búsqueda activa</p>
+          <h3 class="qn-display-md">Dinos qué buscas.</h3>
+          <p>Te avisaremos cuando aparezca algo que encaje con tu búsqueda — antes de que lo veas en portales.</p>
+          <ContactForm origen="inmobiliaria-buscar" sector="inmobiliaria" cta="Avisarme de oportunidades" />
+        </div>
+      </aside>
+
+      <div>
+        <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Para compradores</p>
+        <h2 class="qn-display-lg">¿Estás buscando casa? Cuéntanos cómo es.</h2>
+        <p class="qn-inm-block-lead">
+          Trabajamos con cartera abierta. Si nos dices qué tipo de inmueble buscas, en qué zona y con qué presupuesto, te avisamos en cuanto entre algo que encaje. Sin spam, sin presión, sin enseñarte cien casas que no tienen nada que ver con lo que pediste.
+        </p>
+
+        <ul class="qn-inm-comprar-list">
+          <li>
+            <strong>Búsqueda activa por ti</strong>
+            <span>Te avisamos cuando entra algo que encaja — no te bombardeamos con lo que no.</span>
+          </li>
+          <li>
+            <strong>Acceso a inmuebles antes de portales</strong>
+            <span>Cartera propia de captación. Muchas veces la venta se cierra antes de publicarse.</span>
+          </li>
+          <li>
+            <strong>Asesoría neutral</strong>
+            <span>Te decimos si una vivienda merece la pena — sin presión para que compres.</span>
+          </li>
+          <li>
+            <strong>Acompañamiento hasta la firma</strong>
+            <span>Visitas, negociación, papeleo, notaría. Coordinado por nosotros.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ZONA DE ACTIVIDAD */}
+  <section class="qn-inm-area">
+    <div class="qn-container">
+      <div class="qn-bloque-head">
+        <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Dónde trabajamos</p>
+        <h2 class="qn-display-lg">A Coruña, Oleiros, Sada y Bergondo — en detalle.</h2>
+        <p class="qn-bloque-lead">
+          Conocemos cada zona porque vivimos aquí. En estos municipios conocemos los precios reales por barrio, los promotores que están construyendo y los inmuebles que llevan tiempo sin moverse — y por qué.
+        </p>
+      </div>
+      <div class="qn-inm-area-grid">
+        <div><strong>A Coruña</strong><span>Todos los barrios</span></div>
+        <div><strong>Oleiros</strong><span>Santa Cruz, Mera, Perillo, Bastiagueiro, Liáns</span></div>
+        <div><strong>Sada</strong><span>Centro, Carnoedo, Mondego</span></div>
+        <div><strong>Bergondo</strong><span>Bergondiño, Guísamo, Vixoi</span></div>
+        <div><strong>Cambre</strong><span>Núcleos urbanos</span></div>
+        <div><strong>Culleredo</strong><span>O Burgo, Acea da Ama</span></div>
+      </div>
+    </div>
+  </section>
+
+  <ProcessSteps
+    title="Un proceso claro, sin sorpresas."
+    steps={steps}
+    background="paper"
+  />
+
+  <FAQAccordion faqs={faqs} background="bone" />
+
+  <ContactCTABlock
+    title="¿Hablamos de tu caso?"
+    intro="Cuéntanos si quieres vender o comprar y en qué zona. Te llamamos en menos de 24h laborables."
+    variant="form"
+    background="brand"
+    origen="inmobiliaria"
+    sector="inmobiliaria"
+    cta="Que me llamen"
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .qn-inm-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background:
+      radial-gradient(circle at 90% 20%, var(--qn-inmobiliaria-50) 0%, transparent 45%),
+      var(--qn-bone);
+    overflow: hidden;
+  }
+  .qn-inm-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-inm-hero-inner { grid-template-columns: 1.2fr 1fr; gap: 4rem; }
+  }
+  .qn-inm-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-inm-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 60ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .qn-inm-hero-visual {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 460px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .qn-inm-card {
+    position: absolute;
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--qn-radius-xl);
+    box-shadow: var(--qn-shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 220px;
+    border-left: 3px solid var(--qn-inmobiliaria);
+    animation: qn-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .qn-inm-card-1 { top: 5%; left: 0; animation-delay: 0.1s; }
+  .qn-inm-card-2 { top: 40%; right: 0; animation-delay: 0.2s; }
+  .qn-inm-card-3 { bottom: 5%; left: 10%; animation-delay: 0.3s; }
+  .qn-inm-card-tag {
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-inmobiliaria);
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-inm-card-title {
+    font-weight: var(--qn-fw-semibold);
+    color: var(--qn-ink);
+    font-size: var(--qn-fs-md);
+  }
+  .qn-inm-card-price {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+  }
+
+  @media (max-width: 700px) {
+    .qn-inm-hero-visual { display: none; }
+  }
+
+  /* BLOQUES VENDER Y COMPRAR */
+  .qn-inm-vender,
+  .qn-inm-comprar {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    scroll-margin-top: 5rem;
+  }
+  .qn-inm-vender { background: var(--qn-white); }
+  .qn-inm-comprar { background: var(--qn-paper); }
+
+  .qn-inm-two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .qn-inm-two-col { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+    .qn-inm-two-col-reverse { grid-template-columns: 1fr 1.3fr; }
+  }
+
+  .qn-inm-block-lead {
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    margin: 1rem 0 2.5rem;
+    max-width: 55ch;
+    font-size: var(--qn-fs-md);
+  }
+
+  /* PROMISES */
+  .qn-inm-promises {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .qn-inm-promise {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .qn-inm-promise-num {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-inmobiliaria);
+    background: var(--qn-inmobiliaria-50);
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--qn-radius-pill);
+    letter-spacing: var(--qn-tracking-wide);
+    line-height: 1;
+    min-width: 44px;
+    text-align: center;
+  }
+  .qn-inm-promise h3 {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    margin: 0 0 0.375rem;
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-inm-promise p {
+    margin: 0;
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    font-size: var(--qn-fs-base);
+  }
+
+  /* FORM STICKY */
+  .qn-inm-form {
+    position: relative;
+  }
+  @media (min-width: 1000px) {
+    .qn-inm-form {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .qn-inm-form-inner {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
+    padding: 2.5rem;
+    border-radius: var(--qn-radius-2xl);
+    box-shadow: var(--qn-shadow-lg);
+  }
+  .qn-inm-form-inner h3 {
+    color: var(--qn-white);
+    margin: 0.5rem 0 0.75rem;
+  }
+  .qn-inm-form-inner > p {
+    color: rgba(255,255,255,0.85);
+    margin: 0 0 1.75rem;
+    font-size: var(--qn-fs-base);
+    line-height: var(--qn-lh-relaxed);
+  }
+  .qn-inm-form-inner .qn-eyebrow {
+    color: var(--qn-inmobiliaria) !important;
+  }
+
+  /* Formulario dentro del box: contraste correcto */
+  .qn-inm-form-inner :global(.qn-field label) {
+    color: rgba(255,255,255,0.85);
+  }
+  .qn-inm-form-inner :global(.qn-field input),
+  .qn-inm-form-inner :global(.qn-field select),
+  .qn-inm-form-inner :global(.qn-field textarea) {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+    color: var(--qn-white);
+  }
+  .qn-inm-form-inner :global(.qn-field input::placeholder),
+  .qn-inm-form-inner :global(.qn-field textarea::placeholder) {
+    color: rgba(255,255,255,0.4);
+  }
+  .qn-inm-form-inner :global(.qn-field input:focus),
+  .qn-inm-form-inner :global(.qn-field select:focus),
+  .qn-inm-form-inner :global(.qn-field textarea:focus) {
+    border-color: var(--qn-white);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+  }
+  .qn-inm-form-inner :global(.qn-checkbox) {
+    color: rgba(255,255,255,0.85);
+  }
+  .qn-inm-form-inner :global(.qn-checkbox a) {
+    color: var(--qn-white);
+  }
+
+  .qn-inm-form-alt .qn-inm-form-inner {
+    background: var(--qn-white);
+    color: var(--qn-ink);
+    border: 1px solid var(--qn-mist);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner h3 { color: var(--qn-ink); }
+  .qn-inm-form-alt .qn-inm-form-inner > p { color: var(--qn-graphite); }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field label) {
+    color: var(--qn-ink-soft);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field input),
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field select),
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field textarea) {
+    background: var(--qn-white);
+    border-color: var(--qn-mist);
+    color: var(--qn-ink);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field input::placeholder),
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field textarea::placeholder) {
+    color: var(--qn-stone);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field input:focus),
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field select:focus),
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-field textarea:focus) {
+    border-color: var(--qn-brand-700);
+    box-shadow: 0 0 0 3px var(--qn-brand-100);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-checkbox) {
+    color: var(--qn-ink-soft);
+  }
+  .qn-inm-form-alt .qn-inm-form-inner :global(.qn-checkbox a) {
+    color: var(--qn-brand-700);
+  }
+
+  /* COMPRAR LIST */
+  .qn-inm-comprar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .qn-inm-comprar-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--qn-inmobiliaria);
+  }
+  .qn-inm-comprar-list strong {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-inm-comprar-list span {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-base);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  /* ZONA DE ACTIVIDAD */
+  .qn-inm-area {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+  .qn-inm-area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .qn-inm-area-grid > div {
+    background: var(--qn-inmobiliaria-50);
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--qn-radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    border-left: 3px solid var(--qn-inmobiliaria);
+  }
+  .qn-inm-area-grid strong {
+    font-family: var(--qn-font-sans);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-inmobiliaria);
+    font-size: var(--qn-fs-md);
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-inm-area-grid span {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-ink-soft);
+    line-height: var(--qn-lh-normal);
+  }
+</style>

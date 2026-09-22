@@ -1,87 +1,77 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-
-const lastUpdate = "9 de mayo de 2026";
+import LegalLayout from "@layouts/LegalLayout.astro";
 ---
 
-<BaseLayout
+<LegalLayout
   title="Política de cookies"
-  description="Política de cookies de queNECESITAS conforme a la LSSI-CE."
+  description="Política de cookies de queNECESITAS. Información sobre las cookies utilizadas en el sitio web y cómo gestionarlas."
+  updated="Enero 2026"
 >
-  <section class="qn-legal">
-    <div class="qn-container qn-legal-inner">
-      <p class="qn-eyebrow">Información legal</p>
-      <h1 class="qn-display-lg qn-legal-title">Política de cookies</h1>
-      <p class="qn-legal-update">Última actualización: {lastUpdate}</p>
 
-      <div class="qn-legal-body">
-        <h2>1. ¿Qué son las cookies?</h2>
-        <p>
-          Una cookie es un pequeño archivo que un sitio web descarga en tu navegador cuando lo visitas. Las cookies permiten al sitio recordar tus acciones y preferencias durante un periodo de tiempo, para que no tengas que volver a configurarlas cada vez que regreses al sitio o navegues por sus páginas.
-        </p>
+<h2>1. ¿Qué son las cookies?</h2>
 
-        <h2>2. Cookies utilizadas en este sitio web</h2>
-        <p>
-          En el momento de la última actualización de esta política, este sitio web utiliza únicamente cookies estrictamente necesarias para su funcionamiento. No empleamos cookies analíticas ni publicitarias de terceros sin tu consentimiento expreso.
-        </p>
+<p>Las cookies son pequeños archivos de texto que se almacenan en el dispositivo del usuario (ordenador, móvil, tableta) al visitar un sitio web. Permiten al sitio recordar información sobre tu visita (idioma, preferencias, sesión) y también recopilan datos sobre cómo interactúas con la web.</p>
 
-        <h2>3. Tipos de cookies por finalidad</h2>
-        <ul>
-          <li><strong>Cookies técnicas o estrictamente necesarias:</strong> permiten al usuario la navegación a través del sitio web y la utilización de las diferentes opciones o servicios que en ella existan. Estas cookies no requieren consentimiento.</li>
-          <li><strong>Cookies de personalización:</strong> permiten al usuario acceder al servicio con algunas características de carácter general predefinidas en función de una serie de criterios.</li>
-          <li><strong>Cookies de análisis:</strong> permiten al responsable cuantificar el número de usuarios y realizar la medición y análisis estadístico de la utilización que hacen de los servicios prestados.</li>
-          <li><strong>Cookies publicitarias:</strong> permiten la gestión, de la forma más eficaz posible, de los espacios publicitarios.</li>
-          <li><strong>Cookies de publicidad comportamental:</strong> almacenan información del comportamiento de los usuarios obtenida a través de la observación continuada de sus hábitos de navegación.</li>
-        </ul>
+<p>La normativa vigente (Directiva ePrivacy, LSSI-CE art. 22.2 y RGPD) exige informarte sobre las cookies que utilizamos y obtener tu consentimiento antes de instalar aquellas que no sean estrictamente necesarias.</p>
 
-        <h2>4. Consentimiento</h2>
-        <p>
-          Al acceder al sitio web por primera vez, verás un aviso informándote del uso de cookies y de la posibilidad de configurarlas o rechazarlas. Si continúas navegando o haces clic en el botón "Aceptar", consientes el uso de cookies.
-        </p>
+<h2>2. Tipos de cookies que utilizamos</h2>
 
-        <h2>5. Cómo gestionar y desactivar las cookies</h2>
-        <p>
-          Puedes permitir, bloquear o eliminar las cookies instaladas en tu equipo mediante la configuración de las opciones del navegador. A continuación te facilitamos enlaces a las instrucciones de los principales navegadores:
-        </p>
-        <ul>
-          <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
-          <li><a href="https://support.mozilla.org/es/kb/proteccion-antirrastreo-mejorada-firefox-escritorio" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
-          <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Apple Safari</a></li>
-          <li><a href="https://support.microsoft.com/es-es/microsoft-edge" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
-        </ul>
+<h3>2.1. Cookies técnicas (estrictamente necesarias)</h3>
+<p>Son imprescindibles para el funcionamiento del sitio web. No requieren consentimiento porque sin ellas el sitio no funcionaría correctamente.</p>
 
-        <h2>6. Modificaciones</h2>
-        <p>
-          El responsable se reserva el derecho a modificar la presente política para adaptarla a novedades legislativas o jurisprudenciales, así como a las que pudieran derivarse de los usos y costumbres establecidos en cada momento.
-        </p>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+<table>
+  <tr>
+    <th>Cookie</th>
+    <th>Finalidad</th>
+    <th>Duración</th>
+  </tr>
+  <tr>
+    <td>Sesión</td>
+    <td>Mantener la sesión del usuario durante la navegación</td>
+    <td>Sesión</td>
+  </tr>
+  <tr>
+    <td>Consentimiento cookies</td>
+    <td>Recordar tu elección respecto a las cookies</td>
+    <td>12 meses</td>
+  </tr>
+</table>
 
-<style>
-  .qn-legal { padding-block: clamp(3rem, 6vw, 5rem) clamp(4rem, 7vw, 6rem); }
-  .qn-legal-inner { max-width: 780px; }
-  .qn-legal-title { margin: 1rem 0 0.5rem; }
-  .qn-legal-update {
-    font-size: 0.875rem;
-    color: var(--color-stone);
-    margin: 0 0 2.5rem;
-  }
-  .qn-legal-body {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: var(--color-ink-soft);
-  }
-  .qn-legal-body h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
-  .qn-legal-body p { margin: 0 0 1rem; }
-  .qn-legal-body ul { margin: 0 0 1.25rem; padding-left: 1.25rem; }
-  .qn-legal-body li { margin: 0 0 0.4rem; }
-  .qn-legal-body strong { color: var(--color-brand-600); font-weight: 600; }
-  .qn-legal-body a {
-    color: var(--color-brand-600);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-  }
-</style>
+<h3>2.2. Cookies de rendimiento y análisis</h3>
+<p>Nos ayudan a entender cómo los usuarios interactúan con el sitio (páginas más visitadas, tiempo de estancia, etc.) para mejorarlo. Son anónimas y agregadas — no identifican a personas concretas.</p>
+
+<blockquote>
+<p><strong>Actualmente no utilizamos cookies analíticas de terceros</strong> (Google Analytics u otras). Si en el futuro las incorporamos, actualizaremos esta política y solicitaremos tu consentimiento previamente.</p>
+</blockquote>
+
+<h3>2.3. Cookies de marketing y publicidad</h3>
+<p>No utilizamos cookies publicitarias ni de terceros con fines comerciales.</p>
+
+<h2>3. Cookies de terceros</h2>
+
+<p>Si el sitio embebe contenido de terceros (por ejemplo, un vídeo de YouTube o un mapa de Google), esos terceros pueden instalar sus propias cookies. Actualmente <strong>no incrustamos contenido de terceros que instale cookies</strong> en este sitio.</p>
+
+<h2>4. ¿Cómo gestionar las cookies?</h2>
+
+<h3>4.1. Desde el sitio web</h3>
+<p>La primera vez que visitas la web, un banner te permite aceptar, rechazar o configurar las cookies opcionales. Puedes revocar tu consentimiento en cualquier momento borrando la cookie de consentimiento de tu navegador.</p>
+
+<h3>4.2. Desde tu navegador</h3>
+<p>La mayoría de navegadores permiten controlar las cookies desde su configuración. Puedes bloquearlas, eliminarlas o recibir un aviso antes de que se almacenen. Ten en cuenta que bloquear las cookies técnicas puede impedir el correcto funcionamiento del sitio.</p>
+
+<ul>
+  <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+  <li><a href="https://support.mozilla.org/es/kb/proteccion-antirrastreo-mejorada-firefox-escritorio" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+  <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+  <li><a href="https://support.microsoft.com/es-es/windows/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener">Microsoft Edge</a></li>
+</ul>
+
+<h2>5. Cambios en esta política</h2>
+
+<p>Podemos actualizar esta política si añadimos nuevas cookies o cambian las que utilizamos. En caso de cambios significativos, actualizaremos la fecha de última modificación y, si procede, volveremos a solicitar tu consentimiento.</p>
+
+<h2>6. Contacto</h2>
+
+<p>Para cualquier duda sobre esta política de cookies, puedes escribirnos a <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>.</p>
+
+</LegalLayout>

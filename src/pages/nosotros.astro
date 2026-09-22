@@ -1,0 +1,314 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ServicePoints from "@components/ServicePoints.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+
+const seo = {
+  title: "Sobre nosotros · queNECESITAS y Gespronet",
+  description:
+    "queNECESITAS es la plataforma multiservicio de Gespronet en Galicia. Alarmas, energía, telefonía, inmobiliaria, inversión y ciberseguridad — con equipo propio en Oleiros, sin franquicia.",
+};
+
+const bloques = [
+  {
+    color: "var(--qn-alarmas)",
+    label: "Servicios cotidianos",
+    text: "Alarmas, energía y telefonía — comparador con criterio local para particulares y micronegocios.",
+  },
+  {
+    color: "var(--qn-inmobiliaria)",
+    label: "Inmobiliaria",
+    text: "Mediación local en A Coruña y comarca. Compraventa clásica con criterio profesional.",
+  },
+  {
+    color: "var(--qn-npl)",
+    label: "Inversión",
+    text: "Venta directa de activos bancarios y NPL para inversores cualificados y family office.",
+  },
+  {
+    color: "var(--qn-cyber)",
+    label: "Ciberseguridad",
+    text: "Servicio B2B enterprise en partnership con O4IT para empresas de 50+ empleados.",
+  },
+];
+
+const valores = [
+  {
+    title: "Somos de aquí",
+    description:
+      "En Oleiros desde el primer día. Conocemos la comarca porque vivimos en ella. Cada zona, cada barrio, cada calle. No aprendemos el territorio en un manual.",
+  },
+  {
+    title: "Sin franquicia",
+    description:
+      "Equipo propio. Cuando llamas, hablas con quien lleva tu caso — no con una centralita nacional que aplica un protocolo enlatado. Las decisiones se toman aquí.",
+  },
+  {
+    title: "Con criterio profesional",
+    description:
+      "Formación jurídica, financiera y técnica detrás de cada recomendación. Lo cercano no significa improvisado. Y lo técnico no significa lejano.",
+  },
+  {
+    title: "Honestidad como norma",
+    description:
+      "Si algo no te conviene, te lo decimos. Preferimos perder un encargo a colocarte algo que no te aporte valor real. Este es el filtro que nos define.",
+  },
+];
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* HERO */}
+  <section class="qn-us-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Sobre nosotros</p>
+      <h1 class="qn-display-xl qn-us-hero-title">
+        Somos de aquí. Y trabajamos como tal.
+      </h1>
+      <p class="qn-us-hero-lead">
+        queNECESITAS es la plataforma multiservicio de <strong>Gespronet Axencia de Marketing e Deseño, S.L.</strong>, con sede en Oleiros. Servicios cotidianos, operaciones inmobiliarias, inversión y ciberseguridad empresarial — todo bajo una misma casa, atendido por gente que vive aquí, con criterio local y sin franquicia.
+      </p>
+    </div>
+  </section>
+
+  {/* TESIS */}
+  <section class="qn-us-tesis">
+    <div class="qn-container qn-us-tesis-inner">
+      <div>
+        <p class="qn-eyebrow">Nuestra tesis</p>
+        <h2 class="qn-display-lg">Una casa, cuatro verticales — un mismo criterio.</h2>
+        <p class="qn-us-tesis-lead">
+          queNECESITAS nace de una convicción simple: la gente y las empresas de esta comarca merecen tratar con quien está aquí, entiende su contexto y responde con criterio.
+        </p>
+        <p class="qn-us-tesis-lead">
+          Frente a las franquicias nacionales (que aplican protocolo y no conocen tu zona) y frente al conocido que hace un poco de todo (sin producto real detrás), nosotros somos una casa con cuatro verticales bien pensadas — cada una con su equipo, su proceso y su tono.
+        </p>
+      </div>
+
+      <div class="qn-us-bloques">
+        {bloques.map((b) => (
+          <div class="qn-us-bloque" style={`--bloque-color: ${b.color}`}>
+            <div class="qn-us-bloque-dot"></div>
+            <div>
+              <strong>{b.label}</strong>
+              <span>{b.text}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ServicePoints
+    eyebrow="Lo que nos define"
+    title="Cuatro cosas que no negociamos."
+    points={valores}
+    layout="grid"
+    background="paper"
+  />
+
+  {/* EMPRESA */}
+  <section class="qn-us-empresa">
+    <div class="qn-container">
+      <div class="qn-bloque-head">
+        <p class="qn-eyebrow">La empresa detrás</p>
+        <h2 class="qn-display-lg">Gespronet, en Oleiros desde 2019.</h2>
+        <p class="qn-bloque-lead">
+          queNECESITAS es una marca comercial de Gespronet Axencia de Marketing e Deseño, S.L. Somos empresa gallega, con CIF, sede física y cuentas depositadas en el Registro Mercantil de A Coruña.
+        </p>
+      </div>
+
+      <div class="qn-us-empresa-grid">
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Razón social</span>
+          <span class="qn-us-data-value">Gespronet Axencia de Marketing e Deseño, S.L.</span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">CIF</span>
+          <span class="qn-us-data-value">B75490136</span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Sede social</span>
+          <span class="qn-us-data-value">Rúa do Souto 1, Porto de Santa Cruz<br />15179 Oleiros · A Coruña</span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Registro</span>
+          <span class="qn-us-data-value">Registro Mercantil de A Coruña</span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Teléfono</span>
+          <span class="qn-us-data-value"><a href="tel:672274969">672 274 969</a></span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Email</span>
+          <span class="qn-us-data-value"><a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a></span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Horario</span>
+          <span class="qn-us-data-value">Lunes a viernes<br />8:00 — 16:00</span>
+        </div>
+        <div class="qn-us-data">
+          <span class="qn-us-data-label">Zona natural</span>
+          <span class="qn-us-data-value">A Coruña · Oleiros · Sada · Bergondo · Cambre · Culleredo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ContactCTABlock
+    title="¿Empezamos por dónde tú digas?"
+    intro="Cuéntanos qué necesitas — un servicio cotidiano, mediar en una operación inmobiliaria, hablar de inversión o de ciberseguridad — y te llamamos en menos de 24 horas laborables."
+    variant="form"
+    background="brand"
+    origen="nosotros"
+    sector="general"
+    cta="Que me llamen"
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .qn-us-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  }
+  .qn-us-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-us-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 65ch;
+    margin: 0;
+  }
+  .qn-us-hero-lead strong {
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+  }
+
+  /* TESIS */
+  .qn-us-tesis {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-us-tesis-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-us-tesis-inner { grid-template-columns: 1.2fr 1fr; gap: 4rem; }
+  }
+  .qn-us-tesis-lead {
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    margin: 1rem 0 0;
+    font-size: var(--qn-fs-md);
+  }
+  .qn-us-tesis-lead + .qn-us-tesis-lead { margin-top: 1rem; }
+
+  .qn-us-bloques {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .qn-us-bloque {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem 1.5rem;
+    background: var(--qn-bone);
+    border-radius: var(--qn-radius-lg);
+    border-left: 3px solid var(--bloque-color);
+    transition: transform var(--qn-transition-base);
+  }
+  .qn-us-bloque:hover {
+    transform: translateX(4px);
+  }
+  .qn-us-bloque-dot {
+    width: 12px; height: 12px;
+    background: var(--bloque-color);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .qn-us-bloque strong {
+    display: block;
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-md);
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+    letter-spacing: var(--qn-tracking-tight);
+    margin-bottom: 0.25rem;
+  }
+  .qn-us-bloque span {
+    display: block;
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  /* EMPRESA */
+  .qn-us-empresa {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-bone);
+  }
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  .qn-us-empresa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .qn-us-data {
+    background: var(--qn-white);
+    padding: 1.5rem;
+    border-radius: var(--qn-radius-lg);
+    border: 1px solid var(--qn-mist);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .qn-us-data-label {
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-us-data-value {
+    color: var(--qn-ink);
+    font-family: var(--qn-font-sans);
+    font-weight: var(--qn-fw-medium);
+    line-height: var(--qn-lh-normal);
+    font-size: var(--qn-fs-base);
+  }
+  .qn-us-data a {
+    color: var(--qn-brand-700);
+    text-decoration: none;
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-us-data a:hover { text-decoration: underline; }
+</style>

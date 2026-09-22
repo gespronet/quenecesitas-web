@@ -1,0 +1,173 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  updated: string;
+}
+
+const { title, description, updated } = Astro.props;
+
+const seo = {
+  title,
+  description,
+  noindex: false, // Las legales SÍ se indexan (obligatorio para transparencia)
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  <section class="qn-legal-hero">
+    <div class="qn-container qn-container-narrow">
+      <p class="qn-eyebrow">Legal</p>
+      <h1 class="qn-display-lg qn-legal-title">{title}</h1>
+      <p class="qn-legal-updated">Última actualización: {updated}</p>
+    </div>
+  </section>
+
+  <section class="qn-legal-body">
+    <div class="qn-container qn-container-narrow">
+      <div class="qn-legal-content">
+        <slot />
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style is:global>
+  /* HERO legal */
+  .qn-legal-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(1.5rem, 3vw, 2rem);
+    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  }
+  .qn-legal-title {
+    margin: 1rem 0 0.5rem;
+  }
+  .qn-legal-updated {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    margin: 0;
+  }
+
+  /* BODY legal */
+  .qn-legal-body {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
+  }
+
+  .qn-legal-content {
+    max-width: 720px;
+    margin: 0 auto;
+    color: var(--qn-ink-soft);
+    font-size: var(--qn-fs-base);
+    line-height: var(--qn-lh-loose);
+  }
+
+  .qn-legal-content h2 {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-2xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-tight);
+    margin: 3rem 0 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--qn-brand-100);
+  }
+
+  .qn-legal-content h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .qn-legal-content h3 {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-snug);
+    margin: 2rem 0 0.75rem;
+  }
+
+  .qn-legal-content p {
+    margin: 0 0 1rem;
+  }
+
+  .qn-legal-content ul,
+  .qn-legal-content ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+    list-style: revert;
+  }
+
+  .qn-legal-content li {
+    margin-bottom: 0.5rem;
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  .qn-legal-content a {
+    color: var(--qn-brand-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: var(--qn-fw-medium);
+  }
+
+  .qn-legal-content a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .qn-legal-content strong {
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+  }
+
+  .qn-legal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 2rem;
+    font-size: var(--qn-fs-sm);
+    background: var(--qn-bone);
+    border-radius: var(--qn-radius-lg);
+    overflow: hidden;
+  }
+
+  .qn-legal-content th {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
+    font-weight: var(--qn-fw-semibold);
+    text-align: left;
+    padding: 0.875rem 1rem;
+    font-size: var(--qn-fs-sm);
+  }
+
+  .qn-legal-content td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--qn-mist);
+    vertical-align: top;
+  }
+
+  .qn-legal-content tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .qn-legal-content blockquote {
+    background: var(--qn-brand-50);
+    border-left: 3px solid var(--qn-brand-700);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 var(--qn-radius-md) var(--qn-radius-md) 0;
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-ink-soft);
+  }
+
+  .qn-legal-content blockquote p:last-child {
+    margin-bottom: 0;
+  }
+</style>

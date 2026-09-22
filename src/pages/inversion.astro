@@ -1,0 +1,463 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ServicePoints from "@components/ServicePoints.astro";
+import FAQAccordion from "@components/FAQAccordion.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import { faqSchema } from "@lib/seo";
+
+const productos = [
+  {
+    key: "venta-directa",
+    color: "var(--qn-venta-directa)",
+    bg: "var(--qn-venta-directa-50)",
+    label: "Venta Directa",
+    tag: "Activos bancarios",
+    text: "Inmuebles procedentes de bancos, fondos y entidades financieras. Precios por debajo de mercado, con análisis previo de cargas, ocupación y situación registral.",
+    features: ["Análisis registral", "Estudio de cargas", "Ratios reales"],
+    perfil: "Inversor individual o family office",
+    ticket: "Ticket medio · desde 60.000 €",
+    href: "/venta-directa",
+  },
+  {
+    key: "npl",
+    color: "var(--qn-npl)",
+    bg: "var(--qn-npl-50)",
+    label: "NPL",
+    tag: "Carteras y lotes",
+    text: "Préstamos hipotecarios fallidos con inmueble asociado o carteras de deuda. Due diligence rigurosa antes de presentar la operación. Discreción total.",
+    features: ["Cartera única o lote", "Análisis subyacente", "Plan de recuperación"],
+    perfil: "Family office e institucional",
+    ticket: "Ticket medio · desde 300.000 €",
+    href: "/npl",
+  },
+];
+
+const criterios = [
+  {
+    title: "Análisis cuantitativo",
+    description:
+      "No proyectamos rentabilidades teóricas. Trabajamos con ratios reales del mercado gallego y del sur de Galicia, con datos históricos verificables.",
+  },
+  {
+    title: "Conocimiento jurídico-financiero",
+    description:
+      "Derecho hipotecario, procedimientos de ejecución, situaciones registrales complejas. Sabemos qué preguntar y qué revisar en cada operación.",
+  },
+  {
+    title: "Red local en Galicia",
+    description:
+      "Tasadores, abogados de contacto y peritos de campo en A Coruña, Pontevedra y Vigo. Para validar valoraciones y resolver contingencias específicas de cada activo.",
+  },
+  {
+    title: "Discreción",
+    description:
+      "Las operaciones no se hablan más de lo necesario. Tu nombre, tu interés y tu ticket no aparecen en ningún sitio hasta que tú digas lo contrario.",
+  },
+];
+
+const faqs = [
+  {
+    question: "¿Con qué tipo de operaciones trabajáis?",
+    answer:
+      "Dos grandes líneas. Venta Directa: inmuebles cerrados procedentes de bancos, sareb y fondos, con análisis previo de cargas y ratios de rentabilidad reales. NPL: préstamos hipotecarios fallidos con inmueble asociado, cartera única o en lotes según origen. En ambas hacemos due diligence antes de presentártelas.",
+  },
+  {
+    question: "¿Qué proceso seguís antes de proponer una operación?",
+    answer:
+      "Revisamos situación registral, cargas y limitaciones, estado ocupacional del inmueble, comparables reales del mercado gallego, ratios de rentabilidad bruta y neta y escenarios de salida. Si algo no nos convence, te lo decimos antes de presentarte la operación.",
+  },
+  {
+    question: "¿Trabajáis fuera de Galicia?",
+    answer:
+      "Nuestro foco natural es Galicia — donde tenemos red local de tasadores, abogados y peritos. En operaciones singulares en Asturias y Castilla y León estudiamos caso a caso. No trabajamos operaciones lejanas donde no podamos hacer verificación de campo directa.",
+  },
+  {
+    question: "¿Cuál es el ticket mínimo con el que trabajáis?",
+    answer:
+      "Depende del producto. Para Venta Directa, ticket medio desde 60.000 €. Para NPL, ticket medio desde 300.000 € — habitualmente lotes o carteras. Casos por debajo los estudiamos pero puede que no sean rentables operar por ambas partes.",
+  },
+  {
+    question: "¿Cómo cobráis vuestros honorarios?",
+    answer:
+      "Nuestro sistema de honorarios se acuerda por escrito antes de cualquier propuesta formal. Depende del tipo de operación y del rol nuestro (asesor, intermediario, coordinador integral). Todo transparente antes de firmar un mandato.",
+  },
+];
+
+const seo = {
+  title: "Inversión inmobiliaria en Galicia · Venta Directa y NPL",
+  description:
+    "Selección y análisis previo de activos NPL y ventas directas para inversores cualificados y family office en Galicia. Due diligence rigurosa antes de cada propuesta.",
+  additionalSchema: faqSchema(faqs),
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* HERO */}
+  <section class="qn-inv-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow" style="color: var(--qn-npl)">Inversión inmobiliaria</p>
+      <h1 class="qn-display-xl qn-inv-hero-title">
+        Activos seleccionados, no listados sin filtrar.
+      </h1>
+      <p class="qn-inv-hero-lead">
+        Selección y análisis previo de oportunidades para inversores cualificados y family office. Trabajamos con bancos, sareb, fondos y entidades financieras. Cada operación pasa por nuestra due diligence antes de llegar a tu mesa.
+      </p>
+      <div class="qn-hero-ctas">
+        <a href="#contacto" class="qn-btn qn-btn-accent">Hablar con un asesor</a>
+        <a href="#productos" class="qn-btn qn-btn-outline">Ver productos</a>
+      </div>
+    </div>
+  </section>
+
+  {/* PRODUCTOS */}
+  <section class="qn-bloque" id="productos">
+    <div class="qn-container">
+      <div class="qn-bloque-head">
+        <p class="qn-eyebrow" style="color: var(--qn-npl)">Dos líneas de producto</p>
+        <h2 class="qn-display-lg">Cada operación con su análisis previo.</h2>
+        <p class="qn-bloque-lead">
+          Trabajamos dos verticales muy diferentes. Elige la que encaja con tu perfil o hablamos y te orientamos.
+        </p>
+      </div>
+
+      <div class="qn-inv-grid">
+        {productos.map((p) => (
+          <a href={p.href} class="qn-inv-card" style={`--card-accent: ${p.color}; --card-bg: ${p.bg}`}>
+            <div class="qn-inv-card-header">
+              <div class="qn-inv-card-tag">
+                <span class="qn-inv-card-dot"></span>
+                {p.tag}
+              </div>
+              <h3 class="qn-inv-card-title">{p.label}</h3>
+            </div>
+
+            <p class="qn-inv-card-text">{p.text}</p>
+
+            <ul class="qn-inv-card-features">
+              {p.features.map((f) => <li>{f}</li>)}
+            </ul>
+
+            <div class="qn-inv-card-meta">
+              <div>
+                <span class="qn-inv-card-meta-label">Perfil</span>
+                <span class="qn-inv-card-meta-value">{p.perfil}</span>
+              </div>
+              <div>
+                <span class="qn-inv-card-meta-label">Referencia</span>
+                <span class="qn-inv-card-meta-value">{p.ticket}</span>
+              </div>
+            </div>
+
+            <span class="qn-inv-card-link">
+              Explorar producto
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ServicePoints
+    eyebrow="Nuestro criterio"
+    title="Cuatro cosas que no negociamos."
+    points={criterios}
+    layout="grid"
+    background="paper"
+  />
+
+  {/* PROCESO */}
+  <section class="qn-inv-proceso">
+    <div class="qn-container">
+      <div class="qn-bloque-head">
+        <p class="qn-eyebrow" style="color: var(--qn-npl)">Cómo trabajamos</p>
+        <h2 class="qn-display-lg">Análisis previo, propuesta con criterio.</h2>
+      </div>
+
+      <ol class="qn-inv-steps">
+        <li>
+          <div class="qn-inv-step-num">01</div>
+          <h3>Conocemos tu perfil</h3>
+          <p>Tipo de activo que te interesa, ticket, horizonte temporal, restricciones jurídicas o fiscales. Solo así filtramos lo relevante.</p>
+        </li>
+        <li>
+          <div class="qn-inv-step-num">02</div>
+          <h3>Análisis previo del activo</h3>
+          <p>Revisión registral, cargas, situación ocupacional, ratios de rentabilidad bruta y neta, escenarios de salida. Te entregamos informe sintético con los puntos críticos.</p>
+        </li>
+        <li>
+          <div class="qn-inv-step-num">03</div>
+          <h3>Presentación con criterio</h3>
+          <p>Solo te presentamos operaciones que pasen nuestro filtro. Si una operación tiene un riesgo que no nos convence, te lo decimos antes de gastar tu tiempo.</p>
+        </li>
+        <li>
+          <div class="qn-inv-step-num">04</div>
+          <h3>Acompañamiento al cierre</h3>
+          <p>Coordinación con notaría, registro, asesoría jurídica y financiera. Te dejamos cerrada la operación — no a medio camino.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <FAQAccordion faqs={faqs} background="bone" />
+
+  <div id="contacto">
+    <ContactCTABlock
+      title="Cuéntanos qué tipo de operación te interesa."
+      intro="Te llamamos en menos de 24 horas laborables. Sin compromiso, sin registro en base de datos, sin comunicaciones comerciales masivas después. Discreción como norma."
+      variant="form"
+      background="brand"
+      origen="inversion-hub"
+      sector="inversion"
+      cta="Hablar con un asesor"
+    />
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .qn-inv-hero {
+    padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 5vw, 4rem);
+    background:
+      linear-gradient(180deg, var(--qn-brand-900) 0%, var(--qn-brand-800) 100%);
+    color: var(--qn-bone);
+  }
+  .qn-inv-hero-title {
+    color: var(--qn-white);
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-inv-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: rgba(255,255,255,0.8);
+    max-width: 62ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .qn-inv-hero .qn-btn-outline {
+    color: var(--qn-white);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .qn-inv-hero .qn-btn-outline:hover {
+    background: var(--qn-white);
+    color: var(--qn-brand-800);
+  }
+
+  /* BLOQUE productos */
+  .qn-bloque { padding: clamp(4rem, 8vw, 6rem) 0; }
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  /* Cards de producto — más grandes y sobrias */
+  .qn-inv-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (min-width: 800px) {
+    .qn-inv-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .qn-inv-card {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-2xl);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    text-decoration: none;
+    color: var(--qn-ink);
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base), border-color var(--qn-transition-base);
+    position: relative;
+    overflow: hidden;
+  }
+  .qn-inv-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--card-accent);
+    opacity: 0;
+    transition: opacity var(--qn-transition-base);
+  }
+  .qn-inv-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--qn-shadow-lg);
+    border-color: transparent;
+  }
+  .qn-inv-card:hover::before { opacity: 1; }
+
+  .qn-inv-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .qn-inv-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-graphite);
+  }
+  .qn-inv-card-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--card-accent);
+  }
+  .qn-inv-card-title {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-2xl);
+    font-weight: var(--qn-fw-bold);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-tight);
+    margin: 0;
+  }
+  .qn-inv-card-text {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-base);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
+  }
+
+  .qn-inv-card-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .qn-inv-card-features li {
+    background: var(--card-bg);
+    color: var(--card-accent);
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
+  }
+
+  .qn-inv-card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-lg);
+    border-left: 3px solid var(--card-accent);
+  }
+  .qn-inv-card-meta-label {
+    display: block;
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-stone);
+    font-weight: var(--qn-fw-semibold);
+    margin-bottom: 0.25rem;
+  }
+  .qn-inv-card-meta-value {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+    line-height: var(--qn-lh-snug);
+  }
+
+  .qn-inv-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--card-accent);
+    font-weight: var(--qn-fw-semibold);
+    font-size: var(--qn-fs-md);
+    margin-top: auto;
+    transition: gap var(--qn-transition-base);
+  }
+  .qn-inv-card:hover .qn-inv-card-link { gap: 0.625rem; }
+
+  /* PROCESO */
+  .qn-inv-proceso {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-inv-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .qn-inv-steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .qn-inv-steps { grid-template-columns: repeat(4, 1fr); }
+  }
+  .qn-inv-steps li {
+    background: var(--qn-paper);
+    border: 1px solid transparent;
+    padding: 2rem 1.5rem;
+    border-radius: var(--qn-radius-xl);
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: transform var(--qn-transition-base), border-color var(--qn-transition-base);
+  }
+  .qn-inv-steps li:hover {
+    transform: translateY(-3px);
+    border-color: var(--qn-npl);
+  }
+  .qn-inv-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    background: var(--qn-npl-50);
+    color: var(--qn-npl);
+    border-radius: var(--qn-radius-pill);
+    font-weight: var(--qn-fw-bold);
+    font-size: var(--qn-fs-xs);
+    letter-spacing: var(--qn-tracking-wide);
+    align-self: flex-start;
+    min-width: 44px;
+    text-align: center;
+    line-height: 1;
+  }
+  .qn-inv-steps h3 {
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-tight);
+    margin: 0.25rem 0 0.25rem;
+  }
+  .qn-inv-steps p {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-normal);
+    margin: 0;
+  }
+</style>

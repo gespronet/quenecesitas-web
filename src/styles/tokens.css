@@ -1,0 +1,530 @@
+/* ============================================================
+   queNECESITAS · Sistema de tokens visuales v2
+   Referencia única para colores, tipografía, espacios y ritmo.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Fuente: Barlow desde Google Fonts
+   font-display swap para no bloquear render
+   ------------------------------------------------------------ */
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+  /* --------------------------------------------------------
+     PALETA BASE — marca corporativa
+     -------------------------------------------------------- */
+  --qn-brand-50:  #eff2fb;
+  --qn-brand-100: #dde3f7;
+  --qn-brand-200: #b8c4ef;
+  --qn-brand-300: #8798e0;
+  --qn-brand-400: #5566cc;
+  --qn-brand-500: #3145b8;
+  --qn-brand-600: #1e2f9c;
+  --qn-brand-700: #002292;   /* azul corporativo canónico */
+  --qn-brand-800: #001b76;
+  --qn-brand-900: #000d3d;   /* fondo hero oscuro */
+  --qn-brand-950: #00061f;
+
+  /* --------------------------------------------------------
+     ACENTO NEUTRO — CTAs primarios en home y bloque 1
+     -------------------------------------------------------- */
+  --qn-accent-50:  #fff4f0;
+  --qn-accent-100: #ffe3d6;
+  --qn-accent-500: #FF6A3D;
+  --qn-accent-600: #e5522a;
+  --qn-accent-700: #b63d17;
+
+  /* --------------------------------------------------------
+     NEUTRALES — tonos de superficie y texto
+     -------------------------------------------------------- */
+  --qn-ink:       #1A1A1A;     /* texto principal */
+  --qn-ink-soft:  #2A2A2A;     /* etiquetas suaves */
+  --qn-graphite:  #5A5A5A;     /* texto secundario */
+  --qn-stone:     #7A7A7A;     /* metadatos */
+  --qn-mist:      #E5E7EB;     /* bordes finos */
+  --qn-fog:       #EAEBED;     /* separadores */
+  --qn-paper:     #EFEEE7;     /* superficies suaves */
+  --qn-bone:      #F5F4EE;     /* fondo alterno */
+  --qn-white:     #FFFFFF;
+
+  /* --------------------------------------------------------
+     ACENTOS POR BLOQUE — se aplican en landings específicas
+     Cada landing puede sobreescribir --qn-accent con su color
+
+     Uso: en la landing, en :root o en <body> local:
+     --qn-accent: var(--qn-alarmas);
+     -------------------------------------------------------- */
+  --qn-alarmas:      #dc2626;   /* rojo */
+  --qn-alarmas-50:   #fef2f2;
+  --qn-alarmas-100:  #fee2e2;
+
+  --qn-energia:      #d97706;   /* ámbar */
+  --qn-energia-50:   #fffbeb;
+  --qn-energia-100:  #fef3c7;
+
+  --qn-telefonia:    #7c3aed;   /* violeta */
+  --qn-telefonia-50: #f5f3ff;
+  --qn-telefonia-100:#ede9fe;
+
+  --qn-inmobiliaria:      #059669;   /* verde */
+  --qn-inmobiliaria-50:   #ecfdf5;
+  --qn-inmobiliaria-100:  #d1fae5;
+
+  --qn-venta-directa:     #0891b2;   /* cyan */
+  --qn-venta-directa-50:  #ecfeff;
+  --qn-venta-directa-100: #cffafe;
+
+  --qn-npl:               #1d4ed8;   /* azul financiero */
+  --qn-npl-50:            #eff6ff;
+  --qn-npl-100:           #dbeafe;
+
+  --qn-cyber:             #22d3ee;   /* azul eléctrico */
+  --qn-cyber-dark:        #0f172a;   /* fondo oscuro cyber */
+  --qn-cyber-950:         #030712;
+
+  /* --------------------------------------------------------
+     TIPOGRAFÍA — familia única Barlow con varios pesos
+     -------------------------------------------------------- */
+  --qn-font-sans: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --qn-font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
+
+  /* Pesos */
+  --qn-fw-light: 300;
+  --qn-fw-regular: 400;
+  --qn-fw-medium: 500;
+  --qn-fw-semibold: 600;
+  --qn-fw-bold: 700;
+  --qn-fw-heavy: 800;
+
+  /* Tamaños base — no fluidos, usar clases fluidas para displays */
+  --qn-fs-xs:   0.75rem;    /* 12 */
+  --qn-fs-sm:   0.8125rem;  /* 13 */
+  --qn-fs-base: 1rem;       /* 16 */
+  --qn-fs-md:   1.0625rem;  /* 17 */
+  --qn-fs-lg:   1.125rem;   /* 18 */
+  --qn-fs-xl:   1.25rem;    /* 20 */
+  --qn-fs-2xl:  1.5rem;     /* 24 */
+  --qn-fs-3xl:  1.875rem;   /* 30 */
+  --qn-fs-4xl:  2.25rem;    /* 36 */
+  --qn-fs-5xl:  3rem;       /* 48 */
+
+  /* Line heights */
+  --qn-lh-tight: 1.1;
+  --qn-lh-snug: 1.3;
+  --qn-lh-normal: 1.5;
+  --qn-lh-relaxed: 1.65;
+  --qn-lh-loose: 1.75;
+
+  /* Letter spacing para display */
+  --qn-tracking-tight: -0.025em;
+  --qn-tracking-normal: 0;
+  --qn-tracking-wide: 0.05em;
+  --qn-tracking-wider: 0.08em;
+
+  /* --------------------------------------------------------
+     ESPACIADO Y RITMO
+     -------------------------------------------------------- */
+  --qn-space-1: 0.25rem;
+  --qn-space-2: 0.5rem;
+  --qn-space-3: 0.75rem;
+  --qn-space-4: 1rem;
+  --qn-space-5: 1.25rem;
+  --qn-space-6: 1.5rem;
+  --qn-space-8: 2rem;
+  --qn-space-10: 2.5rem;
+  --qn-space-12: 3rem;
+  --qn-space-16: 4rem;
+  --qn-space-20: 5rem;
+  --qn-space-24: 6rem;
+  --qn-space-32: 8rem;
+
+  /* --------------------------------------------------------
+     CONTENEDOR Y RETÍCULA
+     -------------------------------------------------------- */
+  --qn-container-max: 1200px;
+  --qn-container-narrow: 900px;
+  --qn-container-wide: 1440px;
+  --qn-container-padding: 1.25rem;
+
+  /* --------------------------------------------------------
+     RADIOS
+     -------------------------------------------------------- */
+  --qn-radius-sm: 0.375rem;
+  --qn-radius-md: 0.5rem;
+  --qn-radius-lg: 0.75rem;
+  --qn-radius-xl: 1rem;
+  --qn-radius-2xl: 1.25rem;
+  --qn-radius-3xl: 1.5rem;
+  --qn-radius-pill: 999px;
+
+  /* --------------------------------------------------------
+     SOMBRAS
+     -------------------------------------------------------- */
+  --qn-shadow-sm: 0 1px 3px rgba(0, 27, 118, 0.06);
+  --qn-shadow-md: 0 4px 12px -4px rgba(0, 27, 118, 0.08);
+  --qn-shadow-lg: 0 12px 32px -12px rgba(0, 27, 118, 0.2);
+  --qn-shadow-xl: 0 20px 50px -20px rgba(0, 27, 118, 0.25);
+  --qn-shadow-glow: 0 0 40px rgba(255, 106, 61, 0.35);
+
+  /* --------------------------------------------------------
+     TRANSICIONES
+     -------------------------------------------------------- */
+  --qn-transition-fast: 0.15s ease-out;
+  --qn-transition-base: 0.2s ease-out;
+  --qn-transition-slow: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --------------------------------------------------------
+     Z-INDEX
+     -------------------------------------------------------- */
+  --qn-z-base: 1;
+  --qn-z-dropdown: 10;
+  --qn-z-header: 50;
+  --qn-z-overlay: 100;
+  --qn-z-modal: 200;
+  --qn-z-tooltip: 300;
+
+  /* --------------------------------------------------------
+     DEFAULT ACCENT — cada landing puede sobreescribir
+     -------------------------------------------------------- */
+  --qn-accent: var(--qn-accent-500);
+  --qn-accent-soft: var(--qn-accent-50);
+}
+
+/* ============================================================
+   RESET Y BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--qn-font-sans);
+  font-size: var(--qn-fs-md);
+  font-weight: var(--qn-fw-regular);
+  line-height: var(--qn-lh-relaxed);
+  color: var(--qn-ink);
+  background: var(--qn-white);
+  -webkit-tap-highlight-color: transparent;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--qn-font-sans);
+  font-weight: var(--qn-fw-bold);
+  line-height: var(--qn-lh-tight);
+  letter-spacing: var(--qn-tracking-tight);
+  color: var(--qn-ink);
+}
+
+p {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ============================================================
+   TIPOGRAFÍA FLUIDA — displays
+   ============================================================ */
+.qn-display-2xl {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: var(--qn-fw-heavy);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.qn-display-xl {
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  font-weight: var(--qn-fw-bold);
+  line-height: var(--qn-lh-tight);
+  letter-spacing: -0.03em;
+}
+
+.qn-display-lg {
+  font-size: clamp(1.875rem, 3.5vw, 3rem);
+  font-weight: var(--qn-fw-bold);
+  line-height: var(--qn-lh-snug);
+  letter-spacing: -0.025em;
+}
+
+.qn-display-md {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: var(--qn-fw-semibold);
+  line-height: var(--qn-lh-snug);
+  letter-spacing: -0.02em;
+}
+
+.qn-display-sm {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: var(--qn-fw-semibold);
+  line-height: var(--qn-lh-snug);
+  letter-spacing: -0.015em;
+}
+
+/* Eyebrow (subtítulo previo a heading) */
+.qn-eyebrow {
+  display: inline-block;
+  font-size: var(--qn-fs-sm);
+  font-weight: var(--qn-fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--qn-tracking-wider);
+  color: var(--qn-accent);
+  margin: 0;
+}
+
+/* ============================================================
+   LAYOUT — contenedor
+   ============================================================ */
+.qn-container {
+  width: 100%;
+  max-width: var(--qn-container-max);
+  margin-inline: auto;
+  padding-inline: var(--qn-container-padding);
+}
+
+.qn-container-narrow {
+  width: 100%;
+  max-width: var(--qn-container-narrow);
+  margin-inline: auto;
+  padding-inline: var(--qn-container-padding);
+}
+
+.qn-container-wide {
+  width: 100%;
+  max-width: var(--qn-container-wide);
+  margin-inline: auto;
+  padding-inline: var(--qn-container-padding);
+}
+
+@media (min-width: 768px) {
+  .qn-container,
+  .qn-container-narrow,
+  .qn-container-wide {
+    padding-inline: 2rem;
+  }
+}
+
+/* Section spacing helper */
+.qn-section {
+  padding-block: clamp(4rem, 8vw, 6rem);
+}
+
+.qn-section-tight {
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* ============================================================
+   BOTONES BASE
+   ============================================================ */
+.qn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  border-radius: var(--qn-radius-pill);
+  font-family: var(--qn-font-sans);
+  font-size: var(--qn-fs-md);
+  font-weight: var(--qn-fw-semibold);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: all var(--qn-transition-base);
+  cursor: pointer;
+  border: 2px solid transparent;
+  min-height: 48px;   /* target táctil */
+}
+
+.qn-btn-accent {
+  background: var(--qn-accent);
+  color: var(--qn-white);
+}
+
+.qn-btn-accent:hover {
+  background: var(--qn-accent-600);
+  transform: translateY(-1px);
+  box-shadow: var(--qn-shadow-lg);
+}
+
+.qn-btn-primary {
+  background: var(--qn-brand-700);
+  color: var(--qn-white);
+}
+
+.qn-btn-primary:hover {
+  background: var(--qn-brand-800);
+  transform: translateY(-1px);
+  box-shadow: var(--qn-shadow-lg);
+}
+
+.qn-btn-outline {
+  background: transparent;
+  color: var(--qn-brand-700);
+  border-color: var(--qn-brand-700);
+}
+
+.qn-btn-outline:hover {
+  background: var(--qn-brand-700);
+  color: var(--qn-white);
+}
+
+.qn-btn-outline-white {
+  background: transparent;
+  color: var(--qn-white);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.qn-btn-outline-white:hover {
+  background: var(--qn-white);
+  color: var(--qn-brand-700);
+  border-color: var(--qn-white);
+}
+
+.qn-btn-ghost {
+  background: transparent;
+  color: var(--qn-ink);
+  padding: 0.5rem 1rem;
+}
+
+.qn-btn-ghost:hover {
+  background: var(--qn-paper);
+}
+
+.qn-btn-text {
+  background: transparent;
+  color: var(--qn-brand-700);
+  padding: 0.5rem 0;
+  min-height: auto;
+}
+
+.qn-btn-text:hover {
+  color: var(--qn-brand-800);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ============================================================
+   ACCESIBILIDAD
+   ============================================================ */
+
+/* Focus visible mejorado */
+*:focus-visible {
+  outline: 2px solid var(--qn-brand-500);
+  outline-offset: 3px;
+  border-radius: var(--qn-radius-sm);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link para navegación por teclado */
+.qn-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--qn-brand-700);
+  color: var(--qn-white);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--qn-radius-md);
+  z-index: var(--qn-z-tooltip);
+  font-weight: var(--qn-fw-semibold);
+  transition: top var(--qn-transition-base);
+}
+
+.qn-skip-link:focus {
+  top: 1rem;
+}
+
+/* ============================================================
+   ANIMACIONES BASE (respetan reduced-motion)
+   ============================================================ */
+@keyframes qn-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes qn-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes qn-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes qn-spin {
+  to { transform: rotate(360deg); }
+}
+
+.qn-animate-fade {
+  animation: qn-fade-in 0.6s ease-out both;
+}
+
+.qn-animate-slide-up {
+  animation: qn-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.qn-animate-slide-right {
+  animation: qn-slide-in-right 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Delays de stagger */
+.qn-delay-100 { animation-delay: 0.1s; }
+.qn-delay-200 { animation-delay: 0.2s; }
+.qn-delay-300 { animation-delay: 0.3s; }
+.qn-delay-400 { animation-delay: 0.4s; }

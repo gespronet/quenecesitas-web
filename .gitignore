@@ -18,18 +18,18 @@ pnpm-debug.log*
 .env
 .env.production
 .env.local
+.env.*.local
 
 # macOS-specific files
 .DS_Store
 
-# editor
-.vscode/*
-!.vscode/extensions.json
-!.vscode/launch.json
-.idea/
-*.swp
-*.swo
+# Windows-specific files
+Thumbs.db
+desktop.ini
 
-# misc
-.cache/
-*.log
+# jetbrains setting folder
+.idea/
+.vscode/
+
+# Astro cache
+.astro-cache/

@@ -1,100 +1,133 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import SectorHero from "~/components/SectorHero.astro";
-import ContactForm from "~/components/ContactForm.astro";
-import FAQ from "~/components/FAQ.astro";
+import ServiceLayout from "@layouts/ServiceLayout.astro";
 
-const benefits = [
-  "Fibra y móvil: comparamos los principales operadores",
-  "Soluciones para hogar, autónomos y empresa",
-  "Centralitas virtuales y telefonía profesional",
-  "Te avisamos si tu tarifa ya está bien optimizada",
-];
+const data = {
+  slug: "telefonia",
+  serviceName: "Telefonía",
+  accentVar: "--qn-telefonia",
+  accentBg: "--qn-telefonia-50",
+  eyebrow: "Fibra y móvil · Hogar y empresa",
+  h1: "Fibra y móvil — comparamos y gestionamos la portabilidad.",
+  heroLead:
+    "Trabajamos con LOWI, Vodafone y otras compañías. Comparamos precio, velocidad, cobertura real y letra pequeña de la permanencia. Después gestionamos el cambio para que tú no tengas que llamar a ningún call center.",
+  ctaPrimary: "Buscar mi tarifa",
+  ctaSecondary: "672 274 969",
 
-const faqs = [
-  {
-    question: "¿Con qué operadores trabajáis?",
-    answer: "Trabajamos con los principales operadores del mercado español. La diferencia entre uno y otro suele estar en el equilibrio entre precio, cobertura, atención al cliente y servicios añadidos. Comparamos todos esos factores para que la decisión sea fácil.",
-  },
-  {
-    question: "Soy autónomo / pyme. ¿También me ayudáis?",
-    answer: "Sí. De hecho es uno de los casos donde más diferencia conseguimos. Comparamos tarifas profesionales (con IVA aparte, mejor SLA, atención preferente) y centralitas virtuales si las necesitas. La factura mensual de una pyme típica baja entre un 15% y un 30%.",
-  },
-  {
-    question: "¿Qué es una centralita virtual y por qué la necesito?",
-    answer: "Una centralita virtual es la versión moderna de la centralita física: gestiona las llamadas de tu negocio (extensiones, desvíos, horarios, locuciones) sin necesidad de hardware. La pagas como un servicio mensual y la usas desde el móvil, el ordenador o un teléfono IP. Si tienes un negocio con varios trabajadores y reciben llamadas, casi siempre compensa.",
-  },
-  {
-    question: "¿Y si tengo permanencia con mi compañía actual?",
-    answer: "Lo revisamos. Muchas veces la penalización por irse antes de tiempo sale más barata que seguir un año más con una mala tarifa, y otras veces es al revés. Echamos los números contigo antes de tomar la decisión.",
-  },
-];
+  providersTitle: "Trabajamos con las compañías que funcionan bien en la zona.",
+  providersLead:
+    "En Galicia no todas las compañías tienen la misma cobertura ni el mismo servicio. Comparamos con datos reales de lo que va bien aquí.",
+  providers: [
+    {
+      name: "LOWI",
+      desc: "Buena relación calidad-precio para hogar. Fibra estable a precio competitivo.",
+    },
+    {
+      name: "Vodafone",
+      desc: "Fuerte en 5G y en packs para empresa. Buena cobertura en toda la zona.",
+    },
+    {
+      name: "Otras",
+      desc: "Otras compañías (O2, Movistar, Yoigo) también según tu caso y ubicación exacta.",
+    },
+  ],
+
+  featuresTitle: "Fibra, móvil, centralita — lo que necesites.",
+  featuresLead:
+    "Desde una fibra sencilla para casa hasta una centralita virtual para pyme. Comparamos y contratamos por ti.",
+  features: [
+    {
+      title: "Fibra 1Gb o más",
+      desc: "Velocidad simétrica alta según cobertura real de tu domicilio. Sin sorpresas de velocidad.",
+    },
+    {
+      title: "Móvil 5G",
+      desc: "Líneas móviles con datos según uso real. Portabilidad gestionada por nosotros.",
+    },
+    {
+      title: "Convergente hogar",
+      desc: "Fibra + móvil en pack con descuento. Comparamos los packs de varias compañías.",
+    },
+    {
+      title: "Empresa y pyme",
+      desc: "Centralitas virtuales, extensiones, fibra dedicada, líneas coordinadas.",
+    },
+  ],
+
+  steps: [
+    {
+      title: "Nos cuentas qué usas",
+      description: "Cuánta velocidad necesitas, cuántas líneas móviles, si trabajas desde casa. Con eso ajustamos.",
+    },
+    {
+      title: "Comparativa por compañía",
+      description: "Con precio real, permanencia real, velocidad real que llega a tu domicilio.",
+    },
+    {
+      title: "Recomendación y contrato",
+      description: "Te decimos qué compañía te cuadra mejor y firmas directamente con ellos.",
+    },
+    {
+      title: "Portabilidad gestionada",
+      description: "Nosotros coordinamos con tu compañía actual la baja y con la nueva la portabilidad.",
+    },
+  ],
+
+  puntosTitle: "Por qué comparamos telefonía.",
+  puntos: [
+    {
+      title: "La cobertura real cambia por calle",
+      description:
+        "Una compañía puede ser mala en tu barrio y buena en el de al lado. Nosotros conocemos las quejas y aciertos en la zona.",
+    },
+    {
+      title: "Los packs esconden condiciones",
+      description:
+        "Descuentos que caducan, permanencias encadenadas, subidas automáticas. Te lo dejamos claro por escrito antes de firmar.",
+    },
+    {
+      title: "Portabilidad sin drama",
+      description:
+        "El proceso de cambiarte de compañía suele ser el momento más engorroso. Lo gestionamos nosotros de principio a fin.",
+    },
+    {
+      title: "Empresa: coordinación real",
+      description:
+        "Si tienes pyme, coordinamos fibra + móviles del equipo + centralita como un solo caso. Cero silos.",
+    },
+  ],
+
+  faqs: [
+    {
+      question: "¿Puedo mantener mi número al cambiar de compañía?",
+      answer:
+        "Sí, la portabilidad es un derecho: mantienes tu número aunque cambies de operador. El proceso dura entre 24h y unos días laborables — nosotros lo gestionamos por ti para que no tengas que estar pendiente.",
+    },
+    {
+      question: "¿Cuánto tarda una instalación de fibra nueva?",
+      answer:
+        "En zona con cobertura ya desplegada, entre 3 y 10 días laborables desde la solicitud. Si la infraestructura no llega a tu domicilio, puede ser más largo — te lo advertimos antes de firmar.",
+    },
+    {
+      question: "¿Trabajáis con pymes que necesitan centralita virtual?",
+      answer:
+        "Sí. Comparamos varias soluciones de centralita virtual (con extensiones, transferencias, colas de llamadas) según el tamaño del equipo y las necesidades reales. También coordinamos si necesitas fibra dedicada.",
+    },
+    {
+      question: "¿Qué pasa si mi compañía actual me sube el precio después?",
+      answer:
+        "En la mayoría de los contratos actuales las subidas se avisan con antelación. Si contrataste con nosotros, cuando te llegue la notificación de subida nos llamas y volvemos a comparar sin coste.",
+    },
+    {
+      question: "¿Qué diferencia hay con contratar directamente en la web de la compañía?",
+      answer:
+        "Que has comparado antes con varias. Que alguien local ha analizado tu caso concreto (uso, cobertura, permanencia). Y que si algún día tienes un problema, tienes teléfono local en vez de un chatbot.",
+    },
+  ],
+
+  ctaTitle: "¿Comparamos tu tarifa?",
+  ctaIntro:
+    "Cuéntanos qué usas ahora (fibra, móviles, empresa) y te llamamos con opciones reales de tu zona. Sin compromiso.",
+};
 ---
 
-<BaseLayout
-  title="Telefonía multimarca: fibra, móvil y centralitas"
-  description="Comparamos fibra, móvil y centralitas virtuales entre los principales operadores. Para hogar y empresa. Asesoramiento gratuito en Galicia."
-  schemaType="Service"
->
-  <SectorHero
-    category="Sector · Telefonía"
-    title="Fibra, móvil y centralitas."
-    highlight="La mejor combinación, sin atarte a una marca."
-    description="Comparamos los principales operadores del mercado para encontrar la mejor combinación de fibra, móvil y centralita virtual según uses la conexión en casa o para tu negocio."
-    benefits={benefits}
-  />
-
-  <section class="qn-sector-form" aria-labelledby="telefonia-form-heading">
-    <div class="qn-container qn-sector-form-grid">
-      <div>
-        <p class="qn-eyebrow">Comparativa de tarifas</p>
-        <h2 id="telefonia-form-heading" class="qn-display-lg qn-sector-form-title">
-          Cuéntanos qué uso le das.<br /><span>Te buscamos la mejor combinación.</span>
-        </h2>
-        <p class="qn-sector-form-lead">
-          Hogar, autónomo, pyme. Cada perfil necesita una tarifa distinta. Cuéntanos cómo usas la conexión y el móvil y te preparamos una propuesta a medida con tres o cuatro alternativas competitivas.
-        </p>
-      </div>
-      <ContactForm origen="telefonia" title="Comparativa de fibra y móvil" description="Hogar, autónomo o empresa. Te llamamos en menos de 24h." />
-    </div>
-  </section>
-
-  <FAQ items={faqs} title="Sobre fibra, móvil y centralitas" />
-</BaseLayout>
-
-<style>
-  .qn-sector-form {
-    padding-block: clamp(3rem, 6vw, 5rem);
-    background: var(--color-bone);
-  }
-
-  .qn-sector-form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-
-  .qn-sector-form-title {
-    margin: 1rem 0 1.25rem;
-  }
-
-  .qn-sector-form-title span {
-    color: var(--color-accent-500);
-  }
-
-  .qn-sector-form-lead {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-graphite);
-    margin: 0;
-    max-width: 30rem;
-  }
-
-  @media (min-width: 900px) {
-    .qn-sector-form-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-  }
-</style>
+<ServiceLayout {...data} />
