@@ -1,0 +1,160 @@
+---
+import ContactForm from "./ContactForm.astro";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  origen?: string;
+  sector?: string;
+  cta?: string;
+  variant?: "form" | "buttons";
+  background?: "brand" | "paper" | "white";
+}
+
+const {
+  eyebrow = "Hablemos",
+  title,
+  intro,
+  origen = "contact-cta",
+  sector = "general",
+  cta = "Solicitar contacto",
+  variant = "buttons",
+  background = "brand",
+} = Astro.props;
+---
+
+<section class:list={["qn-cta-block", `qn-cta-bg-${background}`]}>
+  <div class="qn-container">
+    <div class:list={["qn-cta-inner", `qn-cta-variant-${variant}`]}>
+
+      <div class="qn-cta-content">
+        <p class="qn-eyebrow">{eyebrow}</p>
+        <h2 class="qn-display-lg">{title}</h2>
+        {intro && <p class="qn-cta-intro">{intro}</p>}
+
+        {variant === "buttons" && (
+          <div class="qn-cta-actions">
+            <a href="tel:672274969" class="qn-btn qn-btn-accent">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              Llamar · 672 274 969
+            </a>
+            <a href="/contacto" class={background === "brand" ? "qn-btn qn-btn-outline-white" : "qn-btn qn-btn-outline"}>
+              Formulario de contacto
+            </a>
+          </div>
+        )}
+      </div>
+
+      {variant === "form" && (
+        <div class="qn-cta-form-wrap">
+          <ContactForm
+            origen={origen}
+            sector={sector}
+            cta={cta}
+            variant={background === "brand" ? "dark" : "light"}
+          />
+        </div>
+      )}
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .qn-cta-block {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+
+  .qn-cta-bg-brand {
+    background: linear-gradient(180deg, var(--qn-brand-800) 0%, var(--qn-brand-900) 100%);
+    color: var(--qn-bone);
+  }
+
+  .qn-cta-bg-brand h2 {
+    color: var(--qn-white);
+  }
+
+  .qn-cta-bg-brand .qn-eyebrow {
+    color: var(--qn-accent-500);
+  }
+
+  .qn-cta-bg-brand .qn-cta-intro {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .qn-cta-bg-paper {
+    background: var(--qn-paper);
+  }
+
+  .qn-cta-bg-white {
+    background: var(--qn-white);
+  }
+
+  .qn-cta-inner {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .qn-cta-variant-buttons {
+    grid-template-columns: 1fr;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .qn-cta-variant-form {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .qn-cta-variant-form {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+
+  .qn-cta-content h2 {
+    margin: 0.75rem 0 1rem;
+    max-width: 24ch;
+  }
+
+  .qn-cta-variant-buttons .qn-cta-content h2 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .qn-cta-intro {
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    max-width: 55ch;
+    margin: 0 0 2rem;
+  }
+
+  .qn-cta-variant-buttons .qn-cta-intro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .qn-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .qn-cta-form-wrap {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem;
+    border-radius: var(--qn-radius-xl);
+  }
+
+  .qn-cta-bg-paper .qn-cta-form-wrap,
+  .qn-cta-bg-white .qn-cta-form-wrap {
+    background: var(--qn-white);
+    border-color: var(--qn-mist);
+  }
+</style>

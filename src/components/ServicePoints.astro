@@ -1,0 +1,158 @@
+---
+interface Point {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  points: Point[];
+  layout?: "grid" | "list";
+  background?: "white" | "paper" | "bone";
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  points,
+  layout = "grid",
+  background = "white",
+} = Astro.props;
+---
+
+<section class:list={["qn-points", `qn-points-bg-${background}`]}>
+  <div class="qn-container">
+    <div class="qn-points-head">
+      {eyebrow && <p class="qn-eyebrow">{eyebrow}</p>}
+      <h2 class="qn-display-lg">{title}</h2>
+      {intro && <p class="qn-points-intro">{intro}</p>}
+    </div>
+
+    <ul class:list={["qn-points-list", `qn-points-list-${layout}`]}>
+      {points.map((point, i) => (
+        <li class="qn-points-item">
+          <div class="qn-points-marker">
+            <span>{String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <div>
+            <h3 class="qn-points-title">{point.title}</h3>
+            <p class="qn-points-desc">{point.description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .qn-points {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+
+  .qn-points-bg-white {
+    background: var(--qn-white);
+  }
+
+  .qn-points-bg-paper {
+    background: var(--qn-paper);
+  }
+
+  .qn-points-bg-bone {
+    background: var(--qn-bone);
+  }
+
+  .qn-points-head {
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+
+  .qn-points-head .qn-eyebrow {
+    margin-bottom: 0.75rem;
+  }
+
+  .qn-points-intro {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-lg);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  .qn-points-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .qn-points-list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .qn-points-list-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .qn-points-list-list {
+    grid-template-columns: 1fr;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .qn-points-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.5rem;
+    background: var(--qn-white);
+    border-radius: var(--qn-radius-xl);
+    border: 1px solid var(--qn-mist);
+    transition: box-shadow var(--qn-transition-base), transform var(--qn-transition-base);
+  }
+
+  .qn-points-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--qn-shadow-md);
+  }
+
+  .qn-points-bg-paper .qn-points-item,
+  .qn-points-bg-bone .qn-points-item {
+    background: var(--qn-white);
+  }
+
+  .qn-points-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--qn-radius-pill);
+    background: var(--qn-accent-soft);
+    color: var(--qn-accent);
+    font-weight: var(--qn-fw-bold);
+    font-size: var(--qn-fs-sm);
+    letter-spacing: var(--qn-tracking-wide);
+    min-width: 44px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .qn-points-title {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    line-height: var(--qn-lh-snug);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0 0 0.375rem;
+  }
+
+  .qn-points-desc {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-base);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
+  }
+</style>
