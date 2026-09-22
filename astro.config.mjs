@@ -12,8 +12,13 @@ export default defineConfig({
     }),
   ],
   build: {
+    format: "directory",
     inlineStylesheets: "auto",
     assets: "_assets",
+  },
+  trailingSlash: "ignore",
+  image: {
+    domains: ["vkhbkdibihwmwyshrofx.supabase.co"],
   },
   vite: {
     build: {
