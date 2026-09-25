@@ -1,55 +1,58 @@
 ---
-const path = Astro.url.pathname;
+const pathname = Astro.url.pathname;
 
-const isActive = (p: string): boolean => {
-  if (p === "/") return path === "/";
-  return path === p || path.startsWith(p + "/");
-};
-
-const nav = [
-  { label: "Servicios", href: "/servicios" },
-  { label: "Inmobiliaria", href: "/inmobiliaria" },
-  { label: "Inversión", href: "/inversion" },
-  { label: "Ciberseguridad", href: "/ciberseguridad" },
-  { label: "Nosotros", href: "/nosotros" },
+const menu = [
+  { label: "Servicios",     href: "/servicios" },
+  { label: "Inmobiliaria",  href: "/inmobiliaria" },
+  { label: "Inversión",     href: "/inversion" },
+  { label: "Empresas",      href: "/ciberseguridad" },
+  { label: "Nosotros",      href: "/nosotros" },
 ];
+
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+};
 ---
 
-<header class="qn-header" data-header>
+<header class="qn-header">
   <div class="qn-container qn-header-inner">
-    <a href="/" class="qn-logo-link" aria-label="queNECESITAS · Inicio">
-      <img
-        src="/logo.svg"
-        alt="queNECESITAS"
-        width="180"
-        height="48"
-        class="qn-logo"
-        fetchpriority="high"
-      />
+    {/* Logo real — imagen desde public/logo.png */}
+    <a href="/" class="qn-logo" aria-label="queNECESITAS · Inicio">
+   <img
+  src="/logo.svg"
+  alt="queNECESITAS"
+  width="220"
+  height="60"
+  loading="eager"
+  decoding="async"
+/>
     </a>
 
-    <nav class="qn-nav-desktop" aria-label="Navegación principal">
+    {/* Menú desktop */}
+    <nav class="qn-nav" aria-label="Principal">
       <ul class="qn-nav-list">
-        {nav.map((item) => (
+        {menu.map((item) => (
           <li>
             <a
               href={item.href}
-              class:list={["qn-nav-link", { "is-current": isActive(item.href) }]}
-              aria-current={isActive(item.href) ? "page" : undefined}
+              class={`qn-nav-link ${isActive(item.href) ? "is-active" : ""}`}
             >
               {item.label}
             </a>
           </li>
         ))}
-        <li>
-          <a href="/contacto" class="qn-nav-cta">Contacto</a>
-        </li>
       </ul>
     </nav>
 
+    {/* CTA */}
+    <a href="/contacto" class="qn-btn qn-btn-primary qn-header-cta">
+      Hablar con un asesor
+    </a>
+
+    {/* Toggle móvil */}
     <button
-      class="qn-burger"
-      id="qn-burger"
+      class="qn-nav-toggle"
       aria-label="Abrir menú"
       aria-expanded="false"
       aria-controls="qn-mobile-menu"
@@ -60,309 +63,198 @@ const nav = [
     </button>
   </div>
 
-  <div class="qn-mobile-menu" id="qn-mobile-menu" hidden>
-    <nav aria-label="Navegación móvil">
-      <ul class="qn-mobile-list">
-        {nav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class:list={["qn-mobile-link", { "is-current": isActive(item.href) }]}
-              aria-current={isActive(item.href) ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          </li>
-        ))}
-        <li class="qn-mobile-divider" aria-hidden="true"></li>
+  {/* Menú móvil */}
+  <nav class="qn-mobile-menu" id="qn-mobile-menu" aria-hidden="true">
+    <ul>
+      {menu.map((item) => (
         <li>
-          <a href="/contacto" class="qn-mobile-cta">Contacto</a>
-        </li>
-        <li class="qn-mobile-tel">
-          <a href="tel:672274969">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-            </svg>
-            672 274 969
+          <a
+            href={item.href}
+            class={isActive(item.href) ? "is-active" : ""}
+          >
+            {item.label}
           </a>
         </li>
-      </ul>
-    </nav>
-  </div>
+      ))}
+      <li>
+        <a href="/contacto" class="qn-btn qn-btn-primary qn-mobile-cta">
+          Hablar con un asesor
+        </a>
+      </li>
+    </ul>
+  </nav>
 </header>
 
 <script>
-  const burger = document.getElementById("qn-burger");
-  const menu = document.getElementById("qn-mobile-menu");
-  const header = document.querySelector("[data-header]");
-
-  // Toggle menú móvil
-  burger?.addEventListener("click", () => {
-    const expanded = burger.getAttribute("aria-expanded") === "true";
-    burger.setAttribute("aria-expanded", String(!expanded));
-    if (menu) {
-      menu.hidden = expanded;
+  const toggle = document.querySelector<HTMLButtonElement>(".qn-nav-toggle");
+  const menu = document.querySelector<HTMLElement>(".qn-mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", (!expanded).toString());
+      menu.setAttribute("aria-hidden", expanded.toString());
+      menu.classList.toggle("is-open");
+      toggle.classList.toggle("is-open");
       document.body.style.overflow = expanded ? "" : "hidden";
-    }
-  });
-
-  // Cerrar menú al hacer click en un enlace
-  menu?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      if (menu) menu.hidden = true;
-      burger?.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
     });
-  });
-
-  // Efecto scroll: añade sombra al header al hacer scroll
-  let lastScroll = 0;
-  window.addEventListener(
-    "scroll",
-    () => {
-      const currentScroll = window.scrollY;
-      if (currentScroll > 20) {
-        header?.setAttribute("data-scrolled", "true");
-      } else {
-        header?.removeAttribute("data-scrolled");
-      }
-      lastScroll = currentScroll;
-    },
-    { passive: true }
-  );
-
-  // Cerrar menú al pulsar Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && menu && !menu.hidden) {
-      menu.hidden = true;
-      burger?.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-      burger?.focus();
-    }
-  });
+  }
 </script>
 
 <style>
   .qn-header {
     position: sticky;
     top: 0;
-    z-index: var(--qn-z-header);
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(12px);
-    -webkit-backdrop-filter: saturate(180%) blur(12px);
-    border-bottom: 1px solid transparent;
-    transition: border-color var(--qn-transition-base), background var(--qn-transition-base);
-  }
-
-  .qn-header[data-scrolled="true"] {
-    background: rgba(255, 255, 255, 0.95);
-    border-bottom-color: var(--qn-mist);
-    box-shadow: var(--qn-shadow-sm);
+    z-index: 50;
+    border-bottom: 1px solid var(--qn-fog);
+    backdrop-filter: saturate(180%) blur(8px);
+    background: rgba(255, 255, 255, 0.92);
   }
 
   .qn-header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    min-height: 4.5rem;
+    gap: 2rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
   }
 
-  .qn-logo-link {
-    display: block;
-    line-height: 0;
-  }
-
+  /* Logo */
   .qn-logo {
-    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .qn-logo img {
+    display: block;
+    height: 44px;
     width: auto;
+    max-width: 220px;
+    transition: opacity var(--qn-transition-fast);
+  }
+  .qn-logo:hover img { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    .qn-logo img { height: 38px; }
   }
 
-  /* Desktop nav */
-  .qn-nav-desktop {
+  /* Nav desktop */
+  .qn-nav {
     display: none;
+    flex: 1;
+    justify-content: center;
   }
-
+  @media (min-width: 900px) {
+    .qn-nav { display: flex; }
+  }
   .qn-nav-list {
     display: flex;
     gap: 0.5rem;
-    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-
   .qn-nav-link {
-    display: block;
-    padding: 0.625rem 1rem;
-    color: var(--qn-ink);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: var(--qn-ink-soft);
+    font-size: var(--qn-fs-sm);
     font-weight: var(--qn-fw-medium);
-    font-size: var(--qn-fs-md);
+    text-decoration: none;
     border-radius: var(--qn-radius-md);
-    transition: color var(--qn-transition-base), background var(--qn-transition-base);
-    position: relative;
+    transition: color var(--qn-transition-fast), background var(--qn-transition-fast);
   }
-
   .qn-nav-link:hover {
     color: var(--qn-brand-700);
     background: var(--qn-brand-50);
   }
-
-  .qn-nav-link.is-current {
+  .qn-nav-link.is-active {
     color: var(--qn-brand-700);
-  }
-
-  .qn-nav-link.is-current::after {
-    content: "";
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 2px;
-    background: var(--qn-accent);
-    border-radius: 2px;
-  }
-
-  .qn-nav-cta {
-    display: inline-flex;
-    align-items: center;
-    background: var(--qn-brand-700);
-    color: var(--qn-white);
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--qn-radius-pill);
+    background: var(--qn-brand-50);
     font-weight: var(--qn-fw-semibold);
-    font-size: var(--qn-fs-md);
-    margin-left: 0.5rem;
-    transition: all var(--qn-transition-base);
   }
 
-  .qn-nav-cta:hover {
-    background: var(--qn-brand-800);
-    transform: translateY(-1px);
-    box-shadow: var(--qn-shadow-md);
+  /* CTA en header */
+  .qn-header-cta {
+    display: none;
+    padding: 0.625rem 1.125rem;
+    font-size: var(--qn-fs-sm);
+    flex-shrink: 0;
+  }
+  @media (min-width: 900px) {
+    .qn-header-cta { display: inline-flex; }
   }
 
-  /* Burger button */
-  .qn-burger {
+  /* Toggle móvil */
+  .qn-nav-toggle {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 0.75rem;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
     background: transparent;
-    border-radius: var(--qn-radius-md);
-    transition: background var(--qn-transition-base);
-    min-width: 48px;
-    min-height: 48px;
-    align-items: center;
+    border: 0;
+    cursor: pointer;
     justify-content: center;
+    align-items: center;
   }
-
-  .qn-burger:hover {
-    background: var(--qn-paper);
+  @media (min-width: 900px) {
+    .qn-nav-toggle { display: none; }
   }
-
-  .qn-burger span {
+  .qn-nav-toggle span {
     display: block;
     width: 22px;
     height: 2px;
     background: var(--qn-ink);
-    border-radius: 1px;
-    transition: transform var(--qn-transition-base), opacity var(--qn-transition-base);
+    border-radius: 2px;
+    transition: transform var(--qn-transition-base), opacity var(--qn-transition-fast);
   }
+  .qn-nav-toggle.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .qn-nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+  .qn-nav-toggle.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-  .qn-burger[aria-expanded="true"] span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .qn-burger[aria-expanded="true"] span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .qn-burger[aria-expanded="true"] span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  /* Mobile menu */
+  /* Menú móvil */
   .qn-mobile-menu {
+    display: none;
     position: fixed;
-    top: 4.5rem;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 72px;
+    left: 0; right: 0; bottom: 0;
     background: var(--qn-white);
-    padding: 2rem 1.5rem;
+    padding: 2rem;
+    z-index: 40;
     overflow-y: auto;
-    animation: qn-fade-in var(--qn-transition-base);
   }
-
-  .qn-mobile-list {
+  .qn-mobile-menu.is-open { display: block; }
+  .qn-mobile-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    max-width: 400px;
-    margin: 0 auto;
   }
-
-  .qn-mobile-link {
-    display: flex;
-    align-items: center;
+  .qn-mobile-menu a {
+    display: block;
     padding: 1rem 1.25rem;
-    font-size: var(--qn-fs-lg);
-    font-weight: var(--qn-fw-medium);
     color: var(--qn-ink);
-    border-radius: var(--qn-radius-lg);
-    transition: background var(--qn-transition-base);
-    min-height: 48px;
+    font-size: var(--qn-fs-md);
+    font-weight: var(--qn-fw-medium);
+    text-decoration: none;
+    border-radius: var(--qn-radius-md);
+    transition: background var(--qn-transition-fast);
   }
-
-  .qn-mobile-link:hover {
-    background: var(--qn-paper);
-  }
-
-  .qn-mobile-link.is-current {
+  .qn-mobile-menu a:hover,
+  .qn-mobile-menu a.is-active {
     background: var(--qn-brand-50);
     color: var(--qn-brand-700);
-    font-weight: var(--qn-fw-semibold);
   }
-
-  .qn-mobile-divider {
-    height: 1px;
-    background: var(--qn-mist);
-    margin: 1rem 1.25rem;
-  }
-
   .qn-mobile-cta {
-    display: flex;
-    align-items: center;
+    margin-top: 1rem;
     justify-content: center;
-    padding: 1rem 1.25rem;
-    background: var(--qn-brand-700);
-    color: var(--qn-white);
-    font-size: var(--qn-fs-lg);
-    font-weight: var(--qn-fw-semibold);
-    border-radius: var(--qn-radius-lg);
-    text-align: center;
-    min-height: 48px;
-  }
-
-  .qn-mobile-tel a {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    color: var(--qn-brand-700);
-    font-weight: var(--qn-fw-semibold);
-    font-size: var(--qn-fs-lg);
-    min-height: 48px;
-  }
-
-  /* Desktop breakpoint */
-  @media (min-width: 900px) {
-    .qn-nav-desktop {
-      display: block;
-    }
-
-    .qn-burger,
-    .qn-mobile-menu {
-      display: none !important;
-    }
+    width: 100%;
   }
 </style>

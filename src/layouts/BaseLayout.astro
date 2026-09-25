@@ -1,123 +1,124 @@
 ---
-import "../styles/tokens.css";
-import { formatTitle, absoluteUrl, localBusinessSchema, SITE } from "@lib/seo";
+import "@styles/tokens.css";
+import type { AdditionalSchema } from "@lib/seo";
 
 interface Props {
   title: string;
   description: string;
-  canonical?: string;
   ogImage?: string;
   noindex?: boolean;
-  /** JSON-LD adicional específico de la página (Service, FAQPage, etc.) */
-  additionalSchema?: Record<string, unknown> | Record<string, unknown>[];
-  /** Modo dark: para páginas como /ciberseguridad */
+  additionalSchema?: AdditionalSchema | AdditionalSchema[];
   dark?: boolean;
 }
 
 const {
   title,
   description,
-  canonical,
-  ogImage = SITE.defaultOgImage,
+  ogImage = "/og-default.png",
   noindex = false,
   additionalSchema,
   dark = false,
 } = Astro.props;
 
-const fullTitle = formatTitle(title);
-const canonicalUrl = canonical
-  ? absoluteUrl(canonical)
-  : absoluteUrl(Astro.url.pathname);
-const ogImageUrl = ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage);
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://quenecesitashoy.es").toString();
+const siteName = "queNECESITAS";
+const fullTitle = title.includes("queNECESITAS") ? title : `${title} · ${siteName}`;
 
-// Schemas: siempre LocalBusiness, más los que envíe la página
-const schemas = [localBusinessSchema()];
-if (additionalSchema) {
-  if (Array.isArray(additionalSchema)) {
-    schemas.push(...additionalSchema);
-  } else {
-    schemas.push(additionalSchema);
-  }
-}
+const schemas = Array.isArray(additionalSchema)
+  ? additionalSchema
+  : additionalSchema
+    ? [additionalSchema]
+    : [];
 ---
 
-<!doctype html>
-<html lang="es-ES" data-theme={dark ? "dark" : "light"}>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
+<!DOCTYPE html>
+<html lang="es" data-theme={dark ? "dark" : "light"}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
 
-    {/* Título y descripción */}
-    <title>{fullTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {/* Favicon */}
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    {/* Open Graph */}
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="es_ES" />
+  {/* Open Graph */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site ?? "https://quenecesitashoy.es").toString()} />
+  <meta property="og:locale" content="es_ES" />
 
-    {/* Twitter Card */}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site ?? "https://quenecesitashoy.es").toString()} />
 
-    {/* Favicons */}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#002292" />
+  {/* Preconnect a Google Fonts */}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    {/* Preload de fuentes críticas */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  {/* Poppins (principal) + DM Mono (técnica/eyebrows) */}
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap"
+  />
 
-    {/* Sitemap link */}
-    <link rel="sitemap" href="/sitemap-index.xml" />
+  {/* JSON-LD LocalBusiness */}
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://quenecesitashoy.es/#localbusiness",
+    "name": "queNECESITAS",
+    "description": "Plataforma multiservicio de Gespronet: inmobiliaria, inversión, servicios cotidianos y ciberseguridad empresarial en Galicia.",
+    "url": "https://quenecesitashoy.es",
+    "telephone": "+34672274969",
+    "email": "info@quenecesitashoy.es",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rúa do Souto 1, Porto de Santa Cruz",
+      "addressLocality": "Oleiros",
+      "addressRegion": "A Coruña",
+      "postalCode": "15179",
+      "addressCountry": "ES"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "A Coruña" },
+      { "@type": "City", "name": "Oleiros" },
+      { "@type": "City", "name": "Sada" },
+      { "@type": "City", "name": "Bergondo" }
+    ],
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:00",
+      "closes": "16:00"
+    }
+  })} />
 
-    {/* JSON-LD schemas */}
-    {schemas.map((schema) => (
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify(schema)}
-      />
-    ))}
-  </head>
-
-  <body class:list={{ "qn-dark-theme": dark }}>
-    {/* Skip link para navegación por teclado */}
-    <a href="#contenido" class="qn-skip-link">Ir al contenido principal</a>
-
-    <slot name="header" />
-
-    <main id="contenido">
-      <slot />
-    </main>
-
-    <slot name="footer" />
-
-    <style is:global>
-      /* Dark theme override para landing de ciberseguridad */
-      body.qn-dark-theme {
-        background: var(--qn-cyber-dark);
-        color: #E5E7EB;
-      }
-      body.qn-dark-theme h1,
-      body.qn-dark-theme h2,
-      body.qn-dark-theme h3,
-      body.qn-dark-theme h4 {
-        color: #fff;
-      }
-    </style>
-  </body>
+  {/* Schemas adicionales por página */}
+  {schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+</head>
+<body>
+  <slot name="header" />
+  <main id="main">
+    <slot />
+  </main>
+  <slot name="footer" />
+</body>
 </html>
+
+<style is:global>
+  /* Ajuste global cuando Poppins ya está cargado — sin FOUT feo */
+  html { font-family: var(--qn-font-sans); }
+</style>

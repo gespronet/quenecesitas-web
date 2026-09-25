@@ -2,847 +2,497 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import ProcessSteps from "@components/ProcessSteps.astro";
-import ServicePoints from "@components/ServicePoints.astro";
-import FAQAccordion from "@components/FAQAccordion.astro";
-import ContactCTABlock from "@components/ContactCTABlock.astro";
+import ContactForm from "@components/ContactForm.astro";
 
 const seo = {
-  title: "queNECESITAS · Plataforma multiservicio local en Galicia",
+  title: "Lo que necesitas, hoy · queNECESITAS",
   description:
-    "Alarmas, energía, telefonía, inmobiliaria, inversión y ciberseguridad. Todo en A Coruña, Oleiros, Sada y Bergondo. Con criterio local, sin franquicia.",
+    "Un solo interlocutor para ahorrar en casa, comprar o vender tu vivienda, invertir con criterio y proteger tu empresa. Nos cuentas qué necesitas y resolvemos.",
 };
 
-const bloques = [
+const proceso = [
   {
-    key: "alarmas",
-    color: "var(--qn-alarmas)",
-    label: "Alarmas",
-    tag: "Servicios · Seguridad",
-    text: "Comparamos las principales compañías (Prosegur, Verisure, Segurma) y te decimos cuál te cuadra según tu vivienda o negocio.",
-    href: "/alarmas",
+    num: "Paso 01",
+    title: "Nos cuentas",
+    text: "Una llamada o un mensaje. Te escuchamos antes de hablar — con nombre y apellido, sin filtro comercial.",
   },
   {
-    key: "energia",
-    color: "var(--qn-energia)",
-    label: "Energía",
-    tag: "Servicios · Ahorro",
-    text: "Análisis de tu factura eléctrica y de gas. Buscamos la comercializadora con mejor precio real para tu consumo. Sin comisiones ocultas.",
-    href: "/energia",
+    num: "Paso 02",
+    title: "Estudiamos",
+    text: "Analizamos tu caso y preparamos opciones. Sin letra pequeña, sin sorpresas contractuales.",
   },
   {
-    key: "telefonia",
-    color: "var(--qn-telefonia)",
-    label: "Telefonía",
-    tag: "Servicios · Conectividad",
-    text: "Fibra, móvil y centralitas para hogar o pyme. Comparamos LOWI, Vodafone y otros para que pagues por lo que necesitas, no más.",
-    href: "/telefonia",
+    num: "Paso 03",
+    title: "Resolvemos",
+    text: "Gestionamos el cambio de principio a fin y seguimos ahí después. Cero abandono.",
   },
 ];
 
-const inversion = [
-  {
-    key: "venta-directa",
-    color: "var(--qn-venta-directa)",
-    label: "Venta directa",
-    tag: "Activos bancarios",
-    text: "Inmuebles procedentes de bancos y entidades financieras. Precios por debajo de mercado, con análisis previo de cargas y situación.",
-    href: "/venta-directa",
-  },
-  {
-    key: "npl",
-    color: "var(--qn-npl)",
-    label: "NPL",
-    tag: "Carteras y lotes",
-    text: "Activos financieros con inmueble asociado. Due diligence rigurosa antes de presentar la operación. Discreción total.",
-    href: "/npl",
-  },
-];
-
-const puntos = [
-  {
-    title: "Somos de aquí",
-    description:
-      "En Oleiros desde el primer día. Conocemos la comarca porque vivimos en ella. Cada zona, cada barrio, cada calle.",
-  },
-  {
-    title: "Sin franquicia",
-    description:
-      "Equipo propio. Hablas con quien lleva tu caso, no con una centralita nacional que aplica un protocolo enlatado.",
-  },
-  {
-    title: "Con criterio profesional",
-    description:
-      "Formación jurídica, financiera y técnica detrás de cada recomendación. Lo cercano no significa improvisado.",
-  },
-  {
-    title: "Honestidad como norma",
-    description:
-      "Si algo no te conviene, te lo decimos. Preferimos perder un encargo a colocarte algo que no te aporte valor real.",
-  },
-];
-
-const steps = [
-  {
-    title: "Nos cuentas qué necesitas",
-    description: "Un email, una llamada o el formulario. Sin filtros comerciales agresivos.",
-  },
-  {
-    title: "Te llamamos en 24h",
-    description: "Escuchamos antes de proponer. Solo así entendemos tu caso real.",
-  },
-  {
-    title: "Analizamos con criterio",
-    description: "Comparamos opciones reales, no las que nos dan más comisión.",
-  },
-  {
-    title: "Decides con información",
-    description: "Te acompañamos hasta el cierre. Y después seguimos disponibles.",
-  },
-];
-
-const faqs = [
-  {
-    question: "¿En qué zonas trabajáis?",
-    answer:
-      "A Coruña capital, Oleiros, Sada, Bergondo, Cambre y Culleredo son nuestra zona natural. Fuera de esos municipios estudiamos caso a caso — sobre todo en inversión inmobiliaria e inmobiliaria clásica, donde nuestro conocimiento local es diferencial.",
-  },
-  {
-    question: "¿Cuánto tarda vuestra respuesta?",
-    answer:
-      "Menos de 24 horas laborables desde que recibimos tu solicitud. Si es urgente, llama directamente al 672 274 969 en horario de lunes a viernes de 8:00 a 16:00.",
-  },
-  {
-    question: "¿Cuáles son vuestros honorarios?",
-    answer:
-      "Depende del servicio. En comparadores (alarmas, energía, telefonía) trabajamos con comisión del proveedor sin coste añadido para ti. En inmobiliaria y activos, el honorario está cerrado por escrito antes de firmar nada. Ciberseguridad se cotiza según alcance en partnership con O4IT.",
-  },
-  {
-    question: "¿Qué diferencia tenéis con una franquicia nacional?",
-    answer:
-      "Que las decisiones se toman aquí. Cuando llamas, hablas con quien lleva tu caso — no con un call center que aplica un guion. Y cuando comparamos opciones, no tenemos cuotas obligadas de una compañía concreta.",
-  },
-  {
-    question: "¿Ciberseguridad es solo para grandes empresas?",
-    answer:
-      "El servicio Ciber 360 que ofrecemos en partnership con O4IT está dirigido a empresas de más de 50 empleados con necesidades reales de SOC, pentesting y CISO advisory. Si eres pyme o autónomo, déjanos tus datos y te avisamos cuando tengamos producto adaptado.",
-  },
+const hogarChips = [
+  { label: "Luz",      icon: "/icons/luz-burbuja-azul.svg",      href: "/energia"   },
+  { label: "Gas",      icon: "/icons/gas-burbuja-azul.svg",      href: "/energia"   },
+  { label: "Teléfono", icon: "/icons/telefono-burbuja-azul.svg", href: "/telefonia" },
+  { label: "Alarmas",  icon: "/icons/alarmas-burbuja-azul.svg",  href: "/alarmas"   },
 ];
 ---
 
 <BaseLayout {...seo}>
   <Header slot="header" />
 
-  {/* HERO */}
+  {/* HERO — azul rey dominante */}
   <section class="qn-hero">
     <div class="qn-container qn-hero-inner">
-      <div class="qn-hero-content">
-        <p class="qn-eyebrow">A Coruña · Oleiros · Sada · Bergondo</p>
-        <h1 class="qn-display-2xl qn-hero-title">
-          En Galicia, con criterio local.<br />
-          <span class="qn-hero-accent">Sin franquicia.</span>
-        </h1>
-        <p class="qn-hero-lead">
-          Servicios cotidianos, operaciones inmobiliarias, inversión y ciberseguridad empresarial. Todo bajo una misma casa — atendido por gente que vive y trabaja aquí.
-        </p>
-        <div class="qn-hero-ctas">
-          <a href="/contacto" class="qn-btn qn-btn-accent">Cuéntanos qué necesitas</a>
-          <a href="tel:672274969" class="qn-btn qn-btn-outline">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-            672 274 969
-          </a>
-        </div>
+      <p class="qn-hero-eyebrow">
+        <span>HOGAR</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>INMOBILIARIA</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>INVERSIÓN</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>CIBERSEGURIDAD</span>
+      </p>
+
+      <h1 class="qn-hero-title">
+        Lo que<br />necesitas, hoy.
+      </h1>
+
+      <p class="qn-hero-lead">
+        Un solo interlocutor para ahorrar en casa, comprar o vender tu vivienda,
+        invertir con criterio y proteger tu empresa. Nos cuentas qué necesitas
+        y resolvemos.
+      </p>
+
+      <div class="qn-hero-ctas">
+        <a href="#contacto" class="qn-btn qn-btn-primary qn-btn-lg">
+          Hablar con un asesor
+        </a>
+        <a href="/servicios" class="qn-btn qn-btn-outline-white qn-btn-lg">
+          Ver servicios
+        </a>
       </div>
 
-      <div class="qn-hero-visual" aria-hidden="true">
-        <div class="qn-hero-badge qn-hero-badge-1">
-          <span class="qn-hero-badge-dot" style="background: var(--qn-alarmas)"></span>
-          <div>
-            <strong>Servicios</strong>
-            <em>Alarmas · Energía · Telefonía</em>
-          </div>
-        </div>
-        <div class="qn-hero-badge qn-hero-badge-2">
-          <span class="qn-hero-badge-dot" style="background: var(--qn-inmobiliaria)"></span>
-          <div>
-            <strong>Inmobiliaria</strong>
-            <em>Compraventa local</em>
-          </div>
-        </div>
-        <div class="qn-hero-badge qn-hero-badge-3">
-          <span class="qn-hero-badge-dot" style="background: var(--qn-npl)"></span>
-          <div>
-            <strong>Inversión</strong>
-            <em>Venta directa · NPL</em>
-          </div>
-        </div>
-        <div class="qn-hero-badge qn-hero-badge-4">
-          <span class="qn-hero-badge-dot" style="background: var(--qn-cyber)"></span>
-          <div>
-            <strong>Ciberseguridad</strong>
-            <em>Empresarial · B2B</em>
-          </div>
-        </div>
-        <div class="qn-hero-center">
-          <img src="/logo.svg" alt="" width="60" height="60" class="qn-hero-center-logo" />
-        </div>
-      </div>
+      <div class="qn-hero-circle" aria-hidden="true"></div>
+      <div class="qn-hero-circle-small" aria-hidden="true"></div>
     </div>
   </section>
 
-  {/* BLOQUE 1 · SERVICIOS COTIDIANOS */}
-  <section class="qn-bloque">
+  {/* PROCESO */}
+  <section class="qn-proceso">
     <div class="qn-container">
-      <div class="qn-bloque-head">
-        <p class="qn-eyebrow">Servicios cotidianos</p>
-        <h2 class="qn-display-lg">Comparamos por ti — con criterio local.</h2>
-        <p class="qn-bloque-lead">
-          No nos casamos con nadie. Cuando pides alarmas, energía o telefonía, te decimos qué compañía te cuadra a ti — no la que nos deja más margen.
-        </p>
-      </div>
+      <p class="qn-eyebrow">Cómo trabajamos</p>
+      <h2 class="qn-display-lg qn-proceso-title">Hablamos. Resolvemos.</h2>
 
-      <div class="qn-cards-grid">
-        {bloques.map((b) => (
-          <a href={b.href} class="qn-card" style={`--card-accent: ${b.color}`}>
-            <div class="qn-card-tag">
-              <span class="qn-card-dot"></span>
-              {b.tag}
-            </div>
-            <h3 class="qn-card-title">{b.label}</h3>
-            <p class="qn-card-text">{b.text}</p>
-            <span class="qn-card-link">
-              Ver más
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" />
-              </svg>
-            </span>
-          </a>
+      <div class="qn-proceso-grid">
+        {proceso.map((p, i) => (
+          <article class={`qn-proceso-card ${i === 2 ? "qn-proceso-card--dark" : ""}`}>
+            <span class="qn-proceso-num">{p.num}</span>
+            <h3 class="qn-proceso-card-title">{p.title}</h3>
+            <p class="qn-proceso-card-text">{p.text}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  {/* BLOQUE 2 · INMOBILIARIA */}
-  <section class="qn-bloque qn-bloque-inmobiliaria">
-    <div class="qn-container qn-bloque-inm-inner">
-      <div class="qn-bloque-inm-content">
-        <p class="qn-eyebrow" style="color: var(--qn-inmobiliaria)">Inmobiliaria</p>
-        <h2 class="qn-display-lg">Vender o comprar en A Coruña y comarca, con criterio.</h2>
-        <p class="qn-bloque-lead">
-          Conocemos cada zona porque vivimos aquí. Mediación local con criterio profesional — para propietarios que quieren vender bien y para compradores que buscan con cabeza.
+  {/* BLOQUE 01 · HOGAR */}
+  <section class="qn-bloque qn-bloque-01">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">01</span>
+        <h2 class="qn-bloque-title">Hogar</h2>
+        <p class="qn-bloque-tag">Luz · Gas · Teléfono · Alarmas</p>
+        <p class="qn-bloque-text">
+          Revisamos tus facturas gratis y te decimos cuánto puedes ahorrar. Si hay una opción mejor, hacemos el cambio por ti.
         </p>
 
-        <div class="qn-bloque-inm-features">
-          <div>
-            <strong>Valoración honesta</strong>
-            <span>Precio de mercado real, no el que quieres oír</span>
-          </div>
-          <div>
-            <strong>Plan claro</strong>
-            <span>Sabes desde el día uno qué vamos a hacer y en cuánto tiempo</span>
-          </div>
-          <div>
-            <strong>Sin sorpresas</strong>
-            <span>Comisión y contrato por escrito antes de firmar</span>
-          </div>
-        </div>
-
-        <div class="qn-hero-ctas">
-          <a href="/inmobiliaria#vender" class="qn-btn qn-btn-accent">Vender mi inmueble</a>
-          <a href="/inmobiliaria#comprar" class="qn-btn qn-btn-outline">Estoy buscando</a>
-        </div>
-      </div>
-
-      <div class="qn-bloque-inm-visual" aria-hidden="true">
-        <div class="qn-inm-card qn-inm-card-1">
-          <span class="qn-inm-card-tag">Piso · Oleiros</span>
-          <span class="qn-inm-card-title">3 hab · 95 m²</span>
-          <span class="qn-inm-card-price">— · disponible</span>
-        </div>
-        <div class="qn-inm-card qn-inm-card-2">
-          <span class="qn-inm-card-tag">Casa · Sada</span>
-          <span class="qn-inm-card-title">4 hab · 180 m² + jardín</span>
-          <span class="qn-inm-card-price">— · disponible</span>
-        </div>
-        <div class="qn-inm-card qn-inm-card-3">
-          <span class="qn-inm-card-tag">Bajo · A Coruña</span>
-          <span class="qn-inm-card-title">120 m² · centro</span>
-          <span class="qn-inm-card-price">— · disponible</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* BLOQUE 3 · INVERSIÓN */}
-  <section class="qn-bloque">
-    <div class="qn-container">
-      <div class="qn-bloque-head">
-        <p class="qn-eyebrow" style="color: var(--qn-npl)">Inversión</p>
-        <h2 class="qn-display-lg">Activos seleccionados, no listados sin filtrar.</h2>
-        <p class="qn-bloque-lead">
-          Para inversores cualificados y family office. Trabajamos con bancos, sareb y entidades financieras. Cada operación que te presentamos ha pasado por nuestra due diligence — cargas, situación registral, ratios de rentabilidad realistas.
-        </p>
-      </div>
-
-      <div class="qn-cards-grid qn-cards-grid-2">
-        {inversion.map((b) => (
-          <a href={b.href} class="qn-card qn-card-large" style={`--card-accent: ${b.color}`}>
-            <div class="qn-card-tag">
-              <span class="qn-card-dot"></span>
-              {b.tag}
-            </div>
-            <h3 class="qn-card-title qn-card-title-lg">{b.label}</h3>
-            <p class="qn-card-text">{b.text}</p>
-            <span class="qn-card-link">
-              Explorar producto
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 5l7 7-7 7" />
-              </svg>
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  {/* BLOQUE 4 · CIBERSEGURIDAD */}
-  <section class="qn-bloque qn-bloque-cyber">
-    <div class="qn-container qn-cyber-inner">
-      <div>
-        <p class="qn-eyebrow qn-cyber-eyebrow">Ciberseguridad empresarial</p>
-        <h2 class="qn-display-lg qn-cyber-title">
-          Ciber 360 para empresas de 50+ empleados.
-        </h2>
-        <p class="qn-cyber-lead">
-          En partnership con O4IT ofrecemos ciberseguridad administrada real: SOC, pentesting, vulnerability assessment, purple team y CISO advisory. Producto B2B enterprise, no un pack de antivirus.
-        </p>
-
-        <ul class="qn-cyber-features">
-          <li>SOC administrado con SIEM</li>
-          <li>Pentesting anual sobre URLs e IPs</li>
-          <li>Vulnerability assessment recurrente</li>
-          <li>Purple team y CISO advisory</li>
+        <ul class="qn-bloque-chips">
+          {hogarChips.map((c) => (
+            <li>
+              <a href={c.href}>
+                <img
+                  src={c.icon}
+                  alt=""
+                  width="32"
+                  height="32"
+                  loading="lazy"
+                  decoding="async"
+                  aria-hidden="true"
+                />
+                <span>{c.label}</span>
+              </a>
+            </li>
+          ))}
         </ul>
 
-        <div class="qn-hero-ctas">
-          <a href="/ciberseguridad" class="qn-btn qn-btn-accent">Reunión con equipo técnico</a>
-          <a href="/ciberseguridad#pymes" class="qn-btn qn-btn-outline-white">¿Eres pyme?</a>
-        </div>
+        <a href="/servicios" class="qn-btn qn-btn-primary">Revisar mi factura</a>
       </div>
-
-      <div class="qn-cyber-visual" aria-hidden="true">
-        <div class="qn-cyber-terminal">
-          <div class="qn-cyber-terminal-head">
-            <span></span><span></span><span></span>
-            <em>SOC · monitoring</em>
-          </div>
-          <div class="qn-cyber-terminal-body">
-            <div class="qn-cyber-line"><span class="qn-cyber-ok">✓</span> Perímetro estable</div>
-            <div class="qn-cyber-line"><span class="qn-cyber-ok">✓</span> IPs monitorizadas: 30/30</div>
-            <div class="qn-cyber-line"><span class="qn-cyber-ok">✓</span> Pentest Q3 · sin críticos</div>
-            <div class="qn-cyber-line"><span class="qn-cyber-warn">!</span> 2 vulnerabilidades medias</div>
-            <div class="qn-cyber-line"><span class="qn-cyber-ok">✓</span> CISO briefing próximo</div>
-          </div>
-        </div>
-      </div>
+      <div class="qn-bloque-circle" aria-hidden="true"></div>
     </div>
   </section>
 
-  <ServicePoints
-    eyebrow="Por qué queNECESITAS"
-    title="Cuatro cosas que nos definen."
-    points={puntos}
-    layout="grid"
-    background="white"
-  />
-
-  <ProcessSteps
-    title="Un proceso claro, sin sorpresas."
-    steps={steps}
-    background="paper"
-  />
-
-  {/* ZONA DE ACTIVIDAD */}
-  <section class="qn-area">
-    <div class="qn-container qn-area-inner">
-      <div>
-        <p class="qn-eyebrow">Dónde trabajamos</p>
-        <h2 class="qn-display-lg">A Coruña y comarca, en detalle.</h2>
-        <p class="qn-area-lead">
-          Nuestra zona natural de trabajo. En estos municipios conocemos los precios reales, las comercializadoras que funcionan, los proveedores serios y los que no. Si tu inmueble o tu empresa está aquí, somos el sitio donde llamar.
+  {/* BLOQUE 02 · INMOBILIARIA */}
+  <section class="qn-bloque qn-bloque-02">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">02</span>
+        <h2 class="qn-bloque-title">Inmobiliaria</h2>
+        <p class="qn-bloque-tag">Compra · Venta · Alquiler</p>
+        <p class="qn-bloque-text">
+          Te acompañamos en la compra, venta o alquiler de tu vivienda, con criterio local y sin prisas.
         </p>
+
+        <a href="/inmobiliaria" class="qn-btn qn-btn-secondary">Valorar mi vivienda</a>
       </div>
-      <ul class="qn-area-list">
-        <li><strong>A Coruña</strong><span>Todos los barrios</span></li>
-        <li><strong>Oleiros</strong><span>Santa Cruz, Mera, Perillo, Bastiagueiro, Liáns</span></li>
-        <li><strong>Sada</strong><span>Centro, Carnoedo, Mondego</span></li>
-        <li><strong>Bergondo</strong><span>Bergondiño, Guísamo, Vixoi</span></li>
-        <li><strong>Cambre</strong><span>Núcleos urbanos</span></li>
-        <li><strong>Culleredo</strong><span>O Burgo, Acea da Ama</span></li>
-      </ul>
+      <div class="qn-bloque-circle qn-bloque-circle--light" aria-hidden="true"></div>
     </div>
   </section>
 
-  <FAQAccordion faqs={faqs} background="bone" />
+  {/* BLOQUE 03 · INVERSIÓN */}
+  <section class="qn-bloque qn-bloque-03">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">03</span>
+        <h2 class="qn-bloque-title">Inversión</h2>
+        <p class="qn-bloque-tag">Asesoramiento · Planificación · Seguimiento</p>
+        <p class="qn-bloque-text">
+          Decisiones importantes, explicadas con claridad. Te presentamos cada opción con su riesgo y su rentabilidad esperada, para que decidas con toda la información.
+        </p>
 
-  <ContactCTABlock
-    title="¿Hablamos?"
-    intro="Cuéntanos qué necesitas y te llamamos en menos de 24 horas laborables."
-    variant="form"
-    background="brand"
-    origen="home"
-    sector="general"
-    cta="Enviar mensaje"
-  />
+        <a href="/inversion" class="qn-btn qn-btn-secondary">Pedir una cita</a>
+      </div>
+      <div class="qn-bloque-circle qn-bloque-circle--blue" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* BLOQUE 04 · CIBERSEGURIDAD */}
+  <section class="qn-bloque qn-bloque-04">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">04</span>
+        <h2 class="qn-bloque-title">Ciberseguridad</h2>
+        <p class="qn-bloque-tag">Para grandes empresas</p>
+        <p class="qn-bloque-text">
+          Protegemos tu operación con un plan a medida: auditoría, protección y respuesta ante incidentes. Un equipo que habla tu idioma.
+        </p>
+
+        <ul class="qn-bloque-chips qn-bloque-chips--dark">
+          <li><span>Auditoría</span></li>
+          <li><span>Protección de sistemas</span></li>
+          <li><span>Respuesta a incidentes</span></li>
+          <li><span>Formación</span></li>
+        </ul>
+
+        <a href="/ciberseguridad" class="qn-btn qn-btn-primary">Solicitar reunión</a>
+      </div>
+      <div class="qn-bloque-circle qn-bloque-circle--blue-04" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* CONTACTO */}
+  <section class="qn-home-contacto" id="contacto">
+    <div class="qn-container qn-container-narrow">
+      <p class="qn-eyebrow">Contacto</p>
+      <h2 class="qn-display-lg qn-home-contacto-title">¿Qué necesitas hoy?</h2>
+      <p class="qn-home-contacto-lead">
+        Déjanos tus datos y un asesor te llama en menos de 24 horas.
+      </p>
+
+      <div class="qn-home-contacto-form">
+        <ContactForm
+          origen="home"
+          sector="general"
+          cta="Quiero que me llamen"
+          mostrarSector={true}
+        />
+      </div>
+    </div>
+  </section>
 
   <Footer slot="footer" />
 </BaseLayout>
 
 <style>
-  /* HERO */
+  /* =========================================================
+   * HERO
+   * ========================================================= */
   .qn-hero {
-    padding: clamp(4rem, 8vw, 7rem) 0 clamp(4rem, 6vw, 5rem);
-    background:
-      radial-gradient(circle at 15% 20%, var(--qn-brand-50) 0%, transparent 40%),
-      radial-gradient(circle at 85% 80%, var(--qn-accent-50) 0%, transparent 40%),
-      var(--qn-white);
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
     position: relative;
     overflow: hidden;
+    padding: clamp(5rem, 12vw, 9rem) 0 clamp(6rem, 14vw, 10rem);
   }
-  .qn-hero-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  @media (min-width: 1000px) {
-    .qn-hero-inner { grid-template-columns: 1.15fr 1fr; gap: 4rem; }
-  }
-  .qn-hero-title {
-    margin: 1rem 0 1.5rem;
-    max-width: 15ch;
-    letter-spacing: -0.035em;
-  }
-  .qn-hero-accent { color: var(--qn-accent); font-style: italic; }
-  .qn-hero-lead {
-    font-size: var(--qn-fs-lg);
-    line-height: var(--qn-lh-relaxed);
-    color: var(--qn-graphite);
-    max-width: 55ch;
-    margin: 0 0 2rem;
-  }
-  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-
-  .qn-hero-visual {
-    position: relative;
-    aspect-ratio: 1;
-    max-width: 480px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .qn-hero-badge {
-    position: absolute;
-    background: var(--qn-white);
-    border: 1px solid var(--qn-mist);
-    padding: 0.875rem 1.125rem;
-    border-radius: var(--qn-radius-xl);
-    box-shadow: var(--qn-shadow-md);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    min-width: 175px;
-    animation: qn-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  .qn-hero-badge-1 { top: 5%; left: 0; animation-delay: 0.1s; }
-  .qn-hero-badge-2 { top: 5%; right: 0; animation-delay: 0.2s; }
-  .qn-hero-badge-3 { bottom: 5%; left: 0; animation-delay: 0.3s; }
-  .qn-hero-badge-4 { bottom: 5%; right: 0; animation-delay: 0.4s; }
-  .qn-hero-badge-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .qn-hero-badge strong {
-    display: block;
-    font-size: var(--qn-fs-sm);
-    font-weight: var(--qn-fw-semibold);
-    color: var(--qn-ink);
-    line-height: 1.2;
-  }
-  .qn-hero-badge em {
-    display: block;
+  .qn-hero-inner { position: relative; z-index: 2; }
+  .qn-hero-eyebrow {
+    font-family: var(--qn-font-mono);
     font-size: var(--qn-fs-xs);
-    color: var(--qn-graphite);
-    font-style: normal;
-    margin-top: 2px;
-  }
-  .qn-hero-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 110px; height: 110px;
-    background: var(--qn-brand-700);
-    border-radius: 50%;
+    font-weight: var(--qn-fw-medium);
+    letter-spacing: var(--qn-tracking-widest);
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 2rem;
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
-    justify-content: center;
-    box-shadow: var(--qn-shadow-xl), 0 0 0 12px rgba(0, 27, 118, 0.06);
-    animation: qn-fade-in 0.8s ease-out 0.5s both;
   }
-  .qn-hero-center-logo {
-    width: 55px; height: 55px;
-    filter: brightness(0) invert(1);
+  .qn-hero-eyebrow-sep { color: rgba(255, 255, 255, 0.35); }
+  .qn-hero-title {
+    font-size: clamp(3.5rem, 10vw, 6.5rem);
+    font-weight: var(--qn-fw-heavy);
+    line-height: 0.95;
+    letter-spacing: var(--qn-tracking-tighter);
+    color: var(--qn-white);
+    margin: 0 0 2rem;
+    max-width: 12ch;
   }
-
-  /* BLOQUES BASE */
-  .qn-bloque { padding: clamp(4rem, 8vw, 6rem) 0; }
-  .qn-bloque-head {
-    max-width: 720px;
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
-  .qn-bloque-lead {
-    margin-top: 1rem;
-    font-size: var(--qn-fs-md);
-    color: var(--qn-graphite);
+  .qn-hero-lead {
+    font-size: clamp(1rem, 2vw, 1.25rem);
     line-height: var(--qn-lh-relaxed);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 58ch;
+    margin: 0 0 2.5rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.875rem; }
+  .qn-hero-circle {
+    position: absolute;
+    right: -80px; bottom: -140px;
+    width: 380px; height: 380px;
+    background: var(--qn-amber-500);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.95;
+  }
+  .qn-hero-circle-small {
+    position: absolute;
+    right: 260px; bottom: 80px;
+    width: 60px; height: 60px;
+    background: var(--qn-amber-400);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.85;
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .qn-hero-circle { right: -100px; bottom: -180px; width: 480px; height: 480px; }
+    .qn-hero-circle-small { display: block; }
+  }
+  @media (max-width: 600px) {
+    .qn-hero-circle { right: -160px; bottom: -200px; width: 340px; height: 340px; }
   }
 
-  /* CARDS */
-  .qn-cards-grid {
+  /* =========================================================
+   * PROCESO
+   * ========================================================= */
+  .qn-proceso {
+    background: var(--qn-bone);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+  .qn-proceso-title { margin: 1rem 0 3rem; max-width: 20ch; }
+  .qn-proceso-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
-  @media (min-width: 640px) {
-    .qn-cards-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1000px) {
-    .qn-cards-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  .qn-cards-grid-2 {
-    grid-template-columns: 1fr;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  @media (min-width: 700px) {
-    .qn-cards-grid-2 { grid-template-columns: repeat(2, 1fr); }
-  }
-  .qn-card {
+  @media (min-width: 700px) { .qn-proceso-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .qn-proceso-grid { grid-template-columns: repeat(3, 1fr); max-width: 900px; } }
+  .qn-proceso-card {
     background: var(--qn-white);
-    border: 1px solid var(--qn-mist);
+    padding: 2rem;
     border-radius: var(--qn-radius-2xl);
-    padding: 2rem 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    text-decoration: none;
-    color: var(--qn-ink);
-    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base), border-color var(--qn-transition-base);
-    position: relative;
-    overflow: hidden;
-  }
-  .qn-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--card-accent, var(--qn-accent));
-    opacity: 0;
-    transition: opacity var(--qn-transition-base);
-  }
-  .qn-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--qn-shadow-lg);
-    border-color: transparent;
-  }
-  .qn-card:hover::before { opacity: 1; }
-  .qn-card-large { padding: 2.5rem 2rem; }
-  .qn-card-tag {
-    display: inline-flex;
-    align-items: center;
     gap: 0.5rem;
+    box-shadow: var(--qn-shadow-sm);
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base);
+  }
+  .qn-proceso-card:hover { transform: translateY(-4px); box-shadow: var(--qn-shadow-md); }
+  .qn-proceso-card--dark { background: var(--qn-brand-700); color: var(--qn-white); }
+  .qn-proceso-num {
+    font-family: var(--qn-font-mono);
     font-size: var(--qn-fs-xs);
-    font-weight: var(--qn-fw-semibold);
+    letter-spacing: var(--qn-tracking-widest);
     text-transform: uppercase;
-    letter-spacing: var(--qn-tracking-wider);
-    color: var(--qn-graphite);
+    color: var(--qn-stone);
+    font-weight: var(--qn-fw-medium);
   }
-  .qn-card-dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--card-accent, var(--qn-accent));
-  }
-  .qn-card-title {
-    font-family: var(--qn-font-sans);
+  .qn-proceso-card--dark .qn-proceso-num { color: rgba(255, 255, 255, 0.6); }
+  .qn-proceso-card-title {
     font-size: var(--qn-fs-xl);
     font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
     letter-spacing: var(--qn-tracking-tight);
-    line-height: var(--qn-lh-tight);
-    margin: 0.25rem 0 0;
+    margin: 0.25rem 0 0.5rem;
   }
-  .qn-card-title-lg { font-size: var(--qn-fs-2xl); }
-  .qn-card-text {
+  .qn-proceso-card--dark .qn-proceso-card-title { color: var(--qn-white); }
+  .qn-proceso-card-text {
     color: var(--qn-graphite);
-    font-size: var(--qn-fs-base);
     line-height: var(--qn-lh-relaxed);
+    font-size: var(--qn-fs-base);
     margin: 0;
-    flex: 1;
   }
-  .qn-card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    color: var(--card-accent, var(--qn-brand-700));
-    font-weight: var(--qn-fw-semibold);
-    font-size: var(--qn-fs-md);
-    margin-top: 0.5rem;
-    transition: gap var(--qn-transition-base);
-  }
-  .qn-card:hover .qn-card-link { gap: 0.625rem; }
+  .qn-proceso-card--dark .qn-proceso-card-text { color: rgba(255, 255, 255, 0.85); }
 
-  /* BLOQUE INMOBILIARIA */
-  .qn-bloque-inmobiliaria { background: var(--qn-bone); }
-  .qn-bloque-inm-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
-  }
-  @media (min-width: 1000px) {
-    .qn-bloque-inm-inner { grid-template-columns: 1.1fr 1fr; gap: 4rem; }
-  }
-  .qn-bloque-inm-content h2 { margin: 1rem 0 1rem; }
-  .qn-bloque-inm-features {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 2rem 0 2.5rem;
-  }
-  .qn-bloque-inm-features > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-left: 1.25rem;
-    border-left: 3px solid var(--qn-inmobiliaria);
-  }
-  .qn-bloque-inm-features strong {
-    font-weight: var(--qn-fw-semibold);
-    color: var(--qn-ink);
-    font-size: var(--qn-fs-md);
-  }
-  .qn-bloque-inm-features span {
-    font-size: var(--qn-fs-sm);
-    color: var(--qn-graphite);
-    line-height: var(--qn-lh-normal);
-  }
-  .qn-bloque-inm-visual {
-    position: relative;
-    aspect-ratio: 1;
-    max-width: 460px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .qn-inm-card {
-    position: absolute;
-    background: var(--qn-white);
-    border: 1px solid var(--qn-mist);
-    padding: 1.25rem 1.5rem;
-    border-radius: var(--qn-radius-xl);
-    box-shadow: var(--qn-shadow-md);
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-    min-width: 220px;
-    border-left: 3px solid var(--qn-inmobiliaria);
-  }
-  .qn-inm-card-1 { top: 5%; left: 0; }
-  .qn-inm-card-2 { top: 40%; right: 0; }
-  .qn-inm-card-3 { bottom: 5%; left: 10%; }
-  .qn-inm-card-tag {
-    font-size: var(--qn-fs-xs);
-    text-transform: uppercase;
-    letter-spacing: var(--qn-tracking-wider);
-    color: var(--qn-inmobiliaria);
-    font-weight: var(--qn-fw-semibold);
-  }
-  .qn-inm-card-title {
-    font-weight: var(--qn-fw-semibold);
-    color: var(--qn-ink);
-    font-size: var(--qn-fs-md);
-  }
-  .qn-inm-card-price {
-    font-size: var(--qn-fs-sm);
-    color: var(--qn-graphite);
-  }
-
-  /* BLOQUE CIBERSEGURIDAD */
-  .qn-bloque-cyber {
-    background: linear-gradient(135deg, var(--qn-cyber-dark) 0%, var(--qn-cyber-950) 100%);
-    color: rgba(255, 255, 255, 0.85);
+  /* =========================================================
+   * BLOQUES NUMERADOS
+   * ========================================================= */
+  .qn-bloque {
+    padding: clamp(4rem, 10vw, 7rem) 0;
     position: relative;
     overflow: hidden;
   }
-  .qn-bloque-cyber::before {
-    content: "";
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
-    pointer-events: none;
+  .qn-bloque-inner { position: relative; z-index: 2; }
+  .qn-bloque-content { max-width: 620px; }
+  .qn-bloque-num {
+    font-family: var(--qn-font-sans);
+    font-weight: var(--qn-fw-heavy);
+    font-size: clamp(4rem, 10vw, 7rem);
+    line-height: 1;
+    letter-spacing: var(--qn-tracking-tighter);
+    display: block;
+    margin: 0 0 0.5rem;
   }
-  .qn-cyber-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
-    position: relative;
+  .qn-bloque-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: var(--qn-fw-bold);
+    line-height: var(--qn-lh-tight);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0 0 0.5rem;
   }
-  @media (min-width: 1000px) {
-    .qn-cyber-inner { grid-template-columns: 1.1fr 1fr; gap: 4rem; }
+  .qn-bloque-tag {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-sm);
+    letter-spacing: var(--qn-tracking-wide);
+    margin: 0 0 1.5rem;
+    text-transform: uppercase;
   }
-  .qn-cyber-eyebrow { color: var(--qn-cyber) !important; }
-  .qn-cyber-title {
-    color: var(--qn-white);
-    margin: 1rem 0 1rem;
-    max-width: 20ch;
-  }
-  .qn-cyber-lead {
-    color: rgba(255, 255, 255, 0.75);
+  .qn-bloque-text {
     font-size: var(--qn-fs-md);
     line-height: var(--qn-lh-relaxed);
     margin: 0 0 2rem;
     max-width: 55ch;
   }
-  .qn-cyber-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2.5rem;
-  }
-  .qn-cyber-features li {
-    padding-left: 1.75rem;
-    position: relative;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: var(--qn-fs-md);
-  }
-  .qn-cyber-features li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 12px; height: 12px;
-    background: var(--qn-cyber);
-    border-radius: 2px;
-    box-shadow: 0 0 12px rgba(34, 211, 238, 0.6);
-  }
-  .qn-bloque-cyber .qn-btn-outline-white {
-    color: var(--qn-white);
-    border-color: rgba(255, 255, 255, 0.4);
-  }
-  .qn-bloque-cyber .qn-btn-outline-white:hover {
-    background: var(--qn-white);
-    color: var(--qn-cyber-dark);
-  }
-  .qn-cyber-visual {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .qn-cyber-terminal {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(34, 211, 238, 0.3);
-    border-radius: var(--qn-radius-xl);
-    overflow: hidden;
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 20px 60px -20px rgba(34, 211, 238, 0.3);
-  }
-  .qn-cyber-terminal-head {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.875rem 1.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .qn-cyber-terminal-head span {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
-  }
-  .qn-cyber-terminal-head em {
-    margin-left: auto;
-    font-size: var(--qn-fs-xs);
-    font-style: normal;
-    color: var(--qn-cyber);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .qn-cyber-terminal-body {
-    padding: 1.25rem;
-    font-family: var(--qn-font-mono);
-    font-size: var(--qn-fs-sm);
-    display: flex;
-    flex-direction: column;
-    gap: 0.625rem;
-  }
-  .qn-cyber-line {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: rgba(255, 255, 255, 0.85);
-  }
-  .qn-cyber-ok { color: #22c55e; font-weight: bold; }
-  .qn-cyber-warn { color: #f59e0b; font-weight: bold; }
 
-  /* ZONA DE ACTIVIDAD */
-  .qn-area {
-    padding: clamp(4rem, 8vw, 6rem) 0;
-    background: var(--qn-white);
+  /* Chips del bloque HOGAR (con iconos SVG) */
+  .qn-bloque-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 2rem;
+    list-style: none;
+    padding: 0;
   }
-  .qn-area-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: start;
+  .qn-bloque-chips li a,
+  .qn-bloque-chips li span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--qn-radius-md);
+    font-size: var(--qn-fs-sm);
+    font-weight: var(--qn-fw-medium);
+    text-decoration: none;
+    transition: transform var(--qn-transition-fast), background var(--qn-transition-fast);
+  }
+  .qn-bloque-chips li a img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .qn-bloque-chips li a:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Círculo decorativo */
+  .qn-bloque-circle {
+    position: absolute;
+    right: -60px; top: 3rem;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--qn-amber-500);
+    z-index: 1;
   }
   @media (min-width: 900px) {
-    .qn-area-inner { grid-template-columns: 1fr 1.2fr; gap: 4rem; }
+    .qn-bloque-circle { right: -30px; top: 5rem; width: 240px; height: 240px; }
   }
-  .qn-area-lead {
-    color: var(--qn-graphite);
-    line-height: var(--qn-lh-relaxed);
-    margin: 1rem 0 0;
-    max-width: 45ch;
+  .qn-bloque-circle--light { background: var(--qn-brand-100); }
+  .qn-bloque-circle--blue { background: var(--qn-brand-700); }
+  .qn-bloque-circle--blue-04 { background: var(--qn-brand-500); }
+
+  /* Bloque 01 · HOGAR */
+  .qn-bloque-01 {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
   }
-  .qn-area-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.875rem;
+  .qn-bloque-01 .qn-bloque-num,
+  .qn-bloque-01 .qn-bloque-title { color: var(--qn-white); }
+  .qn-bloque-01 .qn-bloque-tag { color: rgba(255, 255, 255, 0.7); }
+  .qn-bloque-01 .qn-bloque-text { color: rgba(255, 255, 255, 0.85); }
+  .qn-bloque-01 .qn-bloque-chips li a {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--qn-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
-  .qn-area-list li {
-    background: var(--qn-paper);
-    border-radius: var(--qn-radius-lg);
-    padding: 1rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  .qn-area-list strong {
-    font-weight: var(--qn-fw-semibold);
-    color: var(--qn-brand-700);
-    font-size: var(--qn-fs-md);
-  }
-  .qn-area-list span {
-    font-size: var(--qn-fs-sm);
-    color: var(--qn-graphite);
-    line-height: var(--qn-lh-normal);
+  .qn-bloque-01 .qn-bloque-chips li a:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 
-  @media (max-width: 700px) {
-    .qn-hero-visual,
-    .qn-bloque-inm-visual { display: none; }
+  /* Bloque 02 · INMOBILIARIA */
+  .qn-bloque-02 {
+    background: var(--qn-bone);
+    color: var(--qn-ink);
+  }
+  .qn-bloque-02 .qn-bloque-num { color: var(--qn-brand-700); }
+  .qn-bloque-02 .qn-bloque-title { color: var(--qn-brand-700); }
+  .qn-bloque-02 .qn-bloque-tag { color: var(--qn-stone); }
+  .qn-bloque-02 .qn-bloque-text { color: var(--qn-graphite); }
+
+  /* Bloque 03 · INVERSIÓN */
+  .qn-bloque-03 {
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
+  }
+  .qn-bloque-03 .qn-bloque-num,
+  .qn-bloque-03 .qn-bloque-title,
+  .qn-bloque-03 .qn-bloque-tag,
+  .qn-bloque-03 .qn-bloque-text { color: var(--qn-brand-900); }
+  .qn-bloque-03 .qn-bloque-tag { color: var(--qn-brand-800); }
+
+  /* Bloque 04 · CIBERSEGURIDAD */
+  .qn-bloque-04 {
+    background: var(--qn-brand-900);
+    color: var(--qn-white);
+  }
+  .qn-bloque-04 .qn-bloque-num,
+  .qn-bloque-04 .qn-bloque-title { color: var(--qn-white); }
+  .qn-bloque-04 .qn-bloque-tag { color: rgba(255, 255, 255, 0.65); }
+  .qn-bloque-04 .qn-bloque-text { color: rgba(255, 255, 255, 0.85); }
+  .qn-bloque-chips--dark li span {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--qn-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* CONTACTO */
+  .qn-home-contacto {
+    background: var(--qn-bone);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+  .qn-home-contacto-title { margin: 1rem 0 0.75rem; }
+  .qn-home-contacto-lead {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 2.5rem;
+  }
+  .qn-home-contacto-form {
+    background: var(--qn-white);
+    padding: 2.5rem;
+    border-radius: var(--qn-radius-2xl);
+    box-shadow: var(--qn-shadow-sm);
+  }
+  @media (max-width: 600px) {
+    .qn-home-contacto-form { padding: 1.75rem; }
   }
 </style>
