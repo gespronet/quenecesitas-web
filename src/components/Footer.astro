@@ -26,10 +26,28 @@ const legal = [
   { label: "Política de privacidad", href: "/politica-privacidad" },
   { label: "Política de cookies", href: "/politica-cookies" },
 ];
+
+const social = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/quenecesitas",
+    icon: "linkedin",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/quenecesitas_hoy",
+    icon: "instagram",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/quenecesistashoy",
+    icon: "facebook",
+  },
+];
 ---
 
 <footer class="qn-footer">
-  {/* CTA superior · ancho completo */}
+  {/* CTA superior */}
   <section class="qn-footer-cta-wrap">
     <div class="qn-footer-track">
       <div class="qn-footer-cta">
@@ -52,7 +70,7 @@ const legal = [
     </div>
   </section>
 
-  {/* Grid principal · ancho completo con contenido centrado */}
+  {/* Grid principal */}
   <div class="qn-footer-track">
     <div class="qn-footer-main">
 
@@ -70,6 +88,28 @@ const legal = [
           <a href="tel:672274969">672 274 969</a><br />
           <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
         </address>
+
+        <div class="qn-footer-social">
+          {social.map((s) => (
+            <a href={s.href} aria-label={`queNECESITAS en ${s.label}`} target="_blank" rel="noopener noreferrer">
+              {s.icon === "linkedin" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              )}
+              {s.icon === "instagram" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.336 3.608 1.311.975.975 1.249 2.242 1.311 3.608.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.062 1.366-.336 2.633-1.311 3.608-.975.975-2.242 1.249-3.608 1.311-1.265.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-1.366-.062-2.633-.336-3.608-1.311-.975-.975-1.249-2.242-1.311-3.608C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.849c.062-1.366.336-2.633 1.311-3.608.975-.975 2.242-1.249 3.608-1.311C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.141 0-3.501.012-4.737.068-1.159.053-1.789.249-2.207.414-.558.217-.959.477-1.378.896-.42.42-.679.819-.896 1.378-.165.418-.361 1.049-.414 2.207-.056 1.236-.068 1.596-.068 4.737 0 3.141.012 3.501.068 4.737.053 1.159.249 1.789.414 2.207.217.558.477.959.896 1.378.42.42.819.679 1.378.896.418.165 1.049.361 2.207.414 1.236.056 1.596.068 4.737.068 3.141 0 3.501-.012 4.737-.068 1.159-.053 1.789-.249 2.207-.414.558-.217.959-.477 1.378-.896.42-.42.679-.819.896-1.378.165-.418.361-1.049.414-2.207.056-1.236.068-1.596.068-4.737 0-3.141-.012-3.501-.068-4.737-.053-1.159-.249-1.789-.414-2.207-.217-.558-.477-.959-.896-1.378-.42-.42-.819-.679-1.378-.896-.418-.165-1.049-.361-2.207-.414C15.501 3.977 15.141 3.965 12 3.965zm0 3.063c-2.76 0-5 2.238-5 5s2.24 5 5 5 5-2.238 5-5-2.24-5-5-5zm0 8.247c-1.794 0-3.247-1.453-3.247-3.247 0-1.794 1.453-3.247 3.247-3.247 1.794 0 3.247 1.453 3.247 3.247 0 1.794-1.453 3.247-3.247 3.247zm5.207-8.429c-.645 0-1.168.523-1.168 1.168 0 .645.523 1.168 1.168 1.168.645 0 1.168-.523 1.168-1.168 0-.645-.523-1.168-1.168-1.168z"/>
+                </svg>
+              )}
+              {s.icon === "facebook" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              )}
+            </a>
+          ))}
+        </div>
       </div>
 
       <nav class="qn-footer-col" aria-label="Servicios">
@@ -97,20 +137,12 @@ const legal = [
             <li><a href={item.href}>{item.label}</a></li>
           ))}
         </ul>
-
-        <div class="qn-footer-social">
-          <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn queNECESITAS" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-            </svg>
-          </a>
-        </div>
       </nav>
 
     </div>
   </div>
 
-  {/* Barra inferior · ancho completo */}
+  {/* Barra inferior */}
   <div class="qn-footer-track">
     <div class="qn-footer-bottom">
       <p class="qn-footer-copy">
@@ -137,15 +169,14 @@ const legal = [
     color: var(--qn-amber-500) !important;
   }
 
-  /* Pista interior con padding generoso.
-     Mobile: 1.5rem · Tablet: 3rem · Desktop normal: 5rem · Wide: 8vw escalable */
+  /* Pista: ancho completo con padding escalado */
   .qn-footer-track {
     width: 100%;
-    padding-left: clamp(1.5rem, 6vw, 8rem);
-    padding-right: clamp(1.5rem, 6vw, 8rem);
+    padding-left: clamp(1rem, 4vw, 4rem);
+    padding-right: clamp(1rem, 4vw, 4rem);
   }
 
-  /* Contenido centrado a 1400 dentro de cada track */
+  /* Contenido centrado a 1400 */
   .qn-footer-cta,
   .qn-footer-main,
   .qn-footer-bottom {
@@ -225,17 +256,14 @@ const legal = [
     color: rgba(255, 255, 255, 0.75);
     margin: 0;
   }
-
   .qn-footer-addr strong {
     color: var(--qn-white);
     font-weight: var(--qn-fw-semibold);
   }
-
   .qn-footer-addr a {
     color: var(--qn-white);
     transition: opacity var(--qn-transition-base);
   }
-
   .qn-footer-addr a:hover {
     opacity: 0.8;
     text-decoration: underline;
@@ -258,7 +286,6 @@ const legal = [
     padding: 0;
     margin: 0;
   }
-
   .qn-footer-list a {
     color: rgba(255, 255, 255, 0.75);
     font-size: var(--qn-fs-md);
@@ -266,19 +293,18 @@ const legal = [
     display: inline-block;
     text-decoration: none;
   }
-
   .qn-footer-list a:hover {
     color: var(--qn-white);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
+  /* SOCIAL */
   .qn-footer-social {
-    margin-top: 2rem;
     display: flex;
-    gap: 0.75rem;
+    gap: 0.625rem;
+    margin-top: 0.5rem;
   }
-
   .qn-footer-social a {
     display: flex;
     align-items: center;
@@ -288,13 +314,15 @@ const legal = [
     background: rgba(255, 255, 255, 0.08);
     color: var(--qn-white);
     border-radius: var(--qn-radius-pill);
-    transition: background var(--qn-transition-base), color var(--qn-transition-base);
+    transition: background var(--qn-transition-base),
+                color var(--qn-transition-base),
+                transform var(--qn-transition-fast);
     text-decoration: none;
   }
-
   .qn-footer-social a:hover {
     background: var(--qn-amber-500);
     color: var(--qn-brand-900);
+    transform: translateY(-2px);
   }
 
   /* Barra inferior */
@@ -310,11 +338,7 @@ const legal = [
     font-size: var(--qn-fs-sm);
     color: rgba(255, 255, 255, 0.6);
   }
-
-  .qn-footer-copy {
-    margin: 0;
-  }
-
+  .qn-footer-copy { margin: 0; }
   .qn-footer-legal {
     display: flex;
     flex-wrap: wrap;
@@ -323,27 +347,22 @@ const legal = [
     padding: 0;
     margin: 0;
   }
-
   .qn-footer-legal a {
     color: rgba(255, 255, 255, 0.6);
     transition: color var(--qn-transition-base);
     text-decoration: none;
   }
-
   .qn-footer-legal a:hover {
     color: var(--qn-white);
   }
 
-  /* Responsive */
   @media (min-width: 768px) {
     .qn-footer-cta {
       grid-template-columns: 1.5fr auto;
     }
-
     .qn-footer-main {
       grid-template-columns: 1.4fr 1fr 1fr 1fr;
     }
-
     .qn-footer-bottom {
       flex-direction: row;
       align-items: center;

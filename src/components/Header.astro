@@ -20,7 +20,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
 <header class="qn-header">
   <div class="qn-header-track">
     <div class="qn-header-inner">
-      {/* LOGO */}
       <a href="/" class="qn-logo" aria-label="queNECESITAS · Inicio">
         <img
           src="/logo.svg"
@@ -32,7 +31,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
         />
       </a>
 
-      {/* Nav desktop */}
       <nav class="qn-nav" aria-label="Principal">
         <ul class="qn-nav-list">
           {menu.map((item, i) => (
@@ -49,7 +47,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
         </ul>
       </nav>
 
-      {/* Zona derecha: Inmuebles + CTA */}
       <div class="qn-header-actions">
         <a
           href="/inmuebles"
@@ -70,7 +67,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
         </a>
       </div>
 
-      {/* Toggle móvil */}
       <button
         class="qn-nav-toggle"
         aria-label="Abrir menú"
@@ -85,49 +81,98 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
   </div>
 
   {/* Menú móvil */}
-  <nav class="qn-mobile-menu" id="qn-mobile-menu" aria-hidden="true">
-    <ul>
-      {menu.map((item) => (
+  <div class="qn-mobile-menu" id="qn-mobile-menu" aria-hidden="true">
+    <nav aria-label="Principal móvil">
+      <ul>
+        {menu.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={isActive(item.href) ? "is-active" : ""}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li class="qn-mobile-sep"></li>
         <li>
           <a
-            href={item.href}
-            class={isActive(item.href) ? "is-active" : ""}
+            href="/inmuebles"
+            class={`qn-mobile-inmuebles ${inmueblesActive ? "is-active" : ""}`}
           >
-            {item.label}
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"></path>
+            </svg>
+            Ver inmuebles disponibles
           </a>
         </li>
-      ))}
-      <li>
-        <a
-          href="/inmuebles"
-          class={`qn-mobile-inmuebles ${inmueblesActive ? "is-active" : ""}`}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"></path>
-          </svg>
-          Ver inmuebles disponibles
-        </a>
-      </li>
-      <li>
-        <a href="/contacto" class="qn-btn qn-btn-primary qn-mobile-cta">
-          Hablar con un asesor
-        </a>
-      </li>
-    </ul>
-  </nav>
+        <li>
+          <a href="/contacto" class="qn-mobile-cta">
+            Hablar con un asesor
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>(".qn-nav-toggle");
   const menu = document.querySelector<HTMLElement>(".qn-mobile-menu");
-  if (toggle && menu) {
+  const header = document.querySelector<HTMLElement>(".qn-header");
+
+  function setMenuPosition() {
+    if (header && menu) {
+      const h = header.offsetHeight;
+      menu.style.top = `${h}px`;
+      menu.style.height = `calc(100vh - ${h}px)`;
+    }
+  }
+
+  function closeMenu() {
+    if (!toggle || !menu) return;
+    toggle.setAttribute("aria-expanded", "false");
+    menu.setAttribute("aria-hidden", "true");
+    menu.classList.remove("is-open");
+    toggle.classList.remove("is-open");
+    document.body.style.overflow = "";
+  }
+
+  if (toggle && menu && header) {
+    setMenuPosition();
+    window.addEventListener("resize", setMenuPosition);
+
     toggle.addEventListener("click", () => {
       const expanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", (!expanded).toString());
-      menu.setAttribute("aria-hidden", expanded.toString());
-      menu.classList.toggle("is-open");
-      toggle.classList.toggle("is-open");
-      document.body.style.overflow = expanded ? "" : "hidden";
+      if (expanded) {
+        closeMenu();
+      } else {
+        setMenuPosition();
+        toggle.setAttribute("aria-expanded", "true");
+        menu.setAttribute("aria-hidden", "false");
+        menu.classList.add("is-open");
+        toggle.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+      }
+    });
+
+    // Cerrar al clicar un link
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", closeMenu);
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    // Cerrar si pasamos a desktop
+    const mq = window.matchMedia("(min-width: 1024px)");
+    mq.addEventListener("change", (e) => {
+      if (e.matches) closeMenu();
     });
   }
 </script>
@@ -144,11 +189,11 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
                 0 2px 20px -8px rgba(10, 27, 77, 0.08);
   }
 
-  /* Pista interior con padding generoso para que respire en pantallas anchas */
+  /* Pista: ocupa 100% del ancho, con padding lateral generoso en wide */
   .qn-header-track {
     width: 100%;
-    padding-left: clamp(1.5rem, 6vw, 8rem);
-    padding-right: clamp(1.5rem, 6vw, 8rem);
+    padding-left: clamp(1rem, 4vw, 4rem);
+    padding-right: clamp(1rem, 4vw, 4rem);
   }
 
   .qn-header-inner {
@@ -163,7 +208,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     margin-right: auto;
   }
 
-  /* LOGO */
   .qn-logo {
     display: inline-flex;
     align-items: center;
@@ -185,10 +229,9 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     max-width: 220px;
   }
   @media (max-width: 600px) {
-    .qn-logo img { height: 38px; }
+    .qn-logo img { height: 36px; max-width: 160px; }
   }
 
-  /* NAV DESKTOP */
   .qn-nav {
     display: none;
     flex: 1;
@@ -237,17 +280,14 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
                 left var(--qn-transition-base);
   }
   .qn-nav-link:hover { color: var(--qn-brand-700); }
-  .qn-nav-link:hover::after {
+  .qn-nav-link:hover::after,
+  .qn-nav-link.is-active::after {
     width: 60%;
     left: 20%;
   }
   .qn-nav-link.is-active {
     color: var(--qn-brand-700);
     font-weight: var(--qn-fw-semibold);
-  }
-  .qn-nav-link.is-active::after {
-    width: 60%;
-    left: 20%;
   }
 
   .qn-nav-sep {
@@ -258,7 +298,6 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     border-radius: 50%;
   }
 
-  /* ACCIONES DE LA DERECHA */
   .qn-header-actions {
     display: none;
     align-items: center;
@@ -285,17 +324,13 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     transition: all var(--qn-transition-fast);
     white-space: nowrap;
   }
-  .qn-header-inmuebles:hover {
+  .qn-header-inmuebles:hover,
+  .qn-header-inmuebles.is-active {
     background: var(--qn-brand-700);
     color: var(--qn-white);
     border-color: var(--qn-brand-700);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px -2px rgba(20, 59, 158, 0.3);
-  }
-  .qn-header-inmuebles.is-active {
-    background: var(--qn-brand-700);
-    color: var(--qn-white);
-    border-color: var(--qn-brand-700);
   }
   .qn-header-inmuebles svg { flex-shrink: 0; }
 
@@ -339,6 +374,7 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     border-radius: 2px;
     transition: transform var(--qn-transition-base),
                 opacity var(--qn-transition-fast);
+    transform-origin: center;
   }
   .qn-nav-toggle.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
   .qn-nav-toggle.is-open span:nth-child(2) { opacity: 0; }
@@ -346,33 +382,58 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
 
   /* MENÚ MÓVIL */
   .qn-mobile-menu {
-    display: none;
     position: fixed;
-    top: 72px;
-    left: 0; right: 0; bottom: 0;
+    top: 72px; /* JS lo recalcula */
+    left: 0;
+    right: 0;
+    height: calc(100vh - 72px);
     background: var(--qn-white);
     padding: 1.5rem;
     z-index: 40;
     overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease,
+                visibility 0.2s ease,
+                transform 0.2s ease;
+    -webkit-overflow-scrolling: touch;
   }
-  .qn-mobile-menu.is-open { display: block; }
+  .qn-mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  @media (min-width: 1024px) {
+    .qn-mobile-menu {
+      display: none !important;
+    }
+  }
+  .qn-mobile-menu nav {
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+  }
   .qn-mobile-menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.375rem;
+    gap: 0.25rem;
   }
   .qn-mobile-menu a {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
     padding: 1rem 1.25rem;
     color: var(--qn-ink);
     font-size: var(--qn-fs-md);
     font-weight: var(--qn-fw-medium);
     text-decoration: none;
     border-radius: var(--qn-radius-md);
-    transition: background var(--qn-transition-fast);
+    transition: background var(--qn-transition-fast),
+                color var(--qn-transition-fast);
   }
   .qn-mobile-menu a:hover,
   .qn-mobile-menu a.is-active {
@@ -380,15 +441,17 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
     color: var(--qn-brand-700);
   }
 
+  .qn-mobile-sep {
+    height: 1px;
+    background: var(--qn-fog);
+    margin: 1rem 1.25rem;
+  }
+
   .qn-mobile-inmuebles {
-    display: inline-flex !important;
-    align-items: center;
-    gap: 0.625rem;
     background: var(--qn-brand-50) !important;
     color: var(--qn-brand-700) !important;
-    border: 1.5px solid var(--qn-brand-100);
-    margin-top: 0.5rem;
     font-weight: var(--qn-fw-semibold) !important;
+    border: 1.5px solid var(--qn-brand-100);
   }
   .qn-mobile-inmuebles.is-active,
   .qn-mobile-inmuebles:hover {
@@ -398,8 +461,21 @@ const inmueblesActive = pathname.startsWith("/inmuebles");
   }
 
   .qn-mobile-cta {
-    margin-top: 1rem;
     justify-content: center;
-    width: 100%;
+    background: var(--qn-amber-500) !important;
+    color: var(--qn-brand-900) !important;
+    font-weight: var(--qn-fw-semibold) !important;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 14px rgba(242, 180, 36, 0.35);
+  }
+  .qn-mobile-cta:hover {
+    background: var(--qn-amber-400) !important;
+    color: var(--qn-brand-900) !important;
+  }
+  .qn-mobile-cta svg {
+    transition: transform var(--qn-transition-fast);
+  }
+  .qn-mobile-cta:hover svg {
+    transform: translateX(3px);
   }
 </style>
