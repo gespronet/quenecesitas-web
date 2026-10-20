@@ -8,6 +8,7 @@ const services = [
 ];
 
 const inmobiliaria = [
+  { label: "Inmuebles disponibles", href: "/inmuebles" },
   { label: "Compraventa", href: "/inmobiliaria" },
   { label: "Venta directa (activos)", href: "/venta-directa" },
   { label: "NPL para inversores", href: "/npl" },
@@ -28,91 +29,99 @@ const legal = [
 ---
 
 <footer class="qn-footer">
-  {/* CTA superior */}
+  {/* CTA superior · ancho completo */}
   <section class="qn-footer-cta-wrap">
-    <div class="qn-container qn-footer-cta">
-      <div>
-        <p class="qn-eyebrow qn-eyebrow-inverted">Hablemos</p>
-        <h2 class="qn-display-md qn-footer-cta-title">
-          Cuéntanos qué necesitas y te llamamos en menos de 24 horas laborables.
-        </h2>
-      </div>
-      <div class="qn-footer-cta-actions">
-        <a href="tel:672274969" class="qn-btn qn-btn-accent">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-          </svg>
-          Llamar · 672 274 969
-        </a>
-        <a href="/contacto" class="qn-btn qn-btn-outline-white">Formulario</a>
+    <div class="qn-footer-track">
+      <div class="qn-footer-cta">
+        <div>
+          <p class="qn-eyebrow qn-eyebrow-inverted">Hablemos</p>
+          <h2 class="qn-display-md qn-footer-cta-title">
+            Cuéntanos qué necesitas y te llamamos en menos de 24 horas laborables.
+          </h2>
+        </div>
+        <div class="qn-footer-cta-actions">
+          <a href="tel:672274969" class="qn-btn qn-btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Llamar · 672 274 969
+          </a>
+          <a href="/contacto" class="qn-btn qn-btn-outline-white">Formulario</a>
+        </div>
       </div>
     </div>
   </section>
 
-  {/* Grid principal */}
-  <div class="qn-container qn-footer-main">
+  {/* Grid principal · ancho completo con contenido centrado */}
+  <div class="qn-footer-track">
+    <div class="qn-footer-main">
 
-    <div class="qn-footer-brand">
-      <img src="/logo-white.svg" alt="queNECESITAS" width="160" height="42" class="qn-footer-logo" />
-      <p class="qn-footer-tag">
-        En Galicia, con criterio local.<br />Sin franquicia.
-      </p>
-      <address class="qn-footer-addr">
-        <strong>Gespronet Axencia de Marketing e Deseño, S.L.</strong><br />
-        Rúa do Souto 1, Porto de Santa Cruz<br />
-        15179 Oleiros · A Coruña<br /><br />
-        <a href="tel:672274969">672 274 969</a><br />
-        <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
-      </address>
-    </div>
-
-    <nav class="qn-footer-col" aria-label="Servicios">
-      <h3 class="qn-footer-h">Servicios</h3>
-      <ul class="qn-footer-list">
-        {services.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </nav>
-
-    <nav class="qn-footer-col" aria-label="Inmobiliaria e inversión">
-      <h3 class="qn-footer-h">Inmobiliaria e inversión</h3>
-      <ul class="qn-footer-list">
-        {inmobiliaria.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </nav>
-
-    <nav class="qn-footer-col" aria-label="Empresa">
-      <h3 class="qn-footer-h">Empresa</h3>
-      <ul class="qn-footer-list">
-        {empresa.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-
-      <div class="qn-footer-social">
-        <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn queNECESITAS" target="_blank" rel="noopener noreferrer">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-          </svg>
+      <div class="qn-footer-brand">
+        <a href="/" class="qn-footer-logo-link" aria-label="queNECESITAS · Inicio">
+          <img src="/logo-white.svg" alt="queNECESITAS" width="200" height="54" class="qn-footer-logo" />
         </a>
+        <p class="qn-footer-tag">
+          En Galicia, con criterio local.<br />Sin franquicia.
+        </p>
+        <address class="qn-footer-addr">
+          <strong>Gespronet Axencia de Marketing e Deseño, S.L.</strong><br />
+          Rúa do Souto 1, Porto de Santa Cruz<br />
+          15179 Oleiros · A Coruña<br /><br />
+          <a href="tel:672274969">672 274 969</a><br />
+          <a href="mailto:info@quenecesitashoy.es">info@quenecesitashoy.es</a>
+        </address>
       </div>
-    </nav>
 
+      <nav class="qn-footer-col" aria-label="Servicios">
+        <h3 class="qn-footer-h">Servicios</h3>
+        <ul class="qn-footer-list">
+          {services.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav class="qn-footer-col" aria-label="Inmobiliaria e inversión">
+        <h3 class="qn-footer-h">Inmobiliaria e inversión</h3>
+        <ul class="qn-footer-list">
+          {inmobiliaria.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav class="qn-footer-col" aria-label="Empresa">
+        <h3 class="qn-footer-h">Empresa</h3>
+        <ul class="qn-footer-list">
+          {empresa.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+
+        <div class="qn-footer-social">
+          <a href="https://www.linkedin.com/company/quenecesitas" aria-label="LinkedIn queNECESITAS" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+        </div>
+      </nav>
+
+    </div>
   </div>
 
-  {/* Barra inferior */}
-  <div class="qn-container qn-footer-bottom">
-    <p class="qn-footer-copy">
-      © {year} Gespronet Axencia de Marketing e Deseño, S.L. · CIF B75490136
-    </p>
-    <ul class="qn-footer-legal">
-      {legal.map((item) => (
-        <li><a href={item.href}>{item.label}</a></li>
-      ))}
-    </ul>
+  {/* Barra inferior · ancho completo */}
+  <div class="qn-footer-track">
+    <div class="qn-footer-bottom">
+      <p class="qn-footer-copy">
+        © {year} Gespronet Axencia de Marketing e Deseño, S.L. · CIF B75490136
+      </p>
+      <ul class="qn-footer-legal">
+        {legal.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
   </div>
 </footer>
 
@@ -121,17 +130,35 @@ const legal = [
     background: var(--qn-brand-900);
     color: var(--qn-bone);
     margin-top: clamp(4rem, 8vw, 6rem);
+    width: 100%;
   }
 
   .qn-eyebrow-inverted {
-    color: var(--qn-accent-500) !important;
+    color: var(--qn-amber-500) !important;
+  }
+
+  /* Pista interior con padding generoso.
+     Mobile: 1.5rem · Tablet: 3rem · Desktop normal: 5rem · Wide: 8vw escalable */
+  .qn-footer-track {
+    width: 100%;
+    padding-left: clamp(1.5rem, 6vw, 8rem);
+    padding-right: clamp(1.5rem, 6vw, 8rem);
+  }
+
+  /* Contenido centrado a 1400 dentro de cada track */
+  .qn-footer-cta,
+  .qn-footer-main,
+  .qn-footer-bottom {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   /* CTA superior */
   .qn-footer-cta-wrap {
     padding: clamp(3rem, 5vw, 4.5rem) 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(180deg, var(--qn-brand-950) 0%, var(--qn-brand-900) 100%);
+    background: linear-gradient(180deg, #050e2b 0%, var(--qn-brand-900) 100%);
   }
 
   .qn-footer-cta {
@@ -158,7 +185,8 @@ const legal = [
     display: grid;
     grid-template-columns: 1fr;
     gap: 3rem;
-    padding: clamp(3rem, 5vw, 4rem) var(--qn-container-padding);
+    padding-top: clamp(3rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 5vw, 4rem);
   }
 
   .qn-footer-brand {
@@ -167,9 +195,19 @@ const legal = [
     gap: 1.5rem;
   }
 
+  .qn-footer-logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity var(--qn-transition-fast);
+  }
+  .qn-footer-logo-link:hover { opacity: 0.85; }
+
   .qn-footer-logo {
-    height: 2rem;
+    display: block;
+    height: 54px;
     width: auto;
+    max-width: 200px;
   }
 
   .qn-footer-tag {
@@ -216,6 +254,9 @@ const legal = [
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .qn-footer-list a {
@@ -223,6 +264,7 @@ const legal = [
     font-size: var(--qn-fs-md);
     transition: color var(--qn-transition-base);
     display: inline-block;
+    text-decoration: none;
   }
 
   .qn-footer-list a:hover {
@@ -246,16 +288,19 @@ const legal = [
     background: rgba(255, 255, 255, 0.08);
     color: var(--qn-white);
     border-radius: var(--qn-radius-pill);
-    transition: background var(--qn-transition-base);
+    transition: background var(--qn-transition-base), color var(--qn-transition-base);
+    text-decoration: none;
   }
 
   .qn-footer-social a:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
   }
 
   /* Barra inferior */
   .qn-footer-bottom {
-    padding: 1.5rem var(--qn-container-padding);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     flex-direction: column;
@@ -274,11 +319,15 @@ const legal = [
     display: flex;
     flex-wrap: wrap;
     gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
   .qn-footer-legal a {
     color: rgba(255, 255, 255, 0.6);
     transition: color var(--qn-transition-base);
+    text-decoration: none;
   }
 
   .qn-footer-legal a:hover {

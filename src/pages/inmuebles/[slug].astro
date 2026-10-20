@@ -1,0 +1,741 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ContactForm from "@components/ContactForm.astro";
+import PropertyCard from "@components/PropertyCard.astro";
+import {
+  getPublishedProperties,
+  formatPrice,
+  formatArea,
+  getActiveAmenities,
+  type Property,
+} from "@lib/properties";
+
+export async function getStaticPaths() {
+  const properties = await getPublishedProperties();
+  return properties.map((p) => ({
+    params: { slug: p.slug },
+    props: { property: p, all: properties },
+  }));
+}
+
+interface Props {
+  property: Property;
+  all: Property[];
+}
+
+const { property: p, all } = Astro.props;
+
+// Inmuebles relacionados: mismo municipio o mismo tipo, hasta 3
+const related = all
+  .filter((o) => o.id !== p.id)
+  .filter((o) => o.municipio === p.municipio || o.tipo_inmueble === p.tipo_inmueble)
+  .slice(0, 3);
+
+const ubicacion = [p.zona_barrio, p.municipio, p.provincia]
+  .filter(Boolean)
+  .join(" · ");
+
+const amenities = getActiveAmenities(p);
+const isReservado = p.estado_venta?.toLowerCase() === "reservado";
+
+const seo = {
+  title: `${p.titulo} · Ref. ${p.referencia}`,
+  description: p.descripcion_web
+    ? p.descripcion_web.slice(0, 155).replace(/\s+/g, " ")
+    : `${p.tipo_inmueble} en ${p.municipio ?? "Galicia"} · ${formatPrice(p.precio)}`,
+  ogImage: p.cover?.url ?? undefined,
+  additionalSchema: {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: p.titulo,
+    description: p.descripcion_web ?? p.titulo,
+    url: `https://quenecesitashoy.es/inmuebles/${p.slug}`,
+    offers: p.precio
+      ? {
+          "@type": "Offer",
+          price: p.precio,
+          priceCurrency: "EUR",
+          availability:
+            p.estado_venta?.toLowerCase() === "disponible"
+              ? "https://schema.org/InStock"
+              : "https://schema.org/LimitedAvailability",
+        }
+      : undefined,
+    image: p.photos.slice(0, 10).map((ph) => ph.url).filter(Boolean),
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: p.municipio,
+      addressRegion: p.provincia,
+      postalCode: p.codigo_postal,
+      addressCountry: "ES",
+    },
+    numberOfRooms: p.habitaciones,
+    numberOfBathroomsTotal: (p.banos ?? 0) + (p.aseos ?? 0),
+    floorSize: p.superficie_construida
+      ? { "@type": "QuantitativeValue", value: p.superficie_construida, unitCode: "MTK" }
+      : undefined,
+  },
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* BREADCRUMB */}
+  <div class="qn-ficha-crumbs">
+    <div class="qn-container">
+      <nav aria-label="Migas de pan">
+        <ol>
+          <li><a href="/inmobiliaria">Inmobiliaria</a></li>
+          <li><a href="/inmuebles">Inmuebles</a></li>
+          <li aria-current="page">Ref. {p.referencia}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  {/* GALERÍA */}
+  <section class="qn-ficha-gallery" aria-label="Galería de fotos">
+    <div class="qn-container qn-container-wide">
+      {p.photos.length > 0 ? (
+        <div class={`qn-gallery-grid qn-gallery-grid--${Math.min(p.photos.length, 5)}`}>
+          {p.photos.slice(0, 5).map((ph, i) => (
+            <a
+              class={`qn-gallery-item qn-gallery-item--${i}`}
+              href={ph.url}
+              target="_blank"
+              rel="noopener"
+              data-gallery-trigger={i}
+            >
+              <img
+                src={ph.url_4_5 || ph.url}
+                alt={ph.nombre || `${p.titulo} — foto ${i + 1}`}
+                width="800"
+                height="1000"
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchpriority={i === 0 ? "high" : "auto"}
+                decoding="async"
+              />
+            </a>
+          ))}
+          {p.photos.length > 5 && (
+            <button type="button" class="qn-gallery-more" data-gallery-trigger="all">
+              Ver las {p.photos.length} fotos
+            </button>
+          )}
+        </div>
+      ) : (
+        <div class="qn-gallery-empty" aria-hidden="true">Sin fotos disponibles</div>
+      )}
+    </div>
+  </section>
+
+  {/* HEADER DE LA FICHA */}
+  <section class="qn-ficha-head">
+    <div class="qn-container qn-ficha-inner">
+      <div class="qn-ficha-main">
+        <div class="qn-ficha-tags">
+          <span class="qn-ficha-tag">{p.tipo_inmueble}</span>
+          <span class="qn-ficha-ref">Ref. {p.referencia}</span>
+          {isReservado && <span class="qn-ficha-reservado">Reservado</span>}
+        </div>
+
+        <h1 class="qn-display-lg qn-ficha-title">{p.titulo}</h1>
+        {ubicacion && <p class="qn-ficha-loc">{ubicacion}</p>}
+
+        <div class="qn-ficha-price-row">
+          <div class="qn-ficha-price">{formatPrice(p.precio)}</div>
+          {p.superficie_construida && p.precio && (
+            <div class="qn-ficha-price-unit">
+              {formatPrice(Math.round(p.precio / p.superficie_construida))} / m²
+            </div>
+          )}
+        </div>
+
+        {/* QUICK FACTS */}
+        <div class="qn-ficha-facts">
+          {p.habitaciones !== null && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">{p.habitaciones}</span>
+              <span class="qn-ficha-fact-label">Habitaciones</span>
+            </div>
+          )}
+          {((p.banos ?? 0) + (p.aseos ?? 0)) > 0 && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">
+                {(p.banos ?? 0) + (p.aseos ?? 0)}
+              </span>
+              <span class="qn-ficha-fact-label">Baños</span>
+            </div>
+          )}
+          {p.superficie_construida && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">
+                {formatArea(p.superficie_construida)}
+              </span>
+              <span class="qn-ficha-fact-label">Construidos</span>
+            </div>
+          )}
+          {p.superficie_parcela && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">
+                {formatArea(p.superficie_parcela)}
+              </span>
+              <span class="qn-ficha-fact-label">Parcela</span>
+            </div>
+          )}
+          {p.ano_construccion && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">{p.ano_construccion}</span>
+              <span class="qn-ficha-fact-label">Año</span>
+            </div>
+          )}
+          {p.planta && (
+            <div class="qn-ficha-fact">
+              <span class="qn-ficha-fact-value">{p.planta}</span>
+              <span class="qn-ficha-fact-label">Planta</span>
+            </div>
+          )}
+        </div>
+
+        {/* DESCRIPCIÓN */}
+        {p.descripcion_web && (
+          <div class="qn-ficha-section">
+            <h2 class="qn-ficha-section-title">Descripción</h2>
+            <div class="qn-ficha-descripcion">
+              {p.descripcion_web.split(/\n\s*\n/).map((parrafo) => (
+                <p>{parrafo}</p>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* AMENITIES */}
+        {amenities.length > 0 && (
+          <div class="qn-ficha-section">
+            <h2 class="qn-ficha-section-title">Características</h2>
+            <ul class="qn-ficha-amenities">
+              {amenities.map((a) => (
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  {a.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* DATOS TÉCNICOS */}
+        <div class="qn-ficha-section">
+          <h2 class="qn-ficha-section-title">Datos técnicos</h2>
+          <dl class="qn-ficha-datos">
+            {p.tipo_inmueble && (
+              <>
+                <dt>Tipo</dt>
+                <dd>{p.tipo_inmueble}</dd>
+              </>
+            )}
+            {p.estado_conservacion && (
+              <>
+                <dt>Estado</dt>
+                <dd>{p.estado_conservacion}</dd>
+              </>
+            )}
+            {p.orientacion && (
+              <>
+                <dt>Orientación</dt>
+                <dd>{p.orientacion}</dd>
+              </>
+            )}
+            {p.calefaccion && (
+              <>
+                <dt>Calefacción</dt>
+                <dd>{p.calefaccion}</dd>
+              </>
+            )}
+            {p.certificado_energetico && (
+              <>
+                <dt>Cert. energético</dt>
+                <dd>
+                  <span class={`qn-energ qn-energ--${p.certificado_energetico.toLowerCase()}`}>
+                    {p.certificado_energetico}
+                  </span>
+                  {p.consumo_energetico && ` · ${p.consumo_energetico} kWh/m² año`}
+                </dd>
+              </>
+            )}
+            {p.codigo_postal && (
+              <>
+                <dt>Código postal</dt>
+                <dd>{p.codigo_postal}</dd>
+              </>
+            )}
+          </dl>
+        </div>
+
+        {/* VIDEO */}
+        {p.video_url && (
+          <div class="qn-ficha-section">
+            <h2 class="qn-ficha-section-title">Vídeo</h2>
+            <a href={p.video_url} target="_blank" rel="noopener" class="qn-btn qn-btn-outline">
+              Ver vídeo del inmueble
+            </a>
+          </div>
+        )}
+      </div>
+
+      {/* SIDEBAR DE CONTACTO */}
+      <aside class="qn-ficha-sidebar">
+        <div class="qn-ficha-sidebar-inner">
+          <p class="qn-eyebrow">Me interesa</p>
+          <h3 class="qn-display-sm qn-ficha-sidebar-title">
+            Pide una visita o más información
+          </h3>
+          <p class="qn-ficha-sidebar-lead">
+            Déjanos tus datos y un asesor te llama en menos de 24 horas laborables.
+          </p>
+
+          <ContactForm
+            origen={`inmueble-${p.referencia}`}
+            sector="inmobiliaria"
+            cta="Me interesa"
+            mostrarSector={false}
+          />
+
+          <div class="qn-ficha-sidebar-footer">
+            <a href="tel:672274969">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              672 274 969
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  {/* RELACIONADOS */}
+  {related.length > 0 && (
+    <section class="qn-ficha-related">
+      <div class="qn-container">
+        <p class="qn-eyebrow">Otros inmuebles</p>
+        <h2 class="qn-display-md qn-ficha-related-title">
+          Más opciones que podrían interesarte
+        </h2>
+        <div class="qn-ficha-related-grid">
+          {related.map((rel) => (
+            <PropertyCard property={rel} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* BREADCRUMB */
+  .qn-ficha-crumbs {
+    padding: 1.25rem 0 0;
+    background: var(--qn-bone);
+  }
+  .qn-ficha-crumbs ol {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-stone);
+    flex-wrap: wrap;
+  }
+  .qn-ficha-crumbs li + li::before {
+    content: "/";
+    margin-right: 0.5rem;
+    color: var(--qn-mist);
+  }
+  .qn-ficha-crumbs a {
+    color: var(--qn-brand-700);
+    text-decoration: none;
+  }
+  .qn-ficha-crumbs a:hover { text-decoration: underline; }
+
+  /* GALERÍA */
+  .qn-ficha-gallery {
+    padding: 1.25rem 0 clamp(2rem, 4vw, 3rem);
+    background: var(--qn-bone);
+  }
+  .qn-gallery-grid {
+    display: grid;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .qn-gallery-grid--1 { grid-template-columns: 1fr; }
+  .qn-gallery-grid--2 { grid-template-columns: 1fr 1fr; }
+  .qn-gallery-grid--3,
+  .qn-gallery-grid--4,
+  .qn-gallery-grid--5 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 240px 240px;
+  }
+  @media (min-width: 900px) {
+    .qn-gallery-grid--3,
+    .qn-gallery-grid--4,
+    .qn-gallery-grid--5 {
+      grid-template-rows: 280px 280px;
+    }
+  }
+  .qn-gallery-item {
+    overflow: hidden;
+    border-radius: var(--qn-radius-md);
+    background: var(--qn-paper);
+    display: block;
+    transition: opacity var(--qn-transition-fast);
+  }
+  .qn-gallery-item:hover { opacity: 0.9; }
+  .qn-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .qn-gallery-grid--3 .qn-gallery-item--0,
+  .qn-gallery-grid--4 .qn-gallery-item--0,
+  .qn-gallery-grid--5 .qn-gallery-item--0 {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+  @media (max-width: 700px) {
+    .qn-gallery-grid--3,
+    .qn-gallery-grid--4,
+    .qn-gallery-grid--5 {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 220px 160px 160px;
+    }
+    .qn-gallery-grid--3 .qn-gallery-item--0,
+    .qn-gallery-grid--4 .qn-gallery-item--0,
+    .qn-gallery-grid--5 .qn-gallery-item--0 {
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+    }
+  }
+  .qn-gallery-more {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    background: var(--qn-brand-900);
+    color: var(--qn-white);
+    border: 0;
+    padding: 0.625rem 1rem;
+    border-radius: var(--qn-radius-pill);
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-sm);
+    font-weight: var(--qn-fw-semibold);
+    cursor: pointer;
+    box-shadow: var(--qn-shadow-md);
+    transition: background var(--qn-transition-fast);
+  }
+  .qn-gallery-more:hover { background: var(--qn-brand-700); }
+  .qn-gallery-empty {
+    aspect-ratio: 16 / 9;
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--qn-stone);
+    font-size: var(--qn-fs-md);
+  }
+
+  /* HEADER DE FICHA */
+  .qn-ficha-head {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
+    background: var(--qn-white);
+  }
+  .qn-ficha-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 1000px) {
+    .qn-ficha-inner {
+      grid-template-columns: minmax(0, 1.6fr) minmax(320px, 1fr);
+      gap: 4rem;
+    }
+  }
+
+  .qn-ficha-main > * + * { margin-top: 2rem; }
+
+  /* Tags */
+  .qn-ficha-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  .qn-ficha-tag {
+    background: var(--qn-brand-50);
+    color: var(--qn-brand-700);
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--qn-radius-pill);
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    font-weight: var(--qn-fw-medium);
+  }
+  .qn-ficha-ref {
+    color: var(--qn-stone);
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-widest);
+  }
+  .qn-ficha-reservado {
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
+  }
+
+  .qn-ficha-title {
+    margin: 0.5rem 0 0.75rem;
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-ficha-loc {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+    margin: 0 0 2rem;
+  }
+
+  /* PRECIO */
+  .qn-ficha-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--qn-fog);
+    border-bottom: 1px solid var(--qn-fog);
+    margin: 1rem 0 0;
+  }
+  .qn-ficha-price {
+    font-family: var(--qn-font-sans);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: var(--qn-fw-heavy);
+    color: var(--qn-brand-700);
+    letter-spacing: var(--qn-tracking-tighter);
+    line-height: 1;
+  }
+  .qn-ficha-price-unit {
+    color: var(--qn-stone);
+    font-size: var(--qn-fs-sm);
+    font-family: var(--qn-font-mono);
+  }
+
+  /* QUICK FACTS */
+  .qn-ficha-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.75rem;
+    padding: 1.5rem;
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-xl);
+  }
+  .qn-ficha-fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    text-align: center;
+    padding: 0.5rem;
+  }
+  .qn-ficha-fact-value {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: 1.1;
+  }
+  .qn-ficha-fact-label {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-stone);
+  }
+
+  /* SECCIONES */
+  .qn-ficha-section-title {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0 0 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--qn-brand-100);
+  }
+  .qn-ficha-descripcion p {
+    margin: 0 0 1rem;
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    font-size: var(--qn-fs-md);
+  }
+  .qn-ficha-descripcion p:last-child { margin-bottom: 0; }
+
+  /* AMENITIES */
+  .qn-ficha-amenities {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .qn-ficha-amenities li {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--qn-ink-soft);
+    font-size: var(--qn-fs-sm);
+  }
+  .qn-ficha-amenities svg {
+    color: var(--qn-brand-700);
+    flex-shrink: 0;
+  }
+
+  /* DATOS TÉCNICOS */
+  .qn-ficha-datos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+  }
+  @media (min-width: 600px) {
+    .qn-ficha-datos {
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 2rem;
+    }
+  }
+  .qn-ficha-datos dt {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-stone);
+    padding: 0.75rem 0 0;
+  }
+  @media (min-width: 600px) {
+    .qn-ficha-datos dt { padding: 0.5rem 0; }
+  }
+  .qn-ficha-datos dd {
+    margin: 0;
+    padding: 0.25rem 0 0.75rem;
+    color: var(--qn-ink);
+    font-size: var(--qn-fs-base);
+    border-bottom: 1px solid var(--qn-fog);
+  }
+  @media (min-width: 600px) {
+    .qn-ficha-datos dd { padding: 0.5rem 0; }
+  }
+
+  /* Certificado energético */
+  .qn-energ {
+    display: inline-block;
+    padding: 0.2rem 0.625rem;
+    border-radius: var(--qn-radius-sm);
+    font-family: var(--qn-font-sans);
+    font-weight: var(--qn-fw-bold);
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-white);
+  }
+  .qn-energ--a { background: #0d9f5f; }
+  .qn-energ--b { background: #4ab84a; }
+  .qn-energ--c { background: #a7cc3b; }
+  .qn-energ--d { background: #f0d000; color: var(--qn-ink); }
+  .qn-energ--e { background: #f3a71f; }
+  .qn-energ--f { background: #e36323; }
+  .qn-energ--g { background: #c91f1a; }
+
+  /* SIDEBAR */
+  .qn-ficha-sidebar {
+    position: relative;
+  }
+  @media (min-width: 1000px) {
+    .qn-ficha-sidebar {
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .qn-ficha-sidebar-inner {
+    background: var(--qn-paper);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-2xl);
+    padding: 2rem;
+  }
+  .qn-ficha-sidebar-title {
+    margin: 0.5rem 0 0.75rem;
+    color: var(--qn-ink);
+  }
+  .qn-ficha-sidebar-lead {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 1.5rem;
+  }
+  .qn-ficha-sidebar-footer {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--qn-mist);
+    text-align: center;
+  }
+  .qn-ficha-sidebar-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-semibold);
+    font-size: var(--qn-fs-md);
+    text-decoration: none;
+  }
+  .qn-ficha-sidebar-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* RELATED */
+  .qn-ficha-related {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-bone);
+  }
+  .qn-ficha-related-title {
+    margin: 1rem 0 3rem;
+    max-width: 30ch;
+  }
+  .qn-ficha-related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  @media (min-width: 640px) {
+    .qn-ficha-related-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .qn-ficha-related-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

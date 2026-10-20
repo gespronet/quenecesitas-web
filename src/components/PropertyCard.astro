@@ -1,221 +1,196 @@
 ---
-import { Picture } from "astro:assets";
-import { formatPrecio, formatSuperficie } from "../lib/properties.js";
+import { formatPrice, formatArea, type Property } from "@lib/properties";
 
-const { property, mainPhotoUrl } = Astro.props;
+interface Props {
+  property: Property;
+  priority?: boolean; // Si es true, cargamos la imagen con fetchpriority alto
+}
 
-const {
-  id,
-  titulo,
-  tipo_inmueble,
-  localidad,
-  municipio,
-  precio,
-  superficie_construida,
-  habitaciones,
-  banos,
-  terraza,
-  garaje,
-  ascensor,
-  estado_venta,
-} = property;
-
-const destacados = [
-  terraza && { icon: "☀️", label: "Terraza" },
-  garaje && { icon: "🚗", label: "Garaje" },
-  ascensor && { icon: "🛗", label: "Ascensor" },
-].filter(Boolean);
+const { property, priority = false } = Astro.props;
+const url = `/inmuebles/${property.slug}`;
+const ubicacion = [property.zona_barrio, property.municipio]
+  .filter(Boolean)
+  .join(" · ");
+const isReservado = property.estado_venta?.toLowerCase() === "reservado";
 ---
 
-<article
-  class="qn-property-card"
-  data-tipo={tipo_inmueble || ""}
-  data-localidad={localidad || ""}
-  data-precio={precio ?? ""}
-  data-habitaciones={habitaciones ?? 0}
->
-  <a href={`/inmuebles/${id}`} class="qn-property-photo-link" aria-hidden="true" tabindex="-1">
-    {mainPhotoUrl ? (
-      <Picture
-        src={mainPhotoUrl}
-        inferSize
-        width={640}
-        quality={75}
-        formats={["avif", "webp"]}
-        fallbackFormat="webp"
-        alt={titulo || "Inmueble"}
-        loading="lazy"
+<a href={url} class="qn-pcard" aria-label={`Ver ficha de ${property.titulo}`}>
+  <div class="qn-pcard-media">
+    {property.cover ? (
+      <img
+        src={property.cover.url_4_5 || property.cover.url}
+        alt={property.titulo}
+        width="400"
+        height="500"
+        loading={priority ? "eager" : "lazy"}
         decoding="async"
-        class="qn-property-photo"
+        fetchpriority={priority ? "high" : "auto"}
       />
     ) : (
-      <div class="qn-property-photo qn-property-photo-empty" role="img" aria-label="Sin foto disponible">🏠</div>
+      <div class="qn-pcard-noimg" aria-hidden="true">Sin foto</div>
     )}
-    {estado_venta === "Reservado" && <span class="qn-property-reservado">Reservado</span>}
-    {tipo_inmueble && <span class="qn-property-badge">{tipo_inmueble}</span>}
-  </a>
 
-  <div class="qn-property-body">
-    <h3 class="qn-property-title">
-      <a href={`/inmuebles/${id}`}>{titulo || "Inmueble en venta"}</a>
-    </h3>
-    <p class="qn-property-location">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-7.58 8-13a8 8 0 1 0-16 0c0 5.42 8 13 8 13Z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      {[localidad, municipio].filter(Boolean).join(", ") || "Consultar zona"}
-    </p>
+    <span class="qn-pcard-ref">Ref. {property.referencia}</span>
+    {isReservado && <span class="qn-pcard-badge">Reservado</span>}
+  </div>
 
-    <p class="qn-property-price">{formatPrecio(precio)}</p>
+  <div class="qn-pcard-body">
+    <p class="qn-pcard-type">{property.tipo_inmueble}</p>
+    <h3 class="qn-pcard-title">{property.titulo}</h3>
+    {ubicacion && <p class="qn-pcard-loc">{ubicacion}</p>}
 
-    <div class="qn-property-stats">
-      {formatSuperficie(superficie_construida) && (
-        <span><span aria-hidden="true">📐</span> {formatSuperficie(superficie_construida)}</span>
+    <div class="qn-pcard-facts">
+      {property.habitaciones !== null && (
+        <span>
+          <strong>{property.habitaciones}</strong> hab.
+        </span>
       )}
-      {habitaciones != null && <span><span aria-hidden="true">🛏</span> {habitaciones}</span>}
-      {banos != null && <span><span aria-hidden="true">🚿</span> {banos}</span>}
+      {property.banos !== null && (
+        <span>
+          <strong>{property.banos}</strong> baños
+        </span>
+      )}
+      {property.superficie_construida && (
+        <span>
+          <strong>{formatArea(property.superficie_construida)}</strong>
+        </span>
+      )}
     </div>
 
-    {destacados.length > 0 && (
-      <div class="qn-property-extras">
-        {destacados.map((d) => (
-          <span class="qn-property-extra"><span aria-hidden="true">{d.icon}</span> {d.label}</span>
-        ))}
-      </div>
-    )}
-
-    <a href={`/inmuebles/${id}`} class="qn-btn-primary qn-property-cta">Ver inmueble</a>
+    <div class="qn-pcard-price">
+      {formatPrice(property.precio)}
+    </div>
   </div>
-</article>
+</a>
 
 <style>
-  .qn-property-card {
-    background: white;
-    border: 1px solid var(--color-mist);
-    border-radius: 1rem;
-    overflow: hidden;
+  .qn-pcard {
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: qn-card-in 0.5s ease both;
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-xl);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--qn-ink);
+    transition: transform var(--qn-transition-base),
+                box-shadow var(--qn-transition-base),
+                border-color var(--qn-transition-base);
   }
-  .qn-property-card:hover {
+  .qn-pcard:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 34, 146, 0.12);
-  }
-  @keyframes qn-card-in {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .qn-property-card { animation: none; }
+    box-shadow: var(--qn-shadow-lg);
+    border-color: var(--qn-brand-700);
   }
 
-  .qn-property-photo-link {
+  /* MEDIA */
+  .qn-pcard-media {
     position: relative;
-    display: block;
-    aspect-ratio: 4 / 3;
-    background: var(--color-paper);
+    aspect-ratio: 4 / 5;
+    background: var(--qn-paper);
+    overflow: hidden;
   }
-  .qn-property-photo {
+  .qn-pcard-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform var(--qn-transition-slow);
   }
-  .qn-property-photo-empty {
+  .qn-pcard:hover .qn-pcard-media img {
+    transform: scale(1.03);
+  }
+  .qn-pcard-noimg {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
-    color: var(--color-mist);
+    color: var(--qn-stone);
+    font-size: var(--qn-fs-sm);
+    letter-spacing: var(--qn-tracking-wide);
+    text-transform: uppercase;
   }
-  .qn-property-badge {
+  .qn-pcard-ref {
     position: absolute;
     top: 0.75rem;
     left: 0.75rem;
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--color-brand-700);
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
-    letter-spacing: 0.02em;
+    background: rgba(10, 27, 77, 0.85);
+    color: var(--qn-white);
+    padding: 0.3rem 0.625rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-family: var(--qn-font-mono);
+    font-weight: var(--qn-fw-medium);
+    letter-spacing: var(--qn-tracking-wide);
+    backdrop-filter: blur(4px);
   }
-  .qn-property-reservado {
+  .qn-pcard-badge {
     position: absolute;
     top: 0.75rem;
     right: 0.75rem;
-    background: #B63D17;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
   }
 
-  .qn-property-body {
-    padding: 1.25rem 1.25rem 1.5rem;
+  /* BODY */
+  .qn-pcard-body {
+    padding: 1.25rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.375rem;
     flex: 1;
   }
-  .qn-property-title {
+  .qn-pcard-type {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-widest);
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-medium);
     margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    line-height: 1.3;
   }
-  .qn-property-title a {
-    color: var(--color-ink);
-    text-decoration: none;
+  .qn-pcard-title {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-bold);
+    line-height: var(--qn-lh-snug);
+    letter-spacing: var(--qn-tracking-tight);
+    color: var(--qn-ink);
+    margin: 0.25rem 0 0.125rem;
   }
-  .qn-property-title a:hover {
-    color: var(--color-brand-700);
+  .qn-pcard-loc {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    margin: 0 0 0.75rem;
   }
-  .qn-property-location {
-    display: flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin: 0;
-    font-size: 0.8125rem;
-    color: var(--color-graphite);
-  }
-  .qn-property-location svg {
-    flex-shrink: 0;
-    color: var(--color-accent-500);
-  }
-  .qn-property-price {
-    margin: 0.25rem 0 0;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-brand-600);
-  }
-  .qn-property-stats {
+  .qn-pcard-facts {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    font-size: 0.875rem;
-    color: var(--color-ink);
-  }
-  .qn-property-extras {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.25rem;
-  }
-  .qn-property-extra {
-    font-size: 0.75rem;
-    background: var(--color-accent-50);
-    color: var(--color-accent-500);
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    font-weight: 600;
-  }
-  .qn-property-cta {
+    gap: 1rem;
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--qn-fog);
     margin-top: auto;
-    padding-top: 0.75rem;
-    text-align: center;
-    justify-content: center;
+  }
+  .qn-pcard-facts strong {
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-pcard-price {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
+    letter-spacing: var(--qn-tracking-tight);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--qn-fog);
   }
 </style>
