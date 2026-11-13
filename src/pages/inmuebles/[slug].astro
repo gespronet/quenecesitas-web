@@ -40,6 +40,11 @@ const ubicacion = [p.zona_barrio, p.municipio, p.provincia]
 const amenities = getActiveAmenities(p);
 const isReservado = p.estado_venta?.toLowerCase() === "reservado";
 
+// Todas las fotos, en su tamaño y proporción originales, para el visor
+const galleryPhotos = p.photos
+  .filter((ph) => ph.url)
+  .map((ph, i) => ({ src: ph.url, alt: ph.nombre || `${p.titulo} — foto ${i + 1}` }));
+
 const seo = {
   title: `${p.titulo} · Ref. ${p.referencia}`,
   description: p.descripcion_web
@@ -63,7 +68,7 @@ const seo = {
               : "https://schema.org/LimitedAvailability",
         }
       : undefined,
-    image: p.photos.slice(0, 10).map((ph) => ph.url).filter(Boolean),
+    image: p.photos.map((ph) => ph.url).filter(Boolean),
     address: {
       "@type": "PostalAddress",
       addressLocality: p.municipio,
@@ -110,10 +115,8 @@ const seo = {
               data-gallery-trigger={i}
             >
               <img
-                src={ph.url_4_5 || ph.url}
+                src={ph.url}
                 alt={ph.nombre || `${p.titulo} — foto ${i + 1}`}
-                width="800"
-                height="1000"
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchpriority={i === 0 ? "high" : "auto"}
                 decoding="async"
@@ -131,6 +134,27 @@ const seo = {
       )}
     </div>
   </section>
+
+  {galleryPhotos.length > 0 && (
+    <dialog class="qn-lightbox" aria-label={`Fotos de ${p.titulo}`} data-photos={JSON.stringify(galleryPhotos)}>
+      <div class="qn-lightbox-top">
+        <span class="qn-lightbox-count" aria-live="polite"></span>
+        <button type="button" class="qn-lightbox-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="qn-lightbox-stage">
+        <button type="button" class="qn-lightbox-nav qn-lightbox-prev" aria-label="Foto anterior">‹</button>
+        <img class="qn-lightbox-img" src="" alt="" />
+        <button type="button" class="qn-lightbox-nav qn-lightbox-next" aria-label="Foto siguiente">›</button>
+      </div>
+      <div class="qn-lightbox-thumbs">
+        {galleryPhotos.map((ph, i) => (
+          <button type="button" class="qn-lightbox-thumb" data-index={i} aria-label={`Ver foto ${i + 1}`}>
+            <img src={ph.src} alt="" loading="lazy" decoding="async" />
+          </button>
+        ))}
+      </div>
+    </dialog>
+  )}
 
   {/* HEADER DE LA FICHA */}
   <section class="qn-ficha-head">
@@ -456,6 +480,104 @@ const seo = {
     font-size: var(--qn-fs-md);
   }
 
+  /* VISOR DE FOTOS */
+  .qn-lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(8, 12, 28, 0.96);
+    color: #fff;
+  }
+  .qn-lightbox[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  .qn-lightbox::backdrop { background: rgba(8, 12, 28, 0.96); }
+  .qn-lightbox-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-sm);
+  }
+  .qn-lightbox-close,
+  .qn-lightbox-nav {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--qn-transition-fast);
+  }
+  .qn-lightbox-close:hover,
+  .qn-lightbox-nav:hover { background: rgba(255, 255, 255, 0.25); }
+  .qn-lightbox-close { width: 44px; height: 44px; font-size: 1.125rem; }
+  .qn-lightbox-stage {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
+    touch-action: pan-y;
+  }
+  .qn-lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+  }
+  .qn-lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .qn-lightbox-prev { left: 0.75rem; }
+  .qn-lightbox-next { right: 0.75rem; }
+  .qn-lightbox-thumbs {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.75rem 1rem 1rem;
+    scrollbar-width: thin;
+  }
+  .qn-lightbox-thumb {
+    flex: 0 0 auto;
+    height: 64px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    background: none;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity var(--qn-transition-fast), border-color var(--qn-transition-fast);
+  }
+  .qn-lightbox-thumb img { height: 100%; width: auto; display: block; }
+  .qn-lightbox-thumb:hover { opacity: 0.85; }
+  .qn-lightbox-thumb[aria-current="true"] { opacity: 1; border-color: #fff; }
+  @media (max-width: 700px) {
+    .qn-lightbox-nav { display: none; }
+    .qn-lightbox-thumb { height: 52px; }
+  }
+  body.qn-lightbox-lock { overflow: hidden; }
+
   /* HEADER DE FICHA */
   .qn-ficha-head {
     padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
@@ -739,3 +861,73 @@ const seo = {
     .qn-ficha-related-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>(".qn-lightbox");
+  if (dialog) {
+    const photos: { src: string; alt: string }[] = JSON.parse(dialog.dataset.photos || "[]");
+    const img = dialog.querySelector<HTMLImageElement>(".qn-lightbox-img")!;
+    const count = dialog.querySelector<HTMLElement>(".qn-lightbox-count")!;
+    const thumbs = Array.from(dialog.querySelectorAll<HTMLButtonElement>(".qn-lightbox-thumb"));
+    let current = 0;
+
+    const show = (i: number) => {
+      if (!photos.length) return;
+      current = (i + photos.length) % photos.length;
+      img.src = photos[current].src;
+      img.alt = photos[current].alt;
+      count.textContent = `${current + 1} / ${photos.length}`;
+      thumbs.forEach((t, ti) => t.setAttribute("aria-current", String(ti === current)));
+      thumbs[current]?.scrollIntoView({ block: "nearest", inline: "center" });
+      // Precarga la siguiente y la anterior
+      [current + 1, current - 1].forEach((n) => {
+        const p = photos[(n + photos.length) % photos.length];
+        if (p) new Image().src = p.src;
+      });
+    };
+
+    const open = (i: number) => {
+      show(i);
+      dialog.showModal();
+      document.body.classList.add("qn-lightbox-lock");
+    };
+
+    dialog.addEventListener("close", () => document.body.classList.remove("qn-lightbox-lock"));
+
+    document.querySelectorAll<HTMLElement>("[data-gallery-trigger]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        const v = el.dataset.galleryTrigger;
+        open(v === "all" ? 0 : Number(v) || 0);
+      });
+    });
+
+    dialog.querySelector(".qn-lightbox-close")!.addEventListener("click", () => dialog.close());
+    dialog.querySelector(".qn-lightbox-prev")!.addEventListener("click", () => show(current - 1));
+    dialog.querySelector(".qn-lightbox-next")!.addEventListener("click", () => show(current + 1));
+    thumbs.forEach((t) => t.addEventListener("click", () => show(Number(t.dataset.index))));
+
+    // Clic fuera de la foto (zona oscura) cierra el visor
+    dialog.querySelector(".qn-lightbox-stage")!.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) dialog.close();
+    });
+
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") show(current + 1);
+      if (e.key === "ArrowLeft") show(current - 1);
+    });
+
+    // Deslizar con el dedo en móvil
+    let startX = 0;
+    let startY = 0;
+    img.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    img.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+  }
+</script>
