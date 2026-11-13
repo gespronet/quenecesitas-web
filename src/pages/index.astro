@@ -2,202 +2,497 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
-import ProcessSteps from "@components/ProcessSteps.astro";
-import ServicePoints from "@components/ServicePoints.astro";
-import FAQAccordion from "@components/FAQAccordion.astro";
-import ContactCTABlock from "@components/ContactCTABlock.astro";
+import ContactForm from "@components/ContactForm.astro";
 
 const seo = {
-  title: "queNECESITAS · Plataforma multiservicio local en Galicia",
+  title: "Lo que necesitas, hoy · queNECESITAS",
   description:
-    "Alarmas, energía, telefonía, inmobiliaria, inversión y ciberseguridad. Todo en Galicia, con criterio local, sin franquicia.",
+    "Un solo interlocutor para ahorrar en casa, comprar o vender tu vivienda, invertir con criterio y proteger tu empresa. Nos cuentas qué necesitas y resolvemos.",
 };
 
-const steps = [
+const proceso = [
   {
-    title: "Nos cuentas qué necesitas",
-    description: "Un email, una llamada o el formulario. Sin filtros comerciales.",
+    num: "Paso 01",
+    title: "Nos cuentas",
+    text: "Una llamada o un mensaje. Te escuchamos antes de hablar — con nombre y apellido, sin filtro comercial.",
   },
   {
-    title: "Te llamamos en 24h",
-    description: "Escuchamos antes de proponer. Solo así entendemos tu caso.",
+    num: "Paso 02",
+    title: "Estudiamos",
+    text: "Analizamos tu caso y preparamos opciones. Sin letra pequeña, sin sorpresas contractuales.",
   },
   {
-    title: "Analizamos con criterio",
-    description: "Comparamos opciones reales, no las que nos dan más comisión.",
-  },
-  {
-    title: "Decides con información",
-    description: "Te acompañamos hasta el cierre. Y después seguimos disponibles.",
-  },
-];
-
-const puntos = [
-  {
-    title: "Somos de aquí",
-    description:
-      "En Oleiros desde el primer día. Conocemos la comarca porque vivimos en ella.",
-  },
-  {
-    title: "Sin franquicia",
-    description:
-      "Equipo propio. Hablas con quien lleva tu caso, no con una centralita nacional.",
-  },
-  {
-    title: "Con criterio",
-    description:
-      "Formación jurídica y financiera detrás de cada recomendación. Nada de improvisar.",
-  },
-  {
-    title: "Honestidad como norma",
-    description:
-      "Si no te conviene, te lo decimos. Preferimos perder un encargo a decepcionarte.",
+    num: "Paso 03",
+    title: "Resolvemos",
+    text: "Gestionamos el cambio de principio a fin y seguimos ahí después. Cero abandono.",
   },
 ];
 
-const faqs = [
-  {
-    question: "¿En qué zonas trabajáis?",
-    answer:
-      "A Coruña capital, Oleiros, Sada, Bergondo, Cambre y Culleredo. Fuera de esas zonas caso a caso.",
-  },
-  {
-    question: "¿Cuánto tarda vuestra respuesta?",
-    answer:
-      "Menos de 24 horas laborables. Si es urgente, llama al 672 274 969 en horario 8:00-16:00.",
-  },
-  {
-    question: "¿Cuáles son vuestros honorarios?",
-    answer:
-      "Depende del servicio. En todos los casos, precio cerrado por escrito antes de firmar nada. Sin sorpresas al final.",
-  },
+const hogarChips = [
+  { label: "Luz",      icon: "/icons/luz-burbuja-azul.svg",      href: "/energia"   },
+  { label: "Gas",      icon: "/icons/gas-burbuja-azul.svg",      href: "/energia"   },
+  { label: "Teléfono", icon: "/icons/telefono-burbuja-azul.svg", href: "/telefonia" },
+  { label: "Alarmas",  icon: "/icons/alarmas-burbuja-azul.svg",  href: "/alarmas"   },
 ];
 ---
 
 <BaseLayout {...seo}>
   <Header slot="header" />
 
-  {/* Hero provisional Sprint 1 */}
-  <section class="qn-hero-lite">
-    <div class="qn-container">
-      <p class="qn-eyebrow">Sprint 1 · Fundamentos técnicos</p>
-      <h1 class="qn-display-xl">
-        En Galicia, con criterio local.<br /><span class="qn-accent-text">Sin franquicia.</span>
-      </h1>
-      <p class="qn-hero-lite-lead">
-        Servicios cotidianos, operaciones inmobiliarias, inversión y ciberseguridad empresarial. Todo bajo una misma casa, en A Coruña y comarca.
+  {/* HERO — azul rey dominante */}
+  <section class="qn-hero">
+    <div class="qn-container qn-hero-inner">
+      <p class="qn-hero-eyebrow">
+        <span>HOGAR</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>INMOBILIARIA</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>INVERSIÓN</span>
+        <span class="qn-hero-eyebrow-sep">·</span>
+        <span>CIBERSEGURIDAD</span>
       </p>
-      <div class="qn-hero-lite-ctas">
-        <a href="/contacto" class="qn-btn qn-btn-accent">Cuéntanos qué necesitas</a>
-        <a href="tel:672274969" class="qn-btn qn-btn-outline">Llamar · 672 274 969</a>
+
+      <h1 class="qn-hero-title">
+        Lo que<br />necesitas, hoy.
+      </h1>
+
+      <p class="qn-hero-lead">
+        Un solo interlocutor para ahorrar en casa, comprar o vender tu vivienda,
+        invertir con criterio y proteger tu empresa. Nos cuentas qué necesitas
+        y resolvemos.
+      </p>
+
+      <div class="qn-hero-ctas">
+        <a href="#contacto" class="qn-btn qn-btn-primary qn-btn-lg">
+          Hablar con un asesor
+        </a>
+        <a href="/servicios" class="qn-btn qn-btn-outline-white qn-btn-lg">
+          Ver servicios
+        </a>
       </div>
 
-      <div class="qn-hero-lite-stats">
-        <div>
-          <strong>4</strong>
-          <span>Bloques de servicios</span>
-        </div>
-        <div>
-          <strong>6</strong>
-          <span>Comarcas atendidas</span>
-        </div>
-        <div>
-          <strong>24h</strong>
-          <span>Tiempo máximo de respuesta</span>
-        </div>
+      <div class="qn-hero-circle" aria-hidden="true"></div>
+      <div class="qn-hero-circle-small" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* PROCESO */}
+  <section class="qn-proceso">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Cómo trabajamos</p>
+      <h2 class="qn-display-lg qn-proceso-title">Hablamos. Resolvemos.</h2>
+
+      <div class="qn-proceso-grid">
+        {proceso.map((p, i) => (
+          <article class={`qn-proceso-card ${i === 2 ? "qn-proceso-card--dark" : ""}`}>
+            <span class="qn-proceso-num">{p.num}</span>
+            <h3 class="qn-proceso-card-title">{p.title}</h3>
+            <p class="qn-proceso-card-text">{p.text}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <ProcessSteps
-    title="Un proceso claro, sin sorpresas."
-    steps={steps}
-    background="paper"
-  />
+  {/* BLOQUE 01 · HOGAR */}
+  <section class="qn-bloque qn-bloque-01">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">01</span>
+        <h2 class="qn-bloque-title">Hogar</h2>
+        <p class="qn-bloque-tag">Luz · Gas · Teléfono · Alarmas</p>
+        <p class="qn-bloque-text">
+          Revisamos tus facturas gratis y te decimos cuánto puedes ahorrar. Si hay una opción mejor, hacemos el cambio por ti.
+        </p>
 
-  <ServicePoints
-    eyebrow="Por qué queNECESITAS"
-    title="Cuatro cosas que nos definen."
-    points={puntos}
-    layout="grid"
-    background="white"
-  />
+        <ul class="qn-bloque-chips">
+          {hogarChips.map((c) => (
+            <li>
+              <a href={c.href}>
+                <img
+                  src={c.icon}
+                  alt=""
+                  width="32"
+                  height="32"
+                  loading="lazy"
+                  decoding="async"
+                  aria-hidden="true"
+                />
+                <span>{c.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
 
-  <FAQAccordion faqs={faqs} background="bone" />
+        <a href="/servicios" class="qn-btn qn-btn-primary">Revisar mi factura</a>
+      </div>
+      <div class="qn-bloque-circle" aria-hidden="true"></div>
+    </div>
+  </section>
 
-  <ContactCTABlock
-    title="¿Hablamos?"
-    intro="Cuéntanos qué necesitas y te llamamos en menos de 24 horas laborables."
-    variant="buttons"
-    background="brand"
-  />
+  {/* BLOQUE 02 · INMOBILIARIA */}
+  <section class="qn-bloque qn-bloque-02">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">02</span>
+        <h2 class="qn-bloque-title">Inmobiliaria</h2>
+        <p class="qn-bloque-tag">Compra · Venta · Alquiler</p>
+        <p class="qn-bloque-text">
+          Te acompañamos en la compra, venta o alquiler de tu vivienda, con criterio local y sin prisas.
+        </p>
+
+        <a href="/inmobiliaria" class="qn-btn qn-btn-secondary">Valorar mi vivienda</a>
+      </div>
+      <div class="qn-bloque-circle qn-bloque-circle--light" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* BLOQUE 03 · INVERSIÓN */}
+  <section class="qn-bloque qn-bloque-03">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">03</span>
+        <h2 class="qn-bloque-title">Inversión</h2>
+        <p class="qn-bloque-tag">Asesoramiento · Planificación · Seguimiento</p>
+        <p class="qn-bloque-text">
+          Decisiones importantes, explicadas con claridad. Te presentamos cada opción con su riesgo y su rentabilidad esperada, para que decidas con toda la información.
+        </p>
+
+        <a href="/inversion" class="qn-btn qn-btn-secondary">Pedir una cita</a>
+      </div>
+      <div class="qn-bloque-circle qn-bloque-circle--blue" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* BLOQUE 04 · CIBERSEGURIDAD */}
+  <section class="qn-bloque qn-bloque-04">
+    <div class="qn-container qn-bloque-inner">
+      <div class="qn-bloque-content">
+        <span class="qn-bloque-num">04</span>
+        <h2 class="qn-bloque-title">Ciberseguridad</h2>
+        <p class="qn-bloque-tag">Para grandes empresas</p>
+        <p class="qn-bloque-text">
+          Protegemos tu operación con un plan a medida: auditoría, protección y respuesta ante incidentes. Un equipo que habla tu idioma.
+        </p>
+
+        <ul class="qn-bloque-chips qn-bloque-chips--dark">
+          <li><span>Auditoría</span></li>
+          <li><span>Protección de sistemas</span></li>
+          <li><span>Respuesta a incidentes</span></li>
+          <li><span>Formación</span></li>
+        </ul>
+
+        <a href="/ciberseguridad" class="qn-btn qn-btn-primary">Solicitar reunión</a>
+      </div>
+      <div class="qn-bloque-circle qn-bloque-circle--blue-04" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  {/* CONTACTO */}
+  <section class="qn-home-contacto" id="contacto">
+    <div class="qn-container qn-container-narrow">
+      <p class="qn-eyebrow">Contacto</p>
+      <h2 class="qn-display-lg qn-home-contacto-title">¿Qué necesitas hoy?</h2>
+      <p class="qn-home-contacto-lead">
+        Déjanos tus datos y un asesor te llama en menos de 24 horas.
+      </p>
+
+      <div class="qn-home-contacto-form">
+        <ContactForm
+          origen="home"
+          sector="general"
+          cta="Quiero que me llamen"
+          mostrarSector={true}
+        />
+      </div>
+    </div>
+  </section>
 
   <Footer slot="footer" />
 </BaseLayout>
 
 <style>
-  .qn-hero-lite {
-    padding: clamp(4rem, 8vw, 7rem) 0;
-    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  /* =========================================================
+   * HERO
+   * ========================================================= */
+  .qn-hero {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
+    position: relative;
+    overflow: hidden;
+    padding: clamp(5rem, 12vw, 9rem) 0 clamp(6rem, 14vw, 10rem);
   }
-
-  .qn-hero-lite h1 {
-    max-width: 18ch;
-    margin: 1rem 0 1.5rem;
-  }
-
-  .qn-accent-text {
-    color: var(--qn-accent);
-  }
-
-  .qn-hero-lite-lead {
-    font-size: var(--qn-fs-lg);
-    line-height: var(--qn-lh-relaxed);
-    color: var(--qn-graphite);
-    max-width: 55ch;
+  .qn-hero-inner { position: relative; z-index: 2; }
+  .qn-hero-eyebrow {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-medium);
+    letter-spacing: var(--qn-tracking-widest);
+    color: rgba(255, 255, 255, 0.6);
     margin: 0 0 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .qn-hero-eyebrow-sep { color: rgba(255, 255, 255, 0.35); }
+  .qn-hero-title {
+    font-size: clamp(3.5rem, 10vw, 6.5rem);
+    font-weight: var(--qn-fw-heavy);
+    line-height: 0.95;
+    letter-spacing: var(--qn-tracking-tighter);
+    color: var(--qn-white);
+    margin: 0 0 2rem;
+    max-width: 12ch;
+  }
+  .qn-hero-lead {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: var(--qn-lh-relaxed);
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 58ch;
+    margin: 0 0 2.5rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.875rem; }
+  .qn-hero-circle {
+    position: absolute;
+    right: -80px; bottom: -140px;
+    width: 380px; height: 380px;
+    background: var(--qn-amber-500);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.95;
+  }
+  .qn-hero-circle-small {
+    position: absolute;
+    right: 260px; bottom: 80px;
+    width: 60px; height: 60px;
+    background: var(--qn-amber-400);
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.85;
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .qn-hero-circle { right: -100px; bottom: -180px; width: 480px; height: 480px; }
+    .qn-hero-circle-small { display: block; }
+  }
+  @media (max-width: 600px) {
+    .qn-hero-circle { right: -160px; bottom: -200px; width: 340px; height: 340px; }
   }
 
-  .qn-hero-lite-ctas {
+  /* =========================================================
+   * PROCESO
+   * ========================================================= */
+  .qn-proceso {
+    background: var(--qn-bone);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+  .qn-proceso-title { margin: 1rem 0 3rem; max-width: 20ch; }
+  .qn-proceso-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 700px) { .qn-proceso-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .qn-proceso-grid { grid-template-columns: repeat(3, 1fr); max-width: 900px; } }
+  .qn-proceso-card {
+    background: var(--qn-white);
+    padding: 2rem;
+    border-radius: var(--qn-radius-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: var(--qn-shadow-sm);
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base);
+  }
+  .qn-proceso-card:hover { transform: translateY(-4px); box-shadow: var(--qn-shadow-md); }
+  .qn-proceso-card--dark { background: var(--qn-brand-700); color: var(--qn-white); }
+  .qn-proceso-num {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    letter-spacing: var(--qn-tracking-widest);
+    text-transform: uppercase;
+    color: var(--qn-stone);
+    font-weight: var(--qn-fw-medium);
+  }
+  .qn-proceso-card--dark .qn-proceso-num { color: rgba(255, 255, 255, 0.6); }
+  .qn-proceso-card-title {
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0.25rem 0 0.5rem;
+  }
+  .qn-proceso-card--dark .qn-proceso-card-title { color: var(--qn-white); }
+  .qn-proceso-card-text {
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+    font-size: var(--qn-fs-base);
+    margin: 0;
+  }
+  .qn-proceso-card--dark .qn-proceso-card-text { color: rgba(255, 255, 255, 0.85); }
+
+  /* =========================================================
+   * BLOQUES NUMERADOS
+   * ========================================================= */
+  .qn-bloque {
+    padding: clamp(4rem, 10vw, 7rem) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .qn-bloque-inner { position: relative; z-index: 2; }
+  .qn-bloque-content { max-width: 620px; }
+  .qn-bloque-num {
+    font-family: var(--qn-font-sans);
+    font-weight: var(--qn-fw-heavy);
+    font-size: clamp(4rem, 10vw, 7rem);
+    line-height: 1;
+    letter-spacing: var(--qn-tracking-tighter);
+    display: block;
+    margin: 0 0 0.5rem;
+  }
+  .qn-bloque-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: var(--qn-fw-bold);
+    line-height: var(--qn-lh-tight);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0 0 0.5rem;
+  }
+  .qn-bloque-tag {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-sm);
+    letter-spacing: var(--qn-tracking-wide);
+    margin: 0 0 1.5rem;
+    text-transform: uppercase;
+  }
+  .qn-bloque-text {
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 2rem;
+    max-width: 55ch;
+  }
+
+  /* Chips del bloque HOGAR (con iconos SVG) */
+  .qn-bloque-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-bottom: 4rem;
+    margin: 0 0 2rem;
+    list-style: none;
+    padding: 0;
   }
-
-  .qn-hero-lite-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--qn-mist);
-    max-width: 640px;
-  }
-
-  .qn-hero-lite-stats > div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.375rem;
-  }
-
-  .qn-hero-lite-stats strong {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: var(--qn-fw-heavy);
-    color: var(--qn-brand-700);
-    letter-spacing: var(--qn-tracking-tight);
-    line-height: 1;
-  }
-
-  .qn-hero-lite-stats span {
+  .qn-bloque-chips li a,
+  .qn-bloque-chips li span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--qn-radius-md);
     font-size: var(--qn-fs-sm);
-    color: var(--qn-graphite);
-    line-height: var(--qn-lh-snug);
+    font-weight: var(--qn-fw-medium);
+    text-decoration: none;
+    transition: transform var(--qn-transition-fast), background var(--qn-transition-fast);
+  }
+  .qn-bloque-chips li a img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
+  .qn-bloque-chips li a:hover {
+    transform: translateY(-2px);
   }
 
-  @media (max-width: 640px) {
-    .qn-hero-lite-stats {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
+  /* Círculo decorativo */
+  .qn-bloque-circle {
+    position: absolute;
+    right: -60px; top: 3rem;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--qn-amber-500);
+    z-index: 1;
+  }
+  @media (min-width: 900px) {
+    .qn-bloque-circle { right: -30px; top: 5rem; width: 240px; height: 240px; }
+  }
+  .qn-bloque-circle--light { background: var(--qn-brand-100); }
+  .qn-bloque-circle--blue { background: var(--qn-brand-700); }
+  .qn-bloque-circle--blue-04 { background: var(--qn-brand-500); }
+
+  /* Bloque 01 · HOGAR */
+  .qn-bloque-01 {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
+  }
+  .qn-bloque-01 .qn-bloque-num,
+  .qn-bloque-01 .qn-bloque-title { color: var(--qn-white); }
+  .qn-bloque-01 .qn-bloque-tag { color: rgba(255, 255, 255, 0.7); }
+  .qn-bloque-01 .qn-bloque-text { color: rgba(255, 255, 255, 0.85); }
+  .qn-bloque-01 .qn-bloque-chips li a {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--qn-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  .qn-bloque-01 .qn-bloque-chips li a:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  /* Bloque 02 · INMOBILIARIA */
+  .qn-bloque-02 {
+    background: var(--qn-bone);
+    color: var(--qn-ink);
+  }
+  .qn-bloque-02 .qn-bloque-num { color: var(--qn-brand-700); }
+  .qn-bloque-02 .qn-bloque-title { color: var(--qn-brand-700); }
+  .qn-bloque-02 .qn-bloque-tag { color: var(--qn-stone); }
+  .qn-bloque-02 .qn-bloque-text { color: var(--qn-graphite); }
+
+  /* Bloque 03 · INVERSIÓN */
+  .qn-bloque-03 {
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
+  }
+  .qn-bloque-03 .qn-bloque-num,
+  .qn-bloque-03 .qn-bloque-title,
+  .qn-bloque-03 .qn-bloque-tag,
+  .qn-bloque-03 .qn-bloque-text { color: var(--qn-brand-900); }
+  .qn-bloque-03 .qn-bloque-tag { color: var(--qn-brand-800); }
+
+  /* Bloque 04 · CIBERSEGURIDAD */
+  .qn-bloque-04 {
+    background: var(--qn-brand-900);
+    color: var(--qn-white);
+  }
+  .qn-bloque-04 .qn-bloque-num,
+  .qn-bloque-04 .qn-bloque-title { color: var(--qn-white); }
+  .qn-bloque-04 .qn-bloque-tag { color: rgba(255, 255, 255, 0.65); }
+  .qn-bloque-04 .qn-bloque-text { color: rgba(255, 255, 255, 0.85); }
+  .qn-bloque-chips--dark li span {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--qn-white);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* CONTACTO */
+  .qn-home-contacto {
+    background: var(--qn-bone);
+    padding: clamp(4rem, 8vw, 6rem) 0;
+  }
+  .qn-home-contacto-title { margin: 1rem 0 0.75rem; }
+  .qn-home-contacto-lead {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 2.5rem;
+  }
+  .qn-home-contacto-form {
+    background: var(--qn-white);
+    padding: 2.5rem;
+    border-radius: var(--qn-radius-2xl);
+    box-shadow: var(--qn-shadow-sm);
+  }
+  @media (max-width: 600px) {
+    .qn-home-contacto-form { padding: 1.75rem; }
   }
 </style>

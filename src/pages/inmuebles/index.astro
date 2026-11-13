@@ -1,0 +1,263 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import PropertyCard from "@components/PropertyCard.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import InmobiliariaTeaser from "@components/InmobiliariaTeaser.astro";
+import { getPublishedProperties } from "@lib/properties";
+
+const properties = await getPublishedProperties();
+
+const tiposDisponibles = [...new Set(properties.map((p) => p.tipo_inmueble).filter(Boolean))];
+const municipiosDisponibles = [...new Set(properties.map((p) => p.municipio).filter(Boolean))];
+
+const seo = {
+  title: "Inmuebles disponibles · queNECESITAS",
+  description: `${properties.length} inmuebles en Galicia — A Coruña, Oleiros, Sada, Bergondo y comarca. Compra, venta y alquiler con criterio local.`,
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  {/* HERO */}
+  <section class="qn-inm-list-hero">
+    <div class="qn-container">
+      <p class="qn-eyebrow">Catálogo</p>
+      <h1 class="qn-display-xl qn-inm-list-title">Inmuebles disponibles.</h1>
+      <p class="qn-inm-list-lead">
+        {properties.length === 0
+          ? "Estamos actualizando el catálogo. Cuéntanos qué buscas y te avisamos cuando entre algo que encaje."
+          : `${properties.length} ${properties.length === 1 ? "inmueble publicado" : "inmuebles publicados"} en nuestra zona de trabajo. Haz clic en cualquiera para ver la ficha completa.`
+        }
+      </p>
+    </div>
+  </section>
+
+  {/* FILTROS + LISTADO */}
+  <section class="qn-inm-list-body">
+    <div class="qn-container">
+
+      {properties.length > 0 && (
+        <div class="qn-inm-filters" role="toolbar" aria-label="Filtrar inmuebles">
+          <div class="qn-inm-filter-group">
+            <label for="filter-tipo">Tipo</label>
+            <select id="filter-tipo" data-filter="tipo">
+              <option value="">Todos</option>
+              {tiposDisponibles.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          </div>
+          <div class="qn-inm-filter-group">
+            <label for="filter-municipio">Zona</label>
+            <select id="filter-municipio" data-filter="municipio">
+              <option value="">Todas</option>
+              {municipiosDisponibles.map((m) => <option value={m}>{m}</option>)}
+            </select>
+          </div>
+          <div class="qn-inm-filter-group">
+            <label for="filter-precio">Precio máx.</label>
+            <select id="filter-precio" data-filter="precio">
+              <option value="">Sin límite</option>
+              <option value="150000">150.000 €</option>
+              <option value="250000">250.000 €</option>
+              <option value="400000">400.000 €</option>
+              <option value="600000">600.000 €</option>
+            </select>
+          </div>
+          <button type="button" class="qn-inm-filter-reset" data-filter-reset>
+            Limpiar
+          </button>
+        </div>
+      )}
+
+      {properties.length > 0 ? (
+        <div class="qn-inm-grid" id="qn-inm-grid">
+          {properties.map((p, i) => (
+            <div
+              class="qn-inm-grid-item"
+              data-tipo={p.tipo_inmueble}
+              data-municipio={p.municipio}
+              data-precio={p.precio ?? 0}
+            >
+              <PropertyCard property={p} priority={i < 3} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="qn-inm-empty">
+          <p>No hay inmuebles publicados ahora mismo.</p>
+          <a href="/contacto" class="qn-btn qn-btn-primary">Que me avisen</a>
+        </div>
+      )}
+
+      <p class="qn-inm-nomatch" hidden>
+        Ningún inmueble coincide con los filtros seleccionados.
+      </p>
+    </div>
+  </section>
+
+  {/* TEASER DE MEDIACIÓN */}
+  <InmobiliariaTeaser />
+
+  <ContactCTABlock
+    title="¿Buscas algo distinto?"
+    intro="Cuéntanos qué buscas: tipo, zona, presupuesto. Te avisamos en cuanto entre algo que encaje — antes de que lo veas en portales."
+    variant="form"
+    background="brand"
+    origen="inmuebles-busqueda"
+    sector="inmobiliaria"
+    cta="Avisarme de oportunidades"
+  />
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<script>
+  const grid = document.getElementById("qn-inm-grid");
+  const nomatch = document.querySelector<HTMLElement>(".qn-inm-nomatch");
+  const filters = document.querySelectorAll<HTMLSelectElement>("[data-filter]");
+  const resetBtn = document.querySelector<HTMLButtonElement>("[data-filter-reset]");
+
+  function applyFilters() {
+    if (!grid) return;
+    const tipo = (document.querySelector<HTMLSelectElement>('[data-filter="tipo"]')?.value) || "";
+    const municipio = (document.querySelector<HTMLSelectElement>('[data-filter="municipio"]')?.value) || "";
+    const precioMax = parseInt(
+      document.querySelector<HTMLSelectElement>('[data-filter="precio"]')?.value || "0",
+      10
+    );
+
+    const items = grid.querySelectorAll<HTMLElement>(".qn-inm-grid-item");
+    let visibles = 0;
+    items.forEach((item) => {
+      const t = item.dataset.tipo || "";
+      const m = item.dataset.municipio || "";
+      const p = parseInt(item.dataset.precio || "0", 10);
+
+      const okTipo = !tipo || t === tipo;
+      const okMun = !municipio || m === municipio;
+      const okPrecio = !precioMax || (p > 0 && p <= precioMax);
+
+      const show = okTipo && okMun && okPrecio;
+      item.hidden = !show;
+      if (show) visibles++;
+    });
+
+    if (nomatch) nomatch.hidden = visibles > 0;
+  }
+
+  filters.forEach((f) => f.addEventListener("change", applyFilters));
+  resetBtn?.addEventListener("click", () => {
+    filters.forEach((f) => (f.value = ""));
+    applyFilters();
+  });
+</script>
+
+<style>
+  .qn-inm-list-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+    background: linear-gradient(180deg, var(--qn-bone) 0%, var(--qn-white) 100%);
+  }
+  .qn-inm-list-title { margin: 1rem 0 1rem; }
+  .qn-inm-list-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .qn-inm-list-body {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 6rem);
+  }
+
+  .qn-inm-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-xl);
+    margin-bottom: 2.5rem;
+    align-items: flex-end;
+  }
+  .qn-inm-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 180px;
+  }
+  .qn-inm-filter-group label {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-widest);
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-medium);
+  }
+  .qn-inm-filter-group select {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-base);
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--qn-mist);
+    border-radius: var(--qn-radius-md);
+    background: var(--qn-white);
+    color: var(--qn-ink);
+    cursor: pointer;
+    transition: border-color var(--qn-transition-fast);
+  }
+  .qn-inm-filter-group select:focus {
+    outline: none;
+    border-color: var(--qn-brand-700);
+  }
+  .qn-inm-filter-reset {
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: 1.5px solid var(--qn-mist);
+    border-radius: var(--qn-radius-md);
+    color: var(--qn-graphite);
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-sm);
+    font-weight: var(--qn-fw-medium);
+    cursor: pointer;
+    transition: background var(--qn-transition-fast), color var(--qn-transition-fast);
+  }
+  .qn-inm-filter-reset:hover {
+    background: var(--qn-brand-700);
+    color: var(--qn-white);
+    border-color: var(--qn-brand-700);
+  }
+
+  .qn-inm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  @media (min-width: 640px) {
+    .qn-inm-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .qn-inm-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .qn-inm-nomatch {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+  }
+
+  .qn-inm-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--qn-paper);
+    border-radius: var(--qn-radius-2xl);
+  }
+  .qn-inm-empty p {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+    margin: 0 0 1.5rem;
+  }
+</style>

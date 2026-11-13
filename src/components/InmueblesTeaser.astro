@@ -1,0 +1,190 @@
+---
+// Bloque teaser que lleva de /inmobiliaria a /inmuebles
+// Lee los inmuebles publicados y muestra las 3 primeras como preview
+import { getPublishedProperties, formatPrice } from "@lib/properties";
+
+const all = await getPublishedProperties();
+const preview = all.slice(0, 3);
+const total = all.length;
+---
+
+{total > 0 && (
+  <section class="qn-inm-teaser">
+    <div class="qn-container">
+      <div class="qn-inm-teaser-grid">
+        <div class="qn-inm-teaser-copy">
+          <p class="qn-eyebrow">Catálogo activo</p>
+          <h2 class="qn-display-lg qn-inm-teaser-title">
+            {total} {total === 1 ? "inmueble publicado" : "inmuebles publicados"} en nuestra zona.
+          </h2>
+          <p class="qn-inm-teaser-lead">
+            Casas, pisos, locales y suelo en A Coruña, Oleiros, Sada, Bergondo, Narón y comarca. Haz clic y ve la ficha completa con fotos, características y precio.
+          </p>
+          <a href="/inmuebles" class="qn-btn qn-btn-primary qn-btn-lg qn-inm-teaser-cta">
+            Ver inmuebles disponibles
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 12h14M13 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="qn-inm-teaser-cards">
+          {preview.map((p, i) => (
+            <a href={`/inmuebles/${p.slug}`} class="qn-inm-teaser-card" style={`--i: ${i}`}>
+              {p.cover ? (
+                <img
+                  src={p.cover.url_4_5 || p.cover.url}
+                  alt={p.titulo}
+                  width="300"
+                  height="400"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="qn-inm-teaser-noimg" aria-hidden="true"></div>
+              )}
+              <div class="qn-inm-teaser-card-body">
+                <span class="qn-inm-teaser-type">{p.tipo_inmueble}</span>
+                <strong>{p.municipio ?? "Galicia"}</strong>
+                <span class="qn-inm-teaser-price">{formatPrice(p.precio)}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .qn-inm-teaser {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background:
+      linear-gradient(135deg, var(--qn-brand-700) 0%, var(--qn-brand-900) 100%);
+    color: var(--qn-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .qn-inm-teaser::before {
+    content: "";
+    position: absolute;
+    right: -120px;
+    top: -80px;
+    width: 320px;
+    height: 320px;
+    background: var(--qn-amber-500);
+    border-radius: 50%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .qn-inm-teaser-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 1000px) {
+    .qn-inm-teaser-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .qn-inm-teaser-copy .qn-eyebrow {
+    color: var(--qn-amber-400) !important;
+  }
+  .qn-inm-teaser-title {
+    color: var(--qn-white);
+    margin: 1rem 0 1.25rem;
+    max-width: 18ch;
+  }
+  .qn-inm-teaser-lead {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 2rem;
+    max-width: 50ch;
+  }
+  .qn-inm-teaser-cta svg {
+    transition: transform var(--qn-transition-fast);
+  }
+  .qn-inm-teaser-cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Cards preview */
+  .qn-inm-teaser-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.875rem;
+  }
+  @media (max-width: 500px) {
+    .qn-inm-teaser-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .qn-inm-teaser-card:nth-child(3) {
+      display: none;
+    }
+  }
+
+  .qn-inm-teaser-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--qn-white);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--qn-radius-xl);
+    overflow: hidden;
+    transition: transform var(--qn-transition-base),
+                border-color var(--qn-transition-base),
+                background var(--qn-transition-base);
+    animation: qn-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i) * 0.08s + 0.1s);
+  }
+  .qn-inm-teaser-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--qn-amber-500);
+  }
+  .qn-inm-teaser-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+  .qn-inm-teaser-noimg {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .qn-inm-teaser-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.875rem 1rem 1rem;
+  }
+  .qn-inm-teaser-type {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-amber-400);
+  }
+  .qn-inm-teaser-card-body strong {
+    font-size: var(--qn-fs-sm);
+    font-weight: var(--qn-fw-semibold);
+    color: var(--qn-white);
+  }
+  .qn-inm-teaser-price {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-sm);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-amber-400);
+    letter-spacing: var(--qn-tracking-tight);
+    margin-top: 0.125rem;
+  }
+</style>

@@ -1,0 +1,339 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ProcessSteps from "@components/ProcessSteps.astro";
+import FAQAccordion from "@components/FAQAccordion.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import { serviceSchema, faqSchema } from "@lib/seo";
+
+const steps = [
+  {
+    title: "Definimos tu perfil",
+    description:
+      "Ticket objetivo, tipo de activo (residencial, terciario, suelo), horizonte y zona geográfica de interés.",
+  },
+  {
+    title: "Filtramos el mercado",
+    description:
+      "De todo el flujo que recibimos de bancos y sareb, sólo pasan a análisis los activos que podrían encajar con tu perfil.",
+  },
+  {
+    title: "Análisis previo del activo",
+    description:
+      "Registral, cargas, situación ocupacional, comparables reales de la zona y ratios de rentabilidad.",
+  },
+  {
+    title: "Propuesta y cierre",
+    description:
+      "Si el activo pasa el filtro, te llega con informe sintético. Acompañamos hasta notaría.",
+  },
+];
+
+const faqs = [
+  {
+    question: "¿De qué bancos y fondos proceden los activos?",
+    answer:
+      "Trabajamos con activos de bancos españoles, sareb y fondos institucionales. La procedencia concreta la comunicamos en cada operación específica cuando hay interés real, no antes.",
+  },
+  {
+    question: "¿Los precios son realmente por debajo de mercado?",
+    answer:
+      "Habitualmente sí — es el sentido de este canal. Pero cada activo se analiza contra comparables reales, no contra precios de tasación teóricos. Si un activo no ofrece descuento suficiente frente al mercado real, no te lo presentamos.",
+  },
+  {
+    question: "¿Qué tipo de inmuebles habéis operado?",
+    answer:
+      "Residencial (viviendas plurifamiliares en A Coruña, Ferrol, Vigo, Santiago), terciario (bajos comerciales y oficinas), y suelo urbano y urbanizable. En operaciones singulares (naves industriales, hoteleros) según flujo.",
+  },
+  {
+    question: "¿Cómo estáis conmigo tras el cierre?",
+    answer:
+      "Con el activo cerrado, salimos de la operación salvo que nos pidas coordinar gestión posterior (contratos de arrendamiento, obra de puesta a punto, comercialización futura). Eso se contrata aparte.",
+  },
+  {
+    question: "¿Trabajáis con inversores extranjeros?",
+    answer:
+      "Sí, siempre que la operación tenga sentido y cumpla la normativa aplicable (inversión extranjera, no residentes). Podemos coordinar con asesoría fiscal internacional si es necesario.",
+  },
+];
+
+const seo = {
+  title: "Venta Directa · Activos bancarios en Galicia · Inversión",
+  description:
+    "Inmuebles procedentes de bancos, sareb y fondos con descuento real sobre mercado. Análisis previo de cargas y ratios reales para inversores en Galicia.",
+  additionalSchema: [
+    serviceSchema(
+      "Venta Directa de activos bancarios",
+      "Selección de inmuebles procedentes de bancos, sareb y fondos con análisis previo de cargas y ratios reales para inversores cualificados en Galicia.",
+      "/venta-directa"
+    ),
+    faqSchema(faqs),
+  ],
+};
+
+const accent = "--qn-venta-directa";
+const accentBg = "--qn-venta-directa-50";
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  <div class="qn-vd-page" style={`--vd-accent: var(${accent}); --vd-accent-bg: var(${accentBg});`}>
+
+    {/* HERO */}
+    <section class="qn-vd-hero">
+      <div class="qn-container qn-vd-hero-inner">
+        <div>
+          <p class="qn-eyebrow" style={`color: var(${accent})`}>Inversión · Venta Directa</p>
+          <h1 class="qn-display-xl qn-vd-hero-title">
+            Activos bancarios con descuento real sobre mercado.
+          </h1>
+          <p class="qn-vd-hero-lead">
+            Inmuebles procedentes de bancos, sareb y fondos que llegan al mercado antes que a portales públicos. Analizamos cada activo antes de presentártelo — cargas, situación registral, ratios de rentabilidad y comparables reales de la zona.
+          </p>
+          <div class="qn-hero-ctas">
+            <a href="#contacto" class="qn-btn qn-btn-accent">Hablar de una operación</a>
+            <a href="/inversion" class="qn-btn qn-btn-outline">Volver a Inversión</a>
+          </div>
+        </div>
+
+        <div class="qn-vd-hero-visual" aria-hidden="true">
+          <div class="qn-vd-metric">
+            <span class="qn-vd-metric-label">Descuento medio</span>
+            <span class="qn-vd-metric-value">15-30%</span>
+            <span class="qn-vd-metric-sub">vs comparables reales</span>
+          </div>
+          <div class="qn-vd-metric">
+            <span class="qn-vd-metric-label">Ticket medio</span>
+            <span class="qn-vd-metric-value">desde 60k €</span>
+            <span class="qn-vd-metric-sub">activo residencial</span>
+          </div>
+          <div class="qn-vd-metric">
+            <span class="qn-vd-metric-label">Análisis previo</span>
+            <span class="qn-vd-metric-value">Siempre</span>
+            <span class="qn-vd-metric-sub">antes de proponer</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* QUÉ INCLUYE EL ANÁLISIS */}
+    <section class="qn-vd-analysis">
+      <div class="qn-container">
+        <div class="qn-bloque-head">
+          <p class="qn-eyebrow" style={`color: var(${accent})`}>Qué revisamos</p>
+          <h2 class="qn-display-lg">Cada activo pasa por seis controles.</h2>
+          <p class="qn-bloque-lead">
+            Antes de que un activo llegue a tu mesa, ha pasado por nuestra due diligence. Si algo no cuadra, no te lo presentamos.
+          </p>
+        </div>
+
+        <div class="qn-vd-checks">
+          <article>
+            <div class="qn-vd-check-num">01</div>
+            <h3>Situación registral</h3>
+            <p>Nota simple actualizada, titularidad correcta, superficies coincidentes, servidumbres.</p>
+          </article>
+          <article>
+            <div class="qn-vd-check-num">02</div>
+            <h3>Cargas</h3>
+            <p>Hipotecas subsistentes, embargos, afecciones fiscales, deudas de comunidad.</p>
+          </article>
+          <article>
+            <div class="qn-vd-check-num">03</div>
+            <h3>Ocupación</h3>
+            <p>Estado ocupacional, contratos vigentes, viabilidad de desocupación si aplica.</p>
+          </article>
+          <article>
+            <div class="qn-vd-check-num">04</div>
+            <h3>Comparables reales</h3>
+            <p>Precios de operaciones cerradas en la zona en los últimos 12-24 meses.</p>
+          </article>
+          <article>
+            <div class="qn-vd-check-num">05</div>
+            <h3>Ratios de rentabilidad</h3>
+            <p>Bruta y neta, calculadas sobre datos reales de alquiler/reventa en la microzona.</p>
+          </article>
+          <article>
+            <div class="qn-vd-check-num">06</div>
+            <h3>Escenarios de salida</h3>
+            <p>Reventa, alquiler, hold-to-mature. Con horizontes y umbrales concretos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <ProcessSteps
+      title="Del interés al cierre."
+      steps={steps}
+      background="paper"
+    />
+
+    <FAQAccordion faqs={faqs} background="bone" />
+
+    <div id="contacto">
+      <ContactCTABlock
+        title="Cuéntanos qué tipo de activo buscas."
+        intro="Ticket objetivo, zona de interés y horizonte. Te llamamos en menos de 24 horas laborables. Discreción como norma — no incluimos tu contacto en base de datos comercial."
+        variant="form"
+        background="brand"
+        origen="venta-directa"
+        sector="venta-directa"
+        cta="Hablar con un asesor"
+      />
+    </div>
+
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .qn-vd-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4rem);
+    background:
+      radial-gradient(circle at 90% 20%, var(--vd-accent-bg) 0%, transparent 45%),
+      var(--qn-bone);
+  }
+  .qn-vd-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-vd-hero-inner { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+  }
+  .qn-vd-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-vd-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 55ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* Métricas hero */
+  .qn-vd-hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .qn-vd-metric {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-left: 4px solid var(--vd-accent);
+    border-radius: var(--qn-radius-xl);
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--qn-shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    animation: qn-slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .qn-vd-metric:nth-child(1) { animation-delay: 0.1s; }
+  .qn-vd-metric:nth-child(2) { animation-delay: 0.2s; }
+  .qn-vd-metric:nth-child(3) { animation-delay: 0.3s; }
+  .qn-vd-metric-label {
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wider);
+    color: var(--qn-stone);
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-vd-metric-value {
+    font-size: var(--qn-fs-3xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--vd-accent);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: 1;
+    margin: 0.125rem 0;
+  }
+  .qn-vd-metric-sub {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+  }
+
+  /* Analysis section */
+  .qn-vd-analysis {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  .qn-vd-checks {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .qn-vd-checks { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .qn-vd-checks { grid-template-columns: repeat(3, 1fr); }
+  }
+  .qn-vd-checks article {
+    background: var(--vd-accent-bg);
+    padding: 1.75rem;
+    border-radius: var(--qn-radius-xl);
+    border: 1px solid transparent;
+    transition: transform var(--qn-transition-base), border-color var(--qn-transition-base);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .qn-vd-checks article:hover {
+    transform: translateY(-3px);
+    border-color: var(--vd-accent);
+  }
+  .qn-vd-check-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    background: var(--qn-white);
+    color: var(--vd-accent);
+    border-radius: var(--qn-radius-pill);
+    font-weight: var(--qn-fw-bold);
+    font-size: var(--qn-fs-xs);
+    letter-spacing: var(--qn-tracking-wide);
+    align-self: flex-start;
+    min-width: 44px;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .qn-vd-checks h3 {
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-tight);
+    margin: 0;
+  }
+  .qn-vd-checks p {
+    color: var(--qn-ink-soft);
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,129 @@
+---
+// Teaser que lleva desde /inmuebles de vuelta a /inmobiliaria
+// Explica el servicio de mediación y captura leads de propietarios
+---
+
+<section class="qn-inmo-teaser">
+  <div class="qn-container">
+    <div class="qn-inmo-teaser-grid">
+      <div class="qn-inmo-teaser-copy">
+        <p class="qn-eyebrow">Para propietarios</p>
+        <h2 class="qn-display-lg qn-inmo-teaser-title">
+          ¿Vendes o buscas con criterio?
+        </h2>
+        <p class="qn-inmo-teaser-lead">
+          Además del catálogo que ves aquí, hacemos mediación completa: valoramos tu inmueble sin compromiso, comercializamos con plan definido y acompañamos hasta notaría. Y si estás buscando, cuéntanos qué: te avisamos antes que a portales.
+        </p>
+        <div class="qn-inmo-teaser-ctas">
+          <a href="/inmobiliaria#vender" class="qn-btn qn-btn-primary">
+            Vender mi inmueble
+          </a>
+          <a href="/inmobiliaria#comprar" class="qn-btn qn-btn-outline">
+            Estoy buscando
+          </a>
+        </div>
+      </div>
+
+      <div class="qn-inmo-teaser-visual" aria-hidden="true">
+        <div class="qn-inmo-stat">
+          <span class="qn-inmo-stat-num">01</span>
+          <strong>Valoración</strong>
+          <span>Honesta, con comparables reales</span>
+        </div>
+        <div class="qn-inmo-stat">
+          <span class="qn-inmo-stat-num">02</span>
+          <strong>Plan de venta</strong>
+          <span>Fotos, anuncio, filtro de visitas</span>
+        </div>
+        <div class="qn-inmo-stat">
+          <span class="qn-inmo-stat-num">03</span>
+          <strong>Acompañamiento</strong>
+          <span>Hasta la firma en notaría</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .qn-inmo-teaser {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-paper);
+  }
+  .qn-inmo-teaser-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-inmo-teaser-grid {
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .qn-inmo-teaser-title {
+    margin: 1rem 0 1.25rem;
+    max-width: 18ch;
+  }
+  .qn-inmo-teaser-lead {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-md);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0 0 2rem;
+    max-width: 55ch;
+  }
+  .qn-inmo-teaser-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .qn-inmo-teaser-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .qn-inmo-stat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-left: 4px solid var(--qn-brand-700);
+    border-radius: var(--qn-radius-xl);
+    align-items: start;
+    transition: transform var(--qn-transition-base),
+                border-left-color var(--qn-transition-base);
+  }
+  .qn-inmo-stat:hover {
+    transform: translateX(4px);
+    border-left-color: var(--qn-amber-500);
+  }
+  .qn-inmo-stat-num {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
+    line-height: 1;
+    letter-spacing: var(--qn-tracking-tight);
+    grid-row: 1 / 3;
+    padding-top: 0.125rem;
+  }
+  .qn-inmo-stat strong {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-md);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-inmo-stat span:last-child {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-normal);
+    display: block;
+    margin-top: 0.125rem;
+  }
+</style>

@@ -1,0 +1,385 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ProcessSteps from "@components/ProcessSteps.astro";
+import ServicePoints from "@components/ServicePoints.astro";
+import FAQAccordion from "@components/FAQAccordion.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import { serviceSchema } from "@lib/seo";
+
+interface Provider {
+  name: string;
+  desc: string;
+}
+
+interface Feature {
+  title: string;
+  desc: string;
+}
+
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Point {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  slug: string;                    // ej: "alarmas"
+  serviceName: string;             // "Alarmas"
+  accentVar: string;               // "--qn-alarmas"
+  accentBg: string;                // "--qn-alarmas-50"
+  eyebrow: string;
+  h1: string;
+  heroLead: string;
+  ctaPrimary: string;
+  ctaSecondary?: string;
+  providers?: Provider[];
+  providersTitle?: string;
+  providersLead?: string;
+  features: Feature[];
+  featuresTitle: string;
+  featuresLead?: string;
+  steps: Step[];
+  puntos: Point[];
+  puntosTitle: string;
+  faqs: FAQ[];
+  ctaTitle: string;
+  ctaIntro: string;
+}
+
+const {
+  slug,
+  serviceName,
+  accentVar,
+  accentBg,
+  eyebrow,
+  h1,
+  heroLead,
+  ctaPrimary,
+  ctaSecondary,
+  providers,
+  providersTitle,
+  providersLead,
+  features,
+  featuresTitle,
+  featuresLead,
+  steps,
+  puntos,
+  puntosTitle,
+  faqs,
+  ctaTitle,
+  ctaIntro,
+} = Astro.props;
+
+const seo = {
+  title: `${serviceName} en A Coruña · Comparador local con criterio`,
+  description: heroLead.slice(0, 155),
+  additionalSchema: serviceSchema(
+    serviceName,
+    heroLead,
+    `/${slug}`
+  ),
+};
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  <div class="qn-service-page" style={`--service-accent: var(${accentVar}); --service-accent-bg: var(${accentBg});`}>
+
+    {/* HERO */}
+    <section class="qn-svc-hero">
+      <div class="qn-container qn-svc-hero-inner">
+        <div class="qn-svc-hero-content">
+          <p class="qn-eyebrow" style={`color: var(${accentVar})`}>{eyebrow}</p>
+          <h1 class="qn-display-xl qn-svc-hero-title">{h1}</h1>
+          <p class="qn-svc-hero-lead">{heroLead}</p>
+          <div class="qn-hero-ctas">
+            <a href="#contacto" class="qn-btn qn-btn-accent">{ctaPrimary}</a>
+            {ctaSecondary && (
+              <a href="tel:672274969" class="qn-btn qn-btn-outline">{ctaSecondary}</a>
+            )}
+          </div>
+        </div>
+
+        <div class="qn-svc-hero-visual" aria-hidden="true">
+          <div class="qn-svc-badge">
+            <span class="qn-svc-badge-dot"></span>
+            <div>
+              <strong>{serviceName}</strong>
+              <em>Comparador local</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* PROVEEDORES (opcional) */}
+    {providers && providers.length > 0 && (
+      <section class="qn-svc-providers">
+        <div class="qn-container">
+          <div class="qn-bloque-head">
+            <p class="qn-eyebrow" style={`color: var(${accentVar})`}>Con quién trabajamos</p>
+            <h2 class="qn-display-lg">{providersTitle}</h2>
+            {providersLead && <p class="qn-bloque-lead">{providersLead}</p>}
+          </div>
+          <div class="qn-providers-grid">
+            {providers.map((p) => (
+              <div class="qn-provider-card">
+                <h3 class="qn-provider-name">{p.name}</h3>
+                <p class="qn-provider-desc">{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* FEATURES */}
+    <section class="qn-svc-features">
+      <div class="qn-container">
+        <div class="qn-bloque-head">
+          <p class="qn-eyebrow" style={`color: var(${accentVar})`}>Qué te ofrecemos</p>
+          <h2 class="qn-display-lg">{featuresTitle}</h2>
+          {featuresLead && <p class="qn-bloque-lead">{featuresLead}</p>}
+        </div>
+        <div class="qn-features-grid">
+          {features.map((f, i) => (
+            <article class="qn-feature-card">
+              <div class="qn-feature-num">{String(i + 1).padStart(2, "0")}</div>
+              <h3 class="qn-feature-title">{f.title}</h3>
+              <p class="qn-feature-desc">{f.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <ProcessSteps
+      title="Cómo trabajamos contigo."
+      steps={steps}
+      background="paper"
+    />
+
+    <ServicePoints
+      eyebrow="Por qué con nosotros"
+      title={puntosTitle}
+      points={puntos}
+      layout="grid"
+      background="white"
+    />
+
+    <FAQAccordion faqs={faqs} background="bone" />
+
+    <div id="contacto">
+      <ContactCTABlock
+        title={ctaTitle}
+        intro={ctaIntro}
+        variant="form"
+        background="brand"
+        origen={slug}
+        sector={slug}
+        cta="Que me llamen"
+      />
+    </div>
+
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO servicio */
+  .qn-svc-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 6vw, 5rem);
+    background:
+      radial-gradient(circle at 90% 20%, var(--service-accent-bg) 0%, transparent 45%),
+      var(--qn-bone);
+    position: relative;
+    overflow: hidden;
+  }
+  .qn-svc-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-svc-hero-inner { grid-template-columns: 1.2fr 1fr; gap: 4rem; }
+  }
+  .qn-svc-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 20ch;
+  }
+  .qn-svc-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 55ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .qn-svc-hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+  .qn-svc-badge {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-2xl);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: var(--qn-shadow-lg);
+    border-top: 4px solid var(--service-accent);
+    min-width: 260px;
+  }
+  .qn-svc-badge-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--service-accent-bg);
+    border: 3px solid var(--service-accent);
+    flex-shrink: 0;
+  }
+  .qn-svc-badge strong {
+    display: block;
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-svc-badge em {
+    display: block;
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    font-style: normal;
+    margin-top: 2px;
+  }
+
+  /* Sección genérica */
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  /* PROVEEDORES */
+  .qn-svc-providers {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-providers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (min-width: 640px) {
+    .qn-providers-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .qn-provider-card {
+    background: var(--service-accent-bg);
+    border-radius: var(--qn-radius-xl);
+    padding: 1.75rem;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: transform var(--qn-transition-base), border-color var(--qn-transition-base);
+  }
+  .qn-provider-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--service-accent);
+  }
+  .qn-provider-name {
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-bold);
+    color: var(--service-accent);
+    margin: 0 0 0.5rem;
+    letter-spacing: var(--qn-tracking-tight);
+  }
+  .qn-provider-desc {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-ink-soft);
+    line-height: var(--qn-lh-normal);
+    margin: 0;
+  }
+
+  /* FEATURES */
+  .qn-svc-features {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-bone);
+  }
+  .qn-features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .qn-features-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 900px) {
+    .qn-features-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .qn-feature-card {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-xl);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base);
+  }
+  .qn-feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--qn-shadow-md);
+  }
+  .qn-feature-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.75rem;
+    background: var(--service-accent-bg);
+    color: var(--service-accent);
+    border-radius: var(--qn-radius-pill);
+    font-weight: var(--qn-fw-bold);
+    font-size: var(--qn-fs-xs);
+    letter-spacing: var(--qn-tracking-wide);
+    align-self: flex-start;
+    min-width: 44px;
+    text-align: center;
+    line-height: 1;
+  }
+  .qn-feature-title {
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    letter-spacing: var(--qn-tracking-tight);
+    line-height: var(--qn-lh-tight);
+    margin: 0.25rem 0 0.25rem;
+  }
+  .qn-feature-desc {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-normal);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,196 @@
+---
+import { formatPrice, formatArea, type Property } from "@lib/properties";
+
+interface Props {
+  property: Property;
+  priority?: boolean; // Si es true, cargamos la imagen con fetchpriority alto
+}
+
+const { property, priority = false } = Astro.props;
+const url = `/inmuebles/${property.slug}`;
+const ubicacion = [property.zona_barrio, property.municipio]
+  .filter(Boolean)
+  .join(" · ");
+const isReservado = property.estado_venta?.toLowerCase() === "reservado";
+---
+
+<a href={url} class="qn-pcard" aria-label={`Ver ficha de ${property.titulo}`}>
+  <div class="qn-pcard-media">
+    {property.cover ? (
+      <img
+        src={property.cover.url_4_5 || property.cover.url}
+        alt={property.titulo}
+        width="400"
+        height="500"
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        fetchpriority={priority ? "high" : "auto"}
+      />
+    ) : (
+      <div class="qn-pcard-noimg" aria-hidden="true">Sin foto</div>
+    )}
+
+    <span class="qn-pcard-ref">Ref. {property.referencia}</span>
+    {isReservado && <span class="qn-pcard-badge">Reservado</span>}
+  </div>
+
+  <div class="qn-pcard-body">
+    <p class="qn-pcard-type">{property.tipo_inmueble}</p>
+    <h3 class="qn-pcard-title">{property.titulo}</h3>
+    {ubicacion && <p class="qn-pcard-loc">{ubicacion}</p>}
+
+    <div class="qn-pcard-facts">
+      {property.habitaciones !== null && (
+        <span>
+          <strong>{property.habitaciones}</strong> hab.
+        </span>
+      )}
+      {property.banos !== null && (
+        <span>
+          <strong>{property.banos}</strong> baños
+        </span>
+      )}
+      {property.superficie_construida && (
+        <span>
+          <strong>{formatArea(property.superficie_construida)}</strong>
+        </span>
+      )}
+    </div>
+
+    <div class="qn-pcard-price">
+      {formatPrice(property.precio)}
+    </div>
+  </div>
+</a>
+
+<style>
+  .qn-pcard {
+    display: flex;
+    flex-direction: column;
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-xl);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--qn-ink);
+    transition: transform var(--qn-transition-base),
+                box-shadow var(--qn-transition-base),
+                border-color var(--qn-transition-base);
+  }
+  .qn-pcard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--qn-shadow-lg);
+    border-color: var(--qn-brand-700);
+  }
+
+  /* MEDIA */
+  .qn-pcard-media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--qn-paper);
+    overflow: hidden;
+  }
+  .qn-pcard-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--qn-transition-slow);
+  }
+  .qn-pcard:hover .qn-pcard-media img {
+    transform: scale(1.03);
+  }
+  .qn-pcard-noimg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--qn-stone);
+    font-size: var(--qn-fs-sm);
+    letter-spacing: var(--qn-tracking-wide);
+    text-transform: uppercase;
+  }
+  .qn-pcard-ref {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(10, 27, 77, 0.85);
+    color: var(--qn-white);
+    padding: 0.3rem 0.625rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-family: var(--qn-font-mono);
+    font-weight: var(--qn-fw-medium);
+    letter-spacing: var(--qn-tracking-wide);
+    backdrop-filter: blur(4px);
+  }
+  .qn-pcard-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--qn-amber-500);
+    color: var(--qn-brand-900);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--qn-radius-pill);
+    font-size: var(--qn-fs-xs);
+    font-weight: var(--qn-fw-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
+  }
+
+  /* BODY */
+  .qn-pcard-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    flex: 1;
+  }
+  .qn-pcard-type {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-widest);
+    color: var(--qn-brand-700);
+    font-weight: var(--qn-fw-medium);
+    margin: 0;
+  }
+  .qn-pcard-title {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-bold);
+    line-height: var(--qn-lh-snug);
+    letter-spacing: var(--qn-tracking-tight);
+    color: var(--qn-ink);
+    margin: 0.25rem 0 0.125rem;
+  }
+  .qn-pcard-loc {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    margin: 0 0 0.75rem;
+  }
+  .qn-pcard-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--qn-fog);
+    margin-top: auto;
+  }
+  .qn-pcard-facts strong {
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+  }
+  .qn-pcard-price {
+    font-family: var(--qn-font-sans);
+    font-size: var(--qn-fs-xl);
+    font-weight: var(--qn-fw-bold);
+    color: var(--qn-brand-700);
+    letter-spacing: var(--qn-tracking-tight);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--qn-fog);
+  }
+</style>

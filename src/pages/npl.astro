@@ -1,0 +1,363 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import ProcessSteps from "@components/ProcessSteps.astro";
+import FAQAccordion from "@components/FAQAccordion.astro";
+import ContactCTABlock from "@components/ContactCTABlock.astro";
+import { serviceSchema, faqSchema } from "@lib/seo";
+
+const steps = [
+  {
+    title: "Perfil e interés",
+    description:
+      "Ticket, tipo de subyacente que buscas (residencial, comercial, mixto), horizonte y vehículo de inversión.",
+  },
+  {
+    title: "Screening de cartera",
+    description:
+      "Preselección sobre carteras vivas y flujo institucional. Filtro por LTV, ubicación, estado del deudor y del subyacente.",
+  },
+  {
+    title: "Due diligence detallada",
+    description:
+      "Sobre la cartera preseleccionada: análisis loan-by-loan de los principales activos, ratios agregados, cobertura documental.",
+  },
+  {
+    title: "Estructuración y cierre",
+    description:
+      "Coordinación con asesoría jurídica y fiscal. Firma con la contraparte cedente. Post-cierre según acuerdo con el cliente.",
+  },
+];
+
+const faqs = [
+  {
+    question: "¿Qué es exactamente una operación NPL?",
+    answer:
+      "NPL son las siglas en inglés de Non-Performing Loans — préstamos fallidos. Son préstamos hipotecarios (o carteras de ellos) que han entrado en default, y que la entidad financiera cede en el mercado para recuperar valor. El comprador adquiere el préstamo con derecho a ejecutar el subyacente si procede. La rentabilidad viene del descuento sobre el principal y del valor recuperado del inmueble.",
+  },
+  {
+    question: "¿Trabajáis carteras individuales o solo lotes?",
+    answer:
+      "Depende del origen. En operaciones bilaterales trabajamos activos individuales con ticket relevante. En flujo institucional trabajamos habitualmente lotes o subcarteras. En ambos, hacemos análisis loan-by-loan de los principales activos antes de cualquier oferta.",
+  },
+  {
+    question: "¿Cuál es el ticket habitual de una operación?",
+    answer:
+      "Depende del formato. En activo individual singular, desde 200.000 €. En carteras, habitualmente lotes desde 500.000 € nominal en adelante, aunque hay ventanas de mercado con lotes más pequeños. Casos por debajo los estudiamos pero raramente son operativos.",
+  },
+  {
+    question: "¿Cómo se ejecuta el subyacente si el deudor no paga?",
+    answer:
+      "Vía procedimiento judicial de ejecución hipotecaria estándar. El plazo depende de la jurisdicción y de la fase actual del procedimiento. Nuestro análisis previo incluye estado procesal, tiempos estimados y viabilidad de negociación con el deudor si aplica.",
+  },
+  {
+    question: "¿Podéis presentarme carteras concretas sin firmar nada?",
+    answer:
+      "Podemos hablar del enfoque, de tipos de operaciones que hemos analizado y de nuestro proceso. Para presentarte una cartera concreta con datos, necesitamos NDA previo — es requisito habitual de las contrapartes cedentes.",
+  },
+];
+
+const seo = {
+  title: "NPL en Galicia · Carteras y activos financieros para inversores",
+  description:
+    "Screening y due diligence de carteras NPL y activos financieros individuales para family office e inversores institucionales. Análisis loan-by-loan y coordinación al cierre.",
+  additionalSchema: [
+    serviceSchema(
+      "NPL · Non-Performing Loans",
+      "Screening y due diligence de carteras NPL y activos financieros individuales para family office e inversores institucionales en Galicia y España.",
+      "/npl"
+    ),
+    faqSchema(faqs),
+  ],
+};
+
+const accent = "--qn-npl";
+const accentBg = "--qn-npl-50";
+---
+
+<BaseLayout {...seo}>
+  <Header slot="header" />
+
+  <div class="qn-npl-page" style={`--npl-accent: var(${accent}); --npl-accent-bg: var(${accentBg});`}>
+
+    {/* HERO */}
+    <section class="qn-npl-hero">
+      <div class="qn-container qn-npl-hero-inner">
+        <div>
+          <p class="qn-eyebrow" style={`color: var(${accent})`}>Inversión · NPL</p>
+          <h1 class="qn-display-xl qn-npl-hero-title">
+            Carteras y activos financieros para inversor cualificado.
+          </h1>
+          <p class="qn-npl-hero-lead">
+            Non-Performing Loans con subyacente inmobiliario. Screening sobre flujo institucional, due diligence loan-by-loan en los activos principales y coordinación al cierre. Para family office e inversores con vehículo propio.
+          </p>
+          <div class="qn-hero-ctas">
+            <a href="#contacto" class="qn-btn qn-btn-accent">Hablar de una cartera</a>
+            <a href="/inversion" class="qn-btn qn-btn-outline">Volver a Inversión</a>
+          </div>
+        </div>
+
+        <div class="qn-npl-hero-visual" aria-hidden="true">
+          <div class="qn-npl-datapanel">
+            <div class="qn-npl-datapanel-head">
+              <span></span><span></span><span></span>
+              <em>portfolio · screening</em>
+            </div>
+            <div class="qn-npl-datapanel-body">
+              <div class="qn-npl-row">
+                <span class="qn-npl-row-label">Nominal cartera</span>
+                <span class="qn-npl-row-value">— M€</span>
+              </div>
+              <div class="qn-npl-row">
+                <span class="qn-npl-row-label">Nº préstamos</span>
+                <span class="qn-npl-row-value">—</span>
+              </div>
+              <div class="qn-npl-row">
+                <span class="qn-npl-row-label">LTV medio</span>
+                <span class="qn-npl-row-value">—</span>
+              </div>
+              <div class="qn-npl-row qn-npl-row-highlight">
+                <span class="qn-npl-row-label">Estado análisis</span>
+                <span class="qn-npl-row-value" style={`color: var(${accent})`}>En curso</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* METODOLOGÍA */}
+    <section class="qn-npl-method">
+      <div class="qn-container">
+        <div class="qn-bloque-head">
+          <p class="qn-eyebrow" style={`color: var(${accent})`}>Metodología</p>
+          <h2 class="qn-display-lg">Screening riguroso, no marketing.</h2>
+          <p class="qn-bloque-lead">
+            El análisis de una cartera NPL no se hace con hojas de cálculo genéricas. Cada préstamo tiene su historia procesal, su subyacente y su nivel de recuperabilidad. Y nosotros pasamos por todos ellos antes de proponerte una operación.
+          </p>
+        </div>
+
+        <div class="qn-npl-methods">
+          <article>
+            <div class="qn-npl-method-num">01</div>
+            <div>
+              <h3>Screening agregado</h3>
+              <p>Sobre el nominal total: distribución por LTV, geografía, tipología del subyacente, edad del default, estado procesal. Con eso ya filtramos qué merece un análisis loan-by-loan.</p>
+            </div>
+          </article>
+          <article>
+            <div class="qn-npl-method-num">02</div>
+            <div>
+              <h3>Análisis loan-by-loan</h3>
+              <p>De los préstamos que representan la mayor parte del nominal (habitualmente 60-70% de la cartera). Nota simple, tasación actualizada, ocupación, valoración conservadora.</p>
+            </div>
+          </article>
+          <article>
+            <div class="qn-npl-method-num">03</div>
+            <div>
+              <h3>Modelo de recuperación</h3>
+              <p>Estimación de tiempos y montos por préstamo. Escenarios base y conservador. Plan de negociación con deudor cuando procede, plan judicial cuando no.</p>
+            </div>
+          </article>
+          <article>
+            <div class="qn-npl-method-num">04</div>
+            <div>
+              <h3>Precio máximo defendible</h3>
+              <p>El precio al que la operación tiene sentido con nuestros parámetros. A partir de ahí, negociación con la cedente. Si no hay margen, no hay operación.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <ProcessSteps
+      title="Del primer contacto al cierre."
+      steps={steps}
+      background="paper"
+    />
+
+    <FAQAccordion faqs={faqs} background="bone" />
+
+    <div id="contacto">
+      <ContactCTABlock
+        title="Cuéntanos qué buscas."
+        intro="Ticket, tipo de subyacente y vehículo de inversión. Bajo NDA cuando proceda. Discreción como norma — no aparecerás en ninguna base de datos comercial nuestra."
+        variant="form"
+        background="brand"
+        origen="npl"
+        sector="npl"
+        cta="Hablar con un asesor"
+      />
+    </div>
+
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .qn-npl-hero {
+    padding: clamp(4rem, 8vw, 6rem) 0 clamp(3rem, 5vw, 4rem);
+    background:
+      radial-gradient(circle at 90% 20%, var(--npl-accent-bg) 0%, transparent 45%),
+      var(--qn-bone);
+  }
+  .qn-npl-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .qn-npl-hero-inner { grid-template-columns: 1.3fr 1fr; gap: 4rem; }
+  }
+  .qn-npl-hero-title {
+    margin: 1rem 0 1.5rem;
+    max-width: 22ch;
+  }
+  .qn-npl-hero-lead {
+    font-size: var(--qn-fs-lg);
+    line-height: var(--qn-lh-relaxed);
+    color: var(--qn-graphite);
+    max-width: 55ch;
+    margin: 0 0 2rem;
+  }
+  .qn-hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* Panel visual estilo "dashboard" */
+  .qn-npl-hero-visual {
+    display: flex;
+    justify-content: center;
+  }
+  .qn-npl-datapanel {
+    background: var(--qn-white);
+    border: 1px solid var(--qn-mist);
+    border-radius: var(--qn-radius-xl);
+    overflow: hidden;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--qn-shadow-lg);
+  }
+  .qn-npl-datapanel-head {
+    background: var(--qn-brand-900);
+    padding: 0.875rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .qn-npl-datapanel-head span {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+  .qn-npl-datapanel-head em {
+    margin-left: auto;
+    font-size: var(--qn-fs-xs);
+    font-style: normal;
+    color: var(--npl-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .qn-npl-datapanel-body {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .qn-npl-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--qn-mist);
+  }
+  .qn-npl-row:last-child { border-bottom: 0; }
+  .qn-npl-row-highlight {
+    background: var(--npl-accent-bg);
+    margin: 0.25rem -0.75rem 0;
+    padding: 0.75rem;
+    border-radius: var(--qn-radius-md);
+    border-bottom: 0;
+  }
+  .qn-npl-row-label {
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-graphite);
+    text-transform: uppercase;
+    letter-spacing: var(--qn-tracking-wide);
+    font-weight: var(--qn-fw-semibold);
+    font-size: var(--qn-fs-xs);
+  }
+  .qn-npl-row-value {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-sm);
+    color: var(--qn-ink);
+    font-weight: var(--qn-fw-semibold);
+  }
+
+  /* METHOD */
+  .qn-npl-method {
+    padding: clamp(4rem, 8vw, 6rem) 0;
+    background: var(--qn-white);
+  }
+  .qn-bloque-head {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .qn-bloque-head .qn-eyebrow { margin-bottom: 0.75rem; }
+  .qn-bloque-lead {
+    margin-top: 1rem;
+    font-size: var(--qn-fs-md);
+    color: var(--qn-graphite);
+    line-height: var(--qn-lh-relaxed);
+  }
+
+  .qn-npl-methods {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (min-width: 800px) {
+    .qn-npl-methods { grid-template-columns: repeat(2, 1fr); }
+  }
+  .qn-npl-methods article {
+    background: var(--qn-paper);
+    padding: 2rem 1.75rem;
+    border-radius: var(--qn-radius-xl);
+    border-left: 3px solid var(--npl-accent);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    transition: transform var(--qn-transition-base), box-shadow var(--qn-transition-base);
+  }
+  .qn-npl-methods article:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--qn-shadow-md);
+  }
+  .qn-npl-method-num {
+    font-family: var(--qn-font-mono);
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-bold);
+    color: var(--npl-accent);
+    line-height: 1;
+    padding-top: 0.25rem;
+  }
+  .qn-npl-methods h3 {
+    font-size: var(--qn-fs-lg);
+    font-weight: var(--qn-fw-semibold);
+    color: var(--qn-ink);
+    letter-spacing: var(--qn-tracking-tight);
+    margin: 0 0 0.5rem;
+    line-height: var(--qn-lh-tight);
+  }
+  .qn-npl-methods p {
+    color: var(--qn-graphite);
+    font-size: var(--qn-fs-sm);
+    line-height: var(--qn-lh-relaxed);
+    margin: 0;
+  }
+</style>
