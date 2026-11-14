@@ -16,7 +16,12 @@ const {
   variant = "light",
 } = Astro.props;
 
-const webhookUrl = import.meta.env.PUBLIC_N8N_WEBHOOK_URL || "";
+// Admite los dos nombres de variable que se han usado (.env y Hostinger)
+// y, si no hay ninguna, usa la dirección del webhook de n8n directamente.
+const webhookUrl =
+  import.meta.env.PUBLIC_N8N_LEAD_WEBHOOK ||
+  import.meta.env.PUBLIC_N8N_WEBHOOK_URL ||
+  "https://n8n.gespronet.cloud/webhook/quenecesitas-leads";
 ---
 
 <form class="qn-form" data-variant={variant} data-origen={origen} data-sector={sector}>
