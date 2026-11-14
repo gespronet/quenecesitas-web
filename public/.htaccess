@@ -49,34 +49,33 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # ---------------------------------------------------------
-# 6. Cache-Control para assets
+# 6. Caché: la web siempre muestra la última versión
 # ---------------------------------------------------------
+# Regla general: el navegador puede guardar los archivos, pero
+# antes de usarlos pregunta al servidor si han cambiado (no-cache).
+# Si no han cambiado, el servidor responde "304" y no se descarga
+# nada: es igual de rápido y nunca se ve una versión antigua.
+#
+# Excepción: los archivos que Astro genera con huella en el nombre
+# (/_assets/nombre.Ab12Cd34.css). Cada versión tiene un nombre
+# distinto, así que se pueden guardar un año sin riesgo.
 <IfModule mod_expires.c>
-  ExpiresActive On
+  ExpiresActive Off
+</IfModule>
 
-  # HTML: sin cache larga (para que se vean cambios al desplegar)
-  ExpiresByType text/html "access plus 1 hour"
+<IfModule mod_headers.c>
+  Header unset Expires
+  Header set Cache-Control "no-cache"
 
-  # CSS y JS con hash de Astro: cache larga
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
+  <FilesMatch "\.[A-Za-z0-9_-]{8}\.(css|js|mjs|jpg|jpeg|png|webp|avif|svg|gif|woff2?|ttf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
 
-  # Imágenes
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/avif "access plus 1 year"
-
-  # Fuentes
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType font/woff "access plus 1 year"
-  ExpiresByType font/ttf "access plus 1 year"
-
-  # XML/JSON (sitemap y datos)
-  ExpiresByType application/xml "access plus 1 day"
-  ExpiresByType text/xml "access plus 1 day"
-  ExpiresByType application/json "access plus 1 hour"
+# Que la caché del servidor de Hostinger (LiteSpeed) no guarde
+# copias antiguas de las páginas
+<IfModule LiteSpeed>
+  CacheDisable public /
 </IfModule>
 
 # ---------------------------------------------------------
