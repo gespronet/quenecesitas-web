@@ -11,7 +11,7 @@ const url = `/inmuebles/${property.slug}`;
 const ubicacion = [property.zona_barrio, property.municipio]
   .filter(Boolean)
   .join(" · ");
-const isReservado = property.estado_venta?.toLowerCase() === "reservado";
+const isReservado = ["reservado","contrato arras"].includes(property.estado_venta?.toLowerCase() ?? "");
 ---
 
 <a href={url} class="qn-pcard" aria-label={`Ver ficha de ${property.titulo}`}>

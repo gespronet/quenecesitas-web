@@ -38,7 +38,7 @@ const ubicacion = [p.zona_barrio, p.municipio, p.provincia]
   .join(" · ");
 
 const amenities = getActiveAmenities(p);
-const isReservado = p.estado_venta?.toLowerCase() === "reservado";
+const isReservado = ["reservado","contrato arras"].includes(p.estado_venta?.toLowerCase() ?? "");
 
 // Todas las fotos, en su tamaño y proporción originales, para el visor
 const galleryPhotos = p.photos

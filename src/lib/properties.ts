@@ -125,7 +125,7 @@ export function formatArea(m2: number | null): string {
  */
 export async function getPublishedProperties(): Promise<Property[]> {
   const { data: raw, error } = await supabase
-    .from("properties")
+    .from("properties_web")
     .select("*")
     .eq("publicado_web", true)
     .order("fecha_publicacion", { ascending: false });
